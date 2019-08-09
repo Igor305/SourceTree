@@ -1,0 +1,197 @@
+{
+  "format": 1,
+  "restore": {
+    "C:\\Users\\Anuitex-153\\source\\repos\\SourceTree\\EducationApp\\EducationApp.PresentationLayer\\EducationApp.PresentationLayer.csproj": {}
+  },
+  "projects": {
+    "C:\\Users\\Anuitex-153\\source\\repos\\SourceTree\\EducationApp\\EducationApp.BusinessLogicLayer\\EducationApp.BusinessLogicLayer.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\Anuitex-153\\source\\repos\\SourceTree\\EducationApp\\EducationApp.BusinessLogicLayer\\EducationApp.BusinessLogicLayer.csproj",
+        "projectName": "EducationApp.BusinessLogicLayer",
+        "projectPath": "C:\\Users\\Anuitex-153\\source\\repos\\SourceTree\\EducationApp\\EducationApp.BusinessLogicLayer\\EducationApp.BusinessLogicLayer.csproj",
+        "packagesPath": "C:\\Users\\Anuitex-153\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Anuitex-153\\source\\repos\\SourceTree\\EducationApp\\EducationApp.BusinessLogicLayer\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Microsoft\\Xamarin\\NuGet\\",
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\Anuitex-153\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "netstandard2.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netstandard2.0": {
+            "projectReferences": {
+              "C:\\Users\\Anuitex-153\\source\\repos\\SourceTree\\EducationApp\\EducationApp.DataAccessLayer\\EducationApp.DataAccessLayer.csproj": {
+                "projectPath": "C:\\Users\\Anuitex-153\\source\\repos\\SourceTree\\EducationApp\\EducationApp.DataAccessLayer\\EducationApp.DataAccessLayer.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netstandard2.0": {
+          "dependencies": {
+            "NETStandard.Library": {
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[2.0.3, )",
+              "autoReferenced": true
+            }
+          },
+          "imports": [
+            "net461"
+          ],
+          "assetTargetFallback": true,
+          "warn": true
+        }
+      }
+    },
+    "C:\\Users\\Anuitex-153\\source\\repos\\SourceTree\\EducationApp\\EducationApp.DataAccessLayer\\EducationApp.DataAccessLayer.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\Anuitex-153\\source\\repos\\SourceTree\\EducationApp\\EducationApp.DataAccessLayer\\EducationApp.DataAccessLayer.csproj",
+        "projectName": "EducationApp.DataAccessLayer",
+        "projectPath": "C:\\Users\\Anuitex-153\\source\\repos\\SourceTree\\EducationApp\\EducationApp.DataAccessLayer\\EducationApp.DataAccessLayer.csproj",
+        "packagesPath": "C:\\Users\\Anuitex-153\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Anuitex-153\\source\\repos\\SourceTree\\EducationApp\\EducationApp.DataAccessLayer\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Microsoft\\Xamarin\\NuGet\\",
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\Anuitex-153\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "netstandard2.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netstandard2.0": {
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netstandard2.0": {
+          "dependencies": {
+            "EntityFramework": {
+              "target": "Package",
+              "version": "[6.2.0, )"
+            },
+            "NETStandard.Library": {
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[2.0.3, )",
+              "autoReferenced": true
+            }
+          },
+          "imports": [
+            "net461"
+          ],
+          "assetTargetFallback": true,
+          "warn": true
+        }
+      }
+    },
+    "C:\\Users\\Anuitex-153\\source\\repos\\SourceTree\\EducationApp\\EducationApp.PresentationLayer\\EducationApp.PresentationLayer.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\Anuitex-153\\source\\repos\\SourceTree\\EducationApp\\EducationApp.PresentationLayer\\EducationApp.PresentationLayer.csproj",
+        "projectName": "EducationApp.PresentationLayer",
+        "projectPath": "C:\\Users\\Anuitex-153\\source\\repos\\SourceTree\\EducationApp\\EducationApp.PresentationLayer\\EducationApp.PresentationLayer.csproj",
+        "packagesPath": "C:\\Users\\Anuitex-153\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Anuitex-153\\source\\repos\\SourceTree\\EducationApp\\EducationApp.PresentationLayer\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Microsoft\\Xamarin\\NuGet\\",
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\Anuitex-153\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "netcoreapp2.1"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netcoreapp2.1": {
+            "projectReferences": {
+              "C:\\Users\\Anuitex-153\\source\\repos\\SourceTree\\EducationApp\\EducationApp.BusinessLogicLayer\\EducationApp.BusinessLogicLayer.csproj": {
+                "projectPath": "C:\\Users\\Anuitex-153\\source\\repos\\SourceTree\\EducationApp\\EducationApp.BusinessLogicLayer\\EducationApp.BusinessLogicLayer.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netcoreapp2.1": {
+          "dependencies": {
+            "Microsoft.AspNetCore.App": {
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[2.1.1, )",
+              "autoReferenced": true
+            },
+            "Microsoft.AspNetCore.Razor.Design": {
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[2.1.2, )"
+            },
+            "Microsoft.NETCore.App": {
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[2.1.0, )",
+              "autoReferenced": true
+            },
+            "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
+              "target": "Package",
+              "version": "[2.1.9, )"
+            }
+          },
+          "imports": [
+            "net461"
+          ],
+          "assetTargetFallback": true,
+          "warn": true
+        }
+      }
+    }
+  }
+}

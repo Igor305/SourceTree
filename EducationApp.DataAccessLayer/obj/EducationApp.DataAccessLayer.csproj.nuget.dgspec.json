@@ -1,0 +1,66 @@
+{
+  "format": 1,
+  "restore": {
+    "C:\\Users\\Anuitex-153\\source\\repos\\SourceTree\\EducationApp\\EducationApp.DataAccessLayer\\EducationApp.DataAccessLayer.csproj": {}
+  },
+  "projects": {
+    "C:\\Users\\Anuitex-153\\source\\repos\\SourceTree\\EducationApp\\EducationApp.DataAccessLayer\\EducationApp.DataAccessLayer.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\Anuitex-153\\source\\repos\\SourceTree\\EducationApp\\EducationApp.DataAccessLayer\\EducationApp.DataAccessLayer.csproj",
+        "projectName": "EducationApp.DataAccessLayer",
+        "projectPath": "C:\\Users\\Anuitex-153\\source\\repos\\SourceTree\\EducationApp\\EducationApp.DataAccessLayer\\EducationApp.DataAccessLayer.csproj",
+        "packagesPath": "C:\\Users\\Anuitex-153\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Anuitex-153\\source\\repos\\SourceTree\\EducationApp\\EducationApp.DataAccessLayer\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Microsoft\\Xamarin\\NuGet\\",
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\Anuitex-153\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "netstandard2.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netstandard2.0": {
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netstandard2.0": {
+          "dependencies": {
+            "EntityFramework": {
+              "target": "Package",
+              "version": "[6.2.0, )"
+            },
+            "NETStandard.Library": {
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[2.0.3, )",
+              "autoReferenced": true
+            }
+          },
+          "imports": [
+            "net461"
+          ],
+          "assetTargetFallback": true,
+          "warn": true
+        }
+      }
+    }
+  }
+}
