@@ -12622,11 +12622,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Anuitex-153\\source\\repos\\SourceTree\\EducationApp\\EducationApp.PresentationLayer\\EducationApp.PresentationLayer.csproj",
+      "projectUniqueName": "C:\\Users\\Anuitex-153\\source\\repos\\SourceTree\\EducationApp.PresentationLayer\\EducationApp.PresentationLayer.csproj",
       "projectName": "EducationApp.PresentationLayer",
-      "projectPath": "C:\\Users\\Anuitex-153\\source\\repos\\SourceTree\\EducationApp\\EducationApp.PresentationLayer\\EducationApp.PresentationLayer.csproj",
+      "projectPath": "C:\\Users\\Anuitex-153\\source\\repos\\SourceTree\\EducationApp.PresentationLayer\\EducationApp.PresentationLayer.csproj",
       "packagesPath": "C:\\Users\\Anuitex-153\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Anuitex-153\\source\\repos\\SourceTree\\EducationApp\\EducationApp.PresentationLayer\\obj\\",
+      "outputPath": "C:\\Users\\Anuitex-153\\source\\repos\\SourceTree\\EducationApp.PresentationLayer\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Microsoft\\Xamarin\\NuGet\\",
@@ -12647,8 +12647,8 @@
       "frameworks": {
         "netcoreapp2.1": {
           "projectReferences": {
-            "C:\\Users\\Anuitex-153\\source\\repos\\SourceTree\\EducationApp\\EducationApp.BusinessLogicLayer\\EducationApp.BusinessLogicLayer.csproj": {
-              "projectPath": "C:\\Users\\Anuitex-153\\source\\repos\\SourceTree\\EducationApp\\EducationApp.BusinessLogicLayer\\EducationApp.BusinessLogicLayer.csproj"
+            "C:\\Users\\Anuitex-153\\source\\repos\\SourceTree\\EducationApp.BusinessLogicLayer\\EducationApp.BusinessLogicLayer.csproj": {
+              "projectPath": "C:\\Users\\Anuitex-153\\source\\repos\\SourceTree\\EducationApp.BusinessLogicLayer\\EducationApp.BusinessLogicLayer.csproj"
             }
           }
         }
