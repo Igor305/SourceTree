@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EducationApp.DataAccessLaye
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EducationApp.BusinessLogicLayer", "EducationApp.BusinessLogicLayer\EducationApp.BusinessLogicLayer.csproj", "{DEF65E95-4160-483C-B147-09C32AE0201A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EducationApp.PresentationLayer", "EducationApp.PresentationLayer\EducationApp.PresentationLayer.csproj", "{F0733110-DDB4-4E22-BD52-A2351337F00D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EducationApp.PresentationLayer", "EducationApp.PresentationLayer\EducationApp.PresentationLayer.csproj", "{F0733110-DDB4-4E22-BD52-A2351337F00D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

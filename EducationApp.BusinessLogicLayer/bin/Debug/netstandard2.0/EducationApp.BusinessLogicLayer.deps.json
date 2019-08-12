@@ -36,10 +36,19 @@
       },
       "EducationApp.DataAccessLayer/1.0.0": {
         "dependencies": {
-          "EntityFramework": "6.2.0"
+          "EntityFramework": "6.2.0",
+          "Microsoft.EntityFrameworkCore": "2.1.1.0"
         },
         "runtime": {
           "EducationApp.DataAccessLayer.dll": {}
+        }
+      },
+      "Microsoft.EntityFrameworkCore.Reference/2.1.1.0": {
+        "runtime": {
+          "Microsoft.EntityFrameworkCore.dll": {
+            "assemblyVersion": "2.1.1.0",
+            "fileVersion": "2.1.1.18157"
+          }
         }
       }
     }
@@ -73,6 +82,11 @@
     },
     "EducationApp.DataAccessLayer/1.0.0": {
       "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Microsoft.EntityFrameworkCore.Reference/2.1.1.0": {
+      "type": "reference",
       "serviceable": false,
       "sha512": ""
     }

@@ -1,12 +1,26 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Linq;
+using System.Data.Entity;
+using System.Linq.Expressions;
+using EducationApp.DataAccessLayer.Repositories.Interfaces;
 
 namespace EducationApp.DataAccessLayer.Repositories.EFRepositories
 {
-    class AuthorRepository
+    public class AuthorRepository : IAuthorRepository
     {
-        public int Id { get; set; }
-        public string Name { get; set; }
+        public AuthorRepository()
+        {
+
+        }
+
+        public int Id()
+        {
+            return 1;
+        }
+        public string Name()
+        {
+            return "Мульберан";
+        }
     }
 }

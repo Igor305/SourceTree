@@ -6,8 +6,7 @@ namespace EducationApp.BusinessLogicLayer.Services.Interfaces
 {
     public interface IAuthorService
     {
-            int Id();
-            string Name();
-
+        int Id();
+        string Name();
     }
 }

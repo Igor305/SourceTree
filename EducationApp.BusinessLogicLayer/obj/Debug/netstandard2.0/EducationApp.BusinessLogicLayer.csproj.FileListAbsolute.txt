@@ -34,3 +34,5 @@ C:\Users\Anuitex-153\source\repos\SourceTree\EducationApp.BusinessLogicLayer\obj
 C:\Users\Anuitex-153\source\repos\SourceTree\EducationApp.BusinessLogicLayer\obj\Debug\netstandard2.0\EducationApp.BusinessLogicLayer.csproj.CopyComplete
 C:\Users\Anuitex-153\source\repos\SourceTree\EducationApp.BusinessLogicLayer\obj\Debug\netstandard2.0\EducationApp.BusinessLogicLayer.dll
 C:\Users\Anuitex-153\source\repos\SourceTree\EducationApp.BusinessLogicLayer\obj\Debug\netstandard2.0\EducationApp.BusinessLogicLayer.pdb
+C:\Users\Anuitex-153\source\repos\SourceTree\EducationApp.BusinessLogicLayer\bin\Debug\netstandard2.0\Microsoft.EntityFrameworkCore.dll
+C:\Users\Anuitex-153\source\repos\SourceTree\EducationApp.BusinessLogicLayer\bin\Debug\netstandard2.0\Microsoft.EntityFrameworkCore.xml
