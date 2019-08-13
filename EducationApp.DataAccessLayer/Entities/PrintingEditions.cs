@@ -4,7 +4,7 @@ using System.Text;
 
 namespace EducationApp.DataAccessLayer.Entities
 {
-    class PrintingEditions
+    public class PrintingEditions
     {
         public int Id { get; set; }
         public string Name { get; set; }

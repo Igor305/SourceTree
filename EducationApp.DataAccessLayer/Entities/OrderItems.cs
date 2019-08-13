@@ -4,7 +4,7 @@ using System.Text;
 
 namespace EducationApp.DataAccessLayer.Entities
 {
-    class OrderItems
+    public class OrderItems
     {
         public int Id { get; set; }
         public string Amount { get; set; }

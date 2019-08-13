@@ -7,7 +7,7 @@ using DbContext = Microsoft.EntityFrameworkCore.DbContext;
 
 namespace EducationApp.DataAccessLayer.AppContext
 {
-    class ApplicationContext : DbContext
+    public class ApplicationContext : DbContext
     {
         public ApplicationContext(DbContextOptions<ApplicationContext> options)
           : base(options)
@@ -22,7 +22,8 @@ namespace EducationApp.DataAccessLayer.AppContext
         public System.Data.Entity.DbSet<Orders> Orders { get; set; }
         public System.Data.Entity.DbSet<OrderItems> OrderItems { get; set; }
         public System.Data.Entity.DbSet<Payments> Payments { get; set; }
- 
+
+        
     }
 
 }
