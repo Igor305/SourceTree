@@ -24,9 +24,4 @@ C:\Users\Anuitex-153\source\repos\SourceTree\EducationApp.DataAccessLayer\obj\De
 C:\Users\Anuitex-153\source\repos\SourceTree\EducationApp.DataAccessLayer\obj\Debug\netstandard2.0\EducationApp.DataAccessLayer.AssemblyInfo.cs
 C:\Users\Anuitex-153\source\repos\SourceTree\EducationApp.DataAccessLayer\obj\Debug\netstandard2.0\EducationApp.DataAccessLayer.dll
 C:\Users\Anuitex-153\source\repos\SourceTree\EducationApp.DataAccessLayer\obj\Debug\netstandard2.0\EducationApp.DataAccessLayer.pdb
-C:\Users\Anuitex-153\source\repos\SourceTree\EducationApp.DataAccessLayer\bin\Debug\netstandard2.0\Microsoft.EntityFrameworkCore.dll
-C:\Users\Anuitex-153\source\repos\SourceTree\EducationApp.DataAccessLayer\bin\Debug\netstandard2.0\Microsoft.EntityFrameworkCore.Relational.dll
-C:\Users\Anuitex-153\source\repos\SourceTree\EducationApp.DataAccessLayer\bin\Debug\netstandard2.0\Microsoft.EntityFrameworkCore.xml
-C:\Users\Anuitex-153\source\repos\SourceTree\EducationApp.DataAccessLayer\bin\Debug\netstandard2.0\Microsoft.EntityFrameworkCore.Relational.xml
 C:\Users\Anuitex-153\source\repos\SourceTree\EducationApp.DataAccessLayer\obj\Debug\netstandard2.0\EducationApp.DataAccessLayer.csprojAssemblyReference.cache
-C:\Users\Anuitex-153\source\repos\SourceTree\EducationApp.DataAccessLayer\obj\Debug\netstandard2.0\EducationApp.DataAccessLayer.csproj.CopyComplete

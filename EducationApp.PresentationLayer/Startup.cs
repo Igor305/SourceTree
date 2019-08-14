@@ -31,9 +31,11 @@ namespace EducationApp.PresentationLayer
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+
+
+            string connection = Configuration["ConnectionString:EmployeeDB"];
+            services.AddDbContext<ApplicationContext>(opts => opts.UseSqlServer(connection));
             services.AddTransient<IAuthorService, AuthorService>();
-            string connection = Configuration.GetConnectionString("DefaultConnection");
-            services.AddDbContext<ApplicationContext>(opts => opts.UseSqlServer(Configuration["ConnectionString:EmployeeDB"]));
 
 
         }

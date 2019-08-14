@@ -1,7 +1,6 @@
 ﻿using EducationApp.DataAccessLayer.Entities;
 using System;
 using System.Collections.Generic;
-using System.Data.Entity;
 using Microsoft.EntityFrameworkCore;
 using DbContext = Microsoft.EntityFrameworkCore.DbContext;
 
@@ -13,15 +12,15 @@ namespace EducationApp.DataAccessLayer.AppContext
           : base(options)
         { }
 
-        public System.Data.Entity.DbSet<Autors> Autors { get; set; }
-        public System.Data.Entity.DbSet<AutorInPrintingEditions> AutorInPrintingEditions { get; set; }
-        public System.Data.Entity.DbSet<PrintingEditions> PrintingEditions { get; set; }
-        public System.Data.Entity.DbSet<Users> Users { get; set; }
-        public System.Data.Entity.DbSet<UserInRoles> UserInRoles { get; set; }
-        public System.Data.Entity.DbSet<Roles> Roles { get; set; }
-        public System.Data.Entity.DbSet<Orders> Orders { get; set; }
-        public System.Data.Entity.DbSet<OrderItems> OrderItems { get; set; }
-        public System.Data.Entity.DbSet<Payments> Payments { get; set; }
+        public DbSet<Autors> Autors { get; set; }
+        public DbSet<AutorInPrintingEditions> AutorInPrintingEditions { get; set; }
+        public DbSet<PrintingEditions> PrintingEditions { get; set; }
+        public DbSet<Users> Users { get; set; }
+        public DbSet<UserInRoles> UserInRoles { get; set; }
+        public DbSet<Roles> Roles { get; set; }
+        public DbSet<Orders> Orders { get; set; }
+        public DbSet<OrderItems> OrderItems { get; set; }
+        public DbSet<Payments> Payments { get; set; }
 
         
     }
