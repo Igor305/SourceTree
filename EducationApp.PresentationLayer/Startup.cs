@@ -52,7 +52,7 @@ namespace EducationApp.PresentationLayer
             {
                 app.UseHsts();
             }
-
+            app.UseAuthentication();
             app.UseHttpsRedirection();
             app.UseMvc();
         }

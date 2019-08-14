@@ -11,8 +11,9 @@ namespace EducationApp.DataAccessLayer.Entities
         public string Description { get; set; }
         public string Price { get; set; }
         public string IsRemoved { get; set; }
-        public string Status { get; set; }
-        public string Currency { get; set; }
+        public enum Status { }
+        public enum Currency { }
         public string Type { get; set; }
+        public List<AutorInPrintingEditions> AutorInPrintingEditionss { get; set; }
     }
 }
