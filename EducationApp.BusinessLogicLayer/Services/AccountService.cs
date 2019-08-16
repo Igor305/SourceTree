@@ -1,11 +1,6 @@
-﻿
-
-namespace EducationApp.BusinessLogicLayer.Services
+﻿namespace EducationApp.BusinessLogicLayer.Services
 {
     public class AccountService
     {
-      
-
-    
     }
 }

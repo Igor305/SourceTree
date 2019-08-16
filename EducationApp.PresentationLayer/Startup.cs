@@ -11,6 +11,7 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -38,9 +39,7 @@ namespace EducationApp.PresentationLayer
             string connection = Configuration["ConnectionString:EmployeeDB"];
             services.AddDbContext<ApplicationContext>(opts => opts.UseSqlServer(connection));
             services.AddTransient<IAuthorService, AuthorService>();
-
             services.AddIdentity<Users, Roles>().AddEntityFrameworkStores<ApplicationContext>();
-
 
         }
 
