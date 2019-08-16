@@ -1,25 +1,26 @@
 ﻿using EducationApp.DataAccessLayer.Entities;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
+using System;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace EducationApp.DataAccessLayer.AppContext
 {
-    public class ApplicationContext : DbContext
+    public class ApplicationContext : IdentityDbContext<Users,Roles,Guid>
     {
         public ApplicationContext(DbContextOptions<ApplicationContext> options)
-          : base(options)
+        : base(options)
         { }
-
         public DbSet<Autors> Autors { get; set; }
         public DbSet<PrintingEditions> PrintingEditions { get; set; }
-        public DbSet<Users> Users { get; set; }
-        public DbSet<Roles> Roles { get; set; }
         public DbSet<Orders> Orders { get; set; }
         public DbSet<OrderItems> OrderItems { get; set; }
         public DbSet<Payments> Payments { get; set; }
 
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+
             modelBuilder.Entity<UserInRoles>()
                 .HasKey(bc => new { bc.UserId, bc.RoleId });
             modelBuilder.Entity<UserInRoles>()
@@ -43,8 +44,8 @@ namespace EducationApp.DataAccessLayer.AppContext
                 .WithMany(c => c.AutorInPrintingEditionss)
                 .HasForeignKey(bc => bc.PrintingEditionId);
 
+            
+            base.OnModelCreating(modelBuilder);
         }
     }
-  
-
 }

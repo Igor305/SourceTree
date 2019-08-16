@@ -1,16 +1,17 @@
-﻿using System.Collections.Generic;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
+using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace EducationApp.DataAccessLayer.Entities
 {
-    public class Users
+    public class Users : IdentityUser<Guid> 
     {
-        [Key]
-        public int Id { get; set; }
+        public Guid Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public string PasswordHash { get; set; }
-        public string Email { get; set; }
+
 
         public List<UserInRoles> UserInRoly { get; set; }
     }
