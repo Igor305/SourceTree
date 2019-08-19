@@ -7,7 +7,7 @@ namespace EducationApp.BusinessLogicLayer.Services
 {
     public class AuthorService : IAuthorService
     {
-        AuthorRepository athor = new AuthorRepository();
+        AuthorRepository  athor = new AuthorRepository();
 
         public int Id()
         {

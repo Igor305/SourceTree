@@ -24,4 +24,3 @@ C:\Users\Anuitex-153\source\repos\SourceTree\EducationApp.DataAccessLayer\obj\De
 C:\Users\Anuitex-153\source\repos\SourceTree\EducationApp.DataAccessLayer\obj\Debug\netstandard2.0\EducationApp.DataAccessLayer.AssemblyInfo.cs
 C:\Users\Anuitex-153\source\repos\SourceTree\EducationApp.DataAccessLayer\obj\Debug\netstandard2.0\EducationApp.DataAccessLayer.dll
 C:\Users\Anuitex-153\source\repos\SourceTree\EducationApp.DataAccessLayer\obj\Debug\netstandard2.0\EducationApp.DataAccessLayer.pdb
-C:\Users\Anuitex-153\source\repos\SourceTree\EducationApp.DataAccessLayer\obj\Debug\netstandard2.0\EducationApp.DataAccessLayer.csprojAssemblyReference.cache

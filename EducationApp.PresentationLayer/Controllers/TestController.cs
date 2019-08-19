@@ -2,29 +2,50 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using EducationApp.DataAccessLayer.AppContext;
-using EducationApp.DataAccessLayer.Entities;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using EducationApp.BusinessLogicLayer.Services.Interfaces;
+using EducationApp.BusinessLogicLayer.Models.Autors;
+using Microsoft.Extensions.Logging;
+using EducationApp.DataAccessLayer.Entities;
 
-namespace EducationApp.PresentationLayer.Controllers
+// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+
+namespace EducationApp.PresentationLayer.Controllers.Base
 {
     [Route("api/[controller]")]
-    [ApiController]
     public class TestController : ControllerBase
     {
-            private ApplicationContext db;
-            public TestController(ApplicationContext context)
-            {
-                db = context;
-            }
-            [HttpPost]
-            public async Task<IActionResult> Create(Autors autors)
-            {
-                db.Autors.Add(autors);
-                await db.SaveChangesAsync();
-                return RedirectToAction("Index");
-            }
-           
+        private IAuthorService _author;
+        private readonly ILogger _logger;
+        public TestController(IAuthorService author, ILogger<TestController> logger)
+        {
+            this._author = author;
+            _logger = logger;
+        }
+
+        [HttpGet]
+          public string Get(string email)
+          {
+
+              string Message = $"About page visited at {DateTime.UtcNow.ToLongTimeString()}";
+              _logger.LogInformation("Message displayed: {Message}", Message);
+              Users user = new Users();
+              email = user.Email;
+              return email;
+    }
+        [HttpPost]
+        public ActionResult Index([FromBody] Users user)
+        {
+            string email = user.Email;
+
+
+            if (email != null) { return CreatedAtRoute(new { email = user.Email }, user); }
+            return CreatedAtRoute(new { email = user.Email },user + "Всё плохо");
+        }
+        [HttpPut]
+        public ActionResult Put([FromBody]Users user)
+        {
+            return CreatedAtRoute(new { email = user.Email }, user);
+        }
     }
 }

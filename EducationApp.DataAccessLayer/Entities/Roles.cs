@@ -7,7 +7,6 @@ namespace EducationApp.DataAccessLayer.Entities
 {
     public class Roles: IdentityRole<Guid>
     {
-        public Guid Id { get; set; }
 
         public List<UserInRoles> UserInRoly { get; set; }
         

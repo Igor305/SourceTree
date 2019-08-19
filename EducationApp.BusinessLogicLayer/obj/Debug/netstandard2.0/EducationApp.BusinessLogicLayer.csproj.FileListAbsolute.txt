@@ -27,7 +27,6 @@ C:\Users\Anuitex-153\source\repos\SourceTree\EducationApp.BusinessLogicLayer\bin
 C:\Users\Anuitex-153\source\repos\SourceTree\EducationApp.BusinessLogicLayer\bin\Debug\netstandard2.0\EducationApp.BusinessLogicLayer.pdb
 C:\Users\Anuitex-153\source\repos\SourceTree\EducationApp.BusinessLogicLayer\bin\Debug\netstandard2.0\EducationApp.DataAccessLayer.dll
 C:\Users\Anuitex-153\source\repos\SourceTree\EducationApp.BusinessLogicLayer\bin\Debug\netstandard2.0\EducationApp.DataAccessLayer.pdb
-C:\Users\Anuitex-153\source\repos\SourceTree\EducationApp.BusinessLogicLayer\obj\Debug\netstandard2.0\EducationApp.BusinessLogicLayer.csprojAssemblyReference.cache
 C:\Users\Anuitex-153\source\repos\SourceTree\EducationApp.BusinessLogicLayer\obj\Debug\netstandard2.0\EducationApp.BusinessLogicLayer.csproj.CoreCompileInputs.cache
 C:\Users\Anuitex-153\source\repos\SourceTree\EducationApp.BusinessLogicLayer\obj\Debug\netstandard2.0\EducationApp.BusinessLogicLayer.AssemblyInfoInputs.cache
 C:\Users\Anuitex-153\source\repos\SourceTree\EducationApp.BusinessLogicLayer\obj\Debug\netstandard2.0\EducationApp.BusinessLogicLayer.AssemblyInfo.cs
@@ -36,3 +35,4 @@ C:\Users\Anuitex-153\source\repos\SourceTree\EducationApp.BusinessLogicLayer\obj
 C:\Users\Anuitex-153\source\repos\SourceTree\EducationApp.BusinessLogicLayer\obj\Debug\netstandard2.0\EducationApp.BusinessLogicLayer.pdb
 C:\Users\Anuitex-153\source\repos\SourceTree\EducationApp.BusinessLogicLayer\bin\Debug\netstandard2.0\Microsoft.AspNetCore.Identity.UI.dll
 C:\Users\Anuitex-153\source\repos\SourceTree\EducationApp.BusinessLogicLayer\bin\Debug\netstandard2.0\Microsoft.AspNetCore.Identity.UI.xml
+C:\Users\Anuitex-153\source\repos\SourceTree\EducationApp.BusinessLogicLayer\obj\Debug\netstandard2.0\EducationApp.BusinessLogicLayer.csprojAssemblyReference.cache
