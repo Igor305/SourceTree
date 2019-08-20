@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace EducationApp.DataAccessLayer.Entities
 {
-    public class Roles: IdentityRole<Guid>
+    public class Roles: IdentityRole<int>
     {
 
         public List<UserInRoles> UserInRoly { get; set; }

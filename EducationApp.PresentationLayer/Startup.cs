@@ -37,10 +37,9 @@ namespace EducationApp.PresentationLayer
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
-
             string connection = Configuration["ConnectionString:EmployeeDB"];
             services.AddDbContext<ApplicationContext>(opts => opts.UseSqlServer(connection));
-            services.AddTransient<IAuthorService, AuthorService>();
+            services.AddTransient<Users>();
             services.AddIdentity<Users, Roles>()
               .AddEntityFrameworkStores<ApplicationContext>()
               .AddDefaultTokenProviders();

@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace EducationApp.DataAccessLayer.Entities
 {
-    public class Users : IdentityUser<Guid> 
+    public class Users : IdentityUser<int> 
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }

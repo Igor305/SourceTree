@@ -24,15 +24,11 @@ namespace EducationApp.PresentationLayer.Controllers.Base
         }
 
         [HttpGet]
-          public string Get(string email)
-          {
+        public string Get(int id)
+        {
+            return "Ты куда зашёл?";
+        }
 
-              string Message = $"About page visited at {DateTime.UtcNow.ToLongTimeString()}";
-              _logger.LogInformation("Message displayed: {Message}", Message);
-              Users user = new Users();
-              email = user.Email;
-              return email;
-    }
         [HttpPost]
         public ActionResult Index([FromBody] Users user)
         {

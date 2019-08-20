@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace EducationApp.DataAccessLayer.AppContext
 {
-    public class ApplicationContext : IdentityDbContext<Users,Roles,Guid>
+    public class ApplicationContext : IdentityDbContext<Users,Roles,int>
     {
         public ApplicationContext(DbContextOptions<ApplicationContext> options)
         : base(options)
