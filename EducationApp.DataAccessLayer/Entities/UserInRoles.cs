@@ -11,6 +11,6 @@ namespace EducationApp.DataAccessLayer.Entities
         public Roles Role { get; set; }
         [Key]
         public int UserId { get; set; }
-        public Users User { get; set; } 
+        public Users User { get; set; }
     }
 }

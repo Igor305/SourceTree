@@ -7,41 +7,29 @@ using EducationApp.BusinessLogicLayer.Services.Interfaces;
 using EducationApp.BusinessLogicLayer.Models.Autors;
 using Microsoft.Extensions.Logging;
 using EducationApp.DataAccessLayer.Entities;
+using EducationApp.DataAccessLayer.AppContext;
+using Microsoft.AspNetCore.Authorization;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace EducationApp.PresentationLayer.Controllers.Base
 {
     [Route("api/[controller]")]
+    [Authorize(Roles = "admin")]
     public class TestController : ControllerBase
     {
         private IAuthorService _author;
-        private readonly ILogger _logger;
-        public TestController(IAuthorService author, ILogger<TestController> logger)
+        private readonly ApplicationContext _applicationcontext;
+        public TestController(IAuthorService author, ApplicationContext applicationcontext)
         {
             this._author = author;
-            _logger = logger;
+            _applicationcontext = applicationcontext;
         }
 
         [HttpGet]
-        public string Get(int id)
+        public IEnumerable<Users> Get()
         {
-            return "Ты куда зашёл?";
-        }
-
-        [HttpPost]
-        public ActionResult Index([FromBody] Users user)
-        {
-            string email = user.Email;
-
-
-            if (email != null) { return CreatedAtRoute(new { email = user.Email }, user); }
-            return CreatedAtRoute(new { email = user.Email },user + "Всё плохо");
-        }
-        [HttpPut]
-        public ActionResult Put([FromBody]Users user)
-        {
-            return CreatedAtRoute(new { email = user.Email }, user);
+            return _applicationcontext.Users.ToList();
         }
     }
 }
