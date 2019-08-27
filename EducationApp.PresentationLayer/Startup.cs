@@ -1,4 +1,6 @@
-﻿using EducationApp.DataAccessLayer.AppContext;
+﻿using EducationApp.BusinessLogicLayer.Services;
+using EducationApp.BusinessLogicLayer.Services.Interfaces;
+using EducationApp.DataAccessLayer.AppContext;
 using EducationApp.DataAccessLayer.Entities;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -28,10 +30,16 @@ namespace EducationApp.PresentationLayer
             string connection = Configuration["ConnectionString:EmployeeDB"];
             services.AddDbContext<ApplicationContext>(opts => opts.UseSqlServer(connection));
             services.AddTransient<Users>();
-            services.AddIdentity<Users, Roles>()
-              .AddEntityFrameworkStores<ApplicationContext>()
-              .AddDefaultTokenProviders();
-
+            services.AddTransient<IEmailService, EmailService>();
+            services.AddIdentity<Users, Roles>(o => {
+                o.Password.RequireDigit = true;
+                o.Password.RequireLowercase = true;
+                o.Password.RequireUppercase = false;
+                o.Password.RequireNonAlphanumeric = false;
+                o.Password.RequiredLength = 6;
+            })
+                .AddEntityFrameworkStores<ApplicationContext>()
+                .AddDefaultTokenProviders();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -46,9 +54,11 @@ namespace EducationApp.PresentationLayer
             {
                 app.UseHsts();
             }
+
             app.UseAuthentication();
             app.UseHttpsRedirection();
             app.UseMvc();
+           
         }
     }
 }
