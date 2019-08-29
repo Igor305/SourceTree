@@ -27,7 +27,9 @@ namespace EducationApp.PresentationLayer
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            const string signingSecurityKey = "0d5b3235a8b403c3dab9c3f4f65KYKARA4A07fcalskd234n1k41230";
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+
+            const string signingSecurityKey = "0d5b3235a8b403c3dab9c3f4f65KYKARA4A666Masssaraksh07fcalskd234n1k41230";
             var signingKey = new SymmetricKey(signingSecurityKey);
             services.AddSingleton<IJwtPrivateKey>(signingKey);
 
@@ -70,7 +72,7 @@ namespace EducationApp.PresentationLayer
                 .AddEntityFrameworkStores<ApplicationContext>()
                 .AddDefaultTokenProviders();
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+          
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

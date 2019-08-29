@@ -56,12 +56,11 @@ namespace EducationApp.PresentationLayer.Controllers
             }
             
             // Создаем утверждения для токена.
-            var claims = new List<Claim>
+            var claims = new Claim[]
             {
             new Claim(ClaimTypes.Email, email)
             };
-             var EmailIdentifier = HttpContext.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Email);
-             string em = EmailIdentifier.Value;
+         //   var EmailIdentifier = HttpContext.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Email).Value;
             // Генерируем JWT.
             var token = new JwtSecurityToken(
                 issuer: "MyJwt",
