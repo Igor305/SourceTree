@@ -1,10 +1,11 @@
-﻿using System;
+﻿using EducationApp.DataAccessLayer.Entities;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace EducationApp.BusinessLogicLayer.Services.Interfaces
 {
-    class IUserService
+    public interface IUserService
     {
     }
 }

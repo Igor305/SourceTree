@@ -4,8 +4,7 @@ using System.Text;
 
 namespace EducationApp.BusinessLogicLayer.Helpers
 {
-    class EmailHelper
+    public class EmailHelper
     {
-
     }
 }

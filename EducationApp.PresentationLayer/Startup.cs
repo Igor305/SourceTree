@@ -10,6 +10,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Microsoft.IdentityModel.Tokens;
+using System;
 
 namespace EducationApp.PresentationLayer
 {
@@ -25,7 +27,34 @@ namespace EducationApp.PresentationLayer
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            const string signingSecurityKey = "0d5b3235a8b403c3dab9c3f4f65KYKARA4A07fcalskd234n1k41230";
+            var signingKey = new SymmetricKey(signingSecurityKey);
+            services.AddSingleton<IJwtPrivateKey>(signingKey);
+
+            const string jwtSchemeName = "JwtBearer";
+            var signingDecodingKey = (IJwtPrivateKey)signingKey;
+            services
+                .AddAuthentication(options => {
+                    options.DefaultAuthenticateScheme = jwtSchemeName;
+                    options.DefaultChallengeScheme = jwtSchemeName;
+                })
+                .AddJwtBearer(jwtSchemeName, jwtBearerOptions => {
+                    jwtBearerOptions.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuerSigningKey = true,
+                        IssuerSigningKey = signingDecodingKey.GetKey(),
+
+                        ValidateIssuer = true,
+                        ValidIssuer = "MyJwt",
+
+                        ValidateAudience = true,
+                        ValidAudience = "TheBestClient",
+
+                        ValidateLifetime = true,
+
+                        ClockSkew = TimeSpan.FromSeconds(5)
+                    };
+                });
 
             string connection = Configuration["ConnectionString:EmployeeDB"];
             services.AddDbContext<ApplicationContext>(opts => opts.UseSqlServer(connection));
@@ -40,12 +69,14 @@ namespace EducationApp.PresentationLayer
             })
                 .AddEntityFrameworkStores<ApplicationContext>()
                 .AddDefaultTokenProviders();
+
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
-            loggerFactory.AddDebug();
+            //loggerFactory.AddDebug();
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
