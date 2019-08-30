@@ -2,9 +2,12 @@
 using EducationApp.BusinessLogicLayer.Services.Interfaces;
 using EducationApp.DataAccessLayer.AppContext;
 using EducationApp.DataAccessLayer.Entities;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -28,7 +31,8 @@ namespace EducationApp.PresentationLayer
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-
+        
+            //Jwt Token
             const string signingSecurityKey = "0d5b3235a8b403c3dab9c3f4f65KYKARA4A666Masssaraksh07fcalskd234n1k41230";
             var signingKey = new SymmetricKey(signingSecurityKey);
             services.AddSingleton<IJwtPrivateKey>(signingKey);
@@ -45,19 +49,24 @@ namespace EducationApp.PresentationLayer
                     {
                         ValidateIssuerSigningKey = true,
                         IssuerSigningKey = signingDecodingKey.GetKey(),
-
                         ValidateIssuer = true,
                         ValidIssuer = "MyJwt",
-
                         ValidateAudience = true,
                         ValidAudience = "TheBestClient",
-
                         ValidateLifetime = true,
-
                         ClockSkew = TimeSpan.FromSeconds(5)
                     };
                 });
+            //
+            services.AddDbContext<IdentityDbContext>(options =>
+            options.UseSqlServer(Configuration.GetConnectionString("AspNetCoreIdentityDb"),
+            optionsBuilder =>
+            optionsBuilder.MigrationsAssembly(typeof(Startup).Assembly.GetName().Name)));
+            services.AddIdentityCore<IdentityUser>(options => { });
+            services.AddScoped<IUserStore<IdentityUser>, UserOnlyStore<IdentityUser, IdentityDbContext>>();
 
+
+            //
             string connection = Configuration["ConnectionString:EmployeeDB"];
             services.AddDbContext<ApplicationContext>(opts => opts.UseSqlServer(connection));
             services.AddTransient<Users>();
@@ -93,5 +102,9 @@ namespace EducationApp.PresentationLayer
             app.UseMvc();
            
         }
+    }
+
+    internal class MinimumAgeRequirement : IAuthorizationRequirement
+    {
     }
 }

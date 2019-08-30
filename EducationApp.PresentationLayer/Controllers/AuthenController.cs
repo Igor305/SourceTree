@@ -5,8 +5,6 @@ using EducationApp.DataAccessLayer.Entities;
 using EducationApp.BusinessLogicLayer.Models;
 using EducationApp.DataAccessLayer.AppContext;
 using System;
-using System.Net.Mail;
-using System.Net;
 using EducationApp.BusinessLogicLayer.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using EducationApp.BusinessLogicLayer.Models.User;
@@ -36,32 +34,32 @@ namespace EducationApp.PresentationLayer.Controllers
         }
 
         [HttpGet]
+
         public ActionResult<IEnumerable<string>> Get()
         {
-            var EmailIdentifier = this.HttpContext.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Email);
+            var EmailIdentifier = HttpContext.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Email);
             return new string[] { EmailIdentifier?.Value, "value1", "value2" };
         }
 
 
         [HttpPost]
         [AllowAnonymous]
-        public async Task<ActionResult<string>> PostAsync(AuthenticationModel authRequest, [FromServices] IJwtPrivateKey jwtPrivateKey,[FromHeader] string email)
+        public async Task<ActionResult<string>> PostAsync(AuthenticationModel authRequest, [FromServices] IJwtPrivateKey jwtPrivateKey, [FromHeader] string email)
         {
-            // Проверяем данные пользователя из запроса.
+            // Validate email
             Users user = new Users();
             var Findd = await _userManager.FindByEmailAsync(email);
             if (Findd == null)
             {
                 return Ok("Вы еще не зарегистрировались. Бегите, станьте нашим 1000-м посетителем!");
             }
-            
-            // Создаем утверждения для токена.
+
+            // Token.
             var claims = new Claim[]
             {
             new Claim(ClaimTypes.Email, email)
             };
-         //   var EmailIdentifier = HttpContext.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Email).Value;
-            // Генерируем JWT.
+            // JWT.
             var token = new JwtSecurityToken(
                 issuer: "MyJwt",
                 audience: "TheBestClient",
@@ -83,7 +81,7 @@ namespace EducationApp.PresentationLayer.Controllers
         }
 
         [HttpPost("Register")]
-        public async Task<IActionResult> AddRegister([FromBody]RegisterModel reg, [FromHeader]string subject, [FromHeader]string message)
+        public async Task<IActionResult> AddRegister([FromBody]RegisterModel reg)
         {
             if (ModelState.IsValid)
             {
@@ -99,12 +97,12 @@ namespace EducationApp.PresentationLayer.Controllers
                         "Authen",
                         new { userId = user.Id, code = code },
                         protocol: HttpContext.Request.Scheme);
-                    subject = "Подтверждение регистрации";
-                    message = $"Подтвердите регистрацию, перейдя по ссылке: <a href='{regurl}'>НАЖМИ НА МЕНЯ</a>";
+                    string subject = "Подтверждение регистрации";
+                    string message = $"Подтвердите регистрацию, перейдя по ссылке: <a href='{regurl}'>НАЖМИ НА МЕНЯ</a>";
                     await _emailService.SendEmail(reg.Email, subject, message);
                     // установка куки
                     await _signInManager.SignInAsync(user, false);
-                    return RedirectToAction("Index", "Values");
+                    return Ok(reg);
                 }
                 else
                 {
@@ -155,7 +153,7 @@ namespace EducationApp.PresentationLayer.Controllers
                 var code = await _userManager.GeneratePasswordResetTokenAsync(user);
                 var callbackUrl = Url.Action(
                     "ResetPassword",
-                    "Authen", 
+                    "Authen",
                 new { userEmail = user.Email, code = code }, protocol: HttpContext.Request.Scheme);
 
                 string subject = "Изменение пароля ";
@@ -167,7 +165,7 @@ namespace EducationApp.PresentationLayer.Controllers
 
         [HttpPost("ResetPassword")]
         [AllowAnonymous]
-        public async Task<IActionResult> ResetPassword(ResetPasswordModel reset, string code, string userEmail,[FromHeader]string password)
+        public async Task<IActionResult> ResetPassword(ResetPasswordModel reset, string code, string userEmail, [FromHeader]string password)
         {
             if (code == null || userEmail == null)
             {
@@ -183,20 +181,21 @@ namespace EducationApp.PresentationLayer.Controllers
             {
                 return Ok(reset);
             }
-           /* foreach (var error in result.Errors)
-            {
-                ModelState.AddModelError(string.Empty, error.Description);
-            }*/
+            /* foreach (var error in result.Errors)
+             {
+                 ModelState.AddModelError(string.Empty, error.Description);
+             }*/
             return Ok(reset);
         }
 
         [HttpPost("Login")]
-        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login([FromBody]LoginModel log)
         {
+
             if (ModelState.IsValid)
             {
-                var result = await _signInManager.PasswordSignInAsync(log.Email, log.Password, log.RememberMe, false);
+
+                var result = await _signInManager.PasswordSignInAsync(log.Email, log.Password, log.RememberMe, lockoutOnFailure: true);
                 if (result.Succeeded)
                 {
                     // проверяем, принадлежит ли URL приложению
@@ -212,12 +211,24 @@ namespace EducationApp.PresentationLayer.Controllers
                 else
                 {
                     ModelState.AddModelError("", "Неправильный логин и (или) пароль");
-
                 }
-
 
             }
             return Ok(log);
+        }
+        [HttpPost("LogOut")]
+        public async Task<IActionResult> LogOut(LoginModel log)
+        {
+            await _signInManager.SignOutAsync();
+            log.Email = log.Password =  null;
+            if (log.ReturnUrl != null)
+            {
+                return LocalRedirect(log.ReturnUrl);
+            }
+            else
+            {
+                return Ok(log);
+            }
         }
     }
 }
