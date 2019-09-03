@@ -19,13 +19,13 @@ using System.Linq;
 namespace EducationApp.PresentationLayer.Controllers
 {
     [Route("api/[controller]")]
-    public class AuthenController : Controller
+    public class AccountController : Controller
     {
         private readonly UserManager<Users> _userManager;
         private readonly SignInManager<Users> _signInManager;
         private readonly ApplicationContext _applicationContext;
         private readonly IEmailService _emailService;
-        public AuthenController(UserManager<Users> userManager, SignInManager<Users> signInManager, ApplicationContext applicationContext, IEmailService emailService)
+        public AccountController(UserManager<Users> userManager, SignInManager<Users> signInManager, ApplicationContext applicationContext, IEmailService emailService)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -34,7 +34,7 @@ namespace EducationApp.PresentationLayer.Controllers
         }
 
         [HttpGet]
-
+        [Authorize]
         public ActionResult<IEnumerable<string>> Get()
         {
             var EmailIdentifier = HttpContext.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Email);
@@ -94,7 +94,7 @@ namespace EducationApp.PresentationLayer.Controllers
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                     var regurl = Url.Action(
                         "ConfirmEmail",
-                        "Authen",
+                        "Account",
                         new { userId = user.Id, code = code },
                         protocol: HttpContext.Request.Scheme);
                     string subject = "Подтверждение регистрации";
@@ -153,7 +153,7 @@ namespace EducationApp.PresentationLayer.Controllers
                 var code = await _userManager.GeneratePasswordResetTokenAsync(user);
                 var callbackUrl = Url.Action(
                     "ResetPassword",
-                    "Authen",
+                    "Account",
                 new { userEmail = user.Email, code = code }, protocol: HttpContext.Request.Scheme);
 
                 string subject = "Изменение пароля ";
@@ -176,16 +176,17 @@ namespace EducationApp.PresentationLayer.Controllers
             {
                 return Ok("ResetPasswordConfirmation");
             }
+            await _userManager.CheckPasswordAsync(user, password);
             var result = await _userManager.ResetPasswordAsync(user, code, password);
             if (result.Succeeded)
             {
-                return Ok(reset);
+                return Ok(user);
             }
             /* foreach (var error in result.Errors)
              {
                  ModelState.AddModelError(string.Empty, error.Description);
              }*/
-            return Ok(reset);
+            return Ok(result);
         }
 
         [HttpPost("Login")]
@@ -212,7 +213,6 @@ namespace EducationApp.PresentationLayer.Controllers
                 {
                     ModelState.AddModelError("", "Неправильный логин и (или) пароль");
                 }
-
             }
             return Ok(log);
         }
@@ -220,7 +220,7 @@ namespace EducationApp.PresentationLayer.Controllers
         public async Task<IActionResult> LogOut(LoginModel log)
         {
             await _signInManager.SignOutAsync();
-            log.Email = log.Password =  null;
+            log.Email = log.Password = null;
             if (log.ReturnUrl != null)
             {
                 return LocalRedirect(log.ReturnUrl);
