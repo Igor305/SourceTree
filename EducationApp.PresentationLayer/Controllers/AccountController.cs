@@ -21,16 +21,18 @@ namespace EducationApp.PresentationLayer.Controllers
     [Route("api/[controller]")]
     public class AccountController : Controller
     {
+        private readonly IJwtPrivateKey _jwtPrivateKey;
         private readonly UserManager<Users> _userManager;
         private readonly SignInManager<Users> _signInManager;
         private readonly ApplicationContext _applicationContext;
         private readonly IEmailService _emailService;
-        public AccountController(UserManager<Users> userManager, SignInManager<Users> signInManager, ApplicationContext applicationContext, IEmailService emailService)
+        public AccountController(UserManager<Users> userManager, SignInManager<Users> signInManager, ApplicationContext applicationContext, IEmailService emailService, IJwtPrivateKey jwtPrivateKey)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _applicationContext = applicationContext;
             _emailService = emailService;
+            _jwtPrivateKey = jwtPrivateKey;
         }
 
         [HttpGet]
@@ -40,7 +42,6 @@ namespace EducationApp.PresentationLayer.Controllers
             var EmailIdentifier = HttpContext.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Email);
             return new string[] { EmailIdentifier?.Value, "value1", "value2" };
         }
-
 
         [HttpPost]
         [AllowAnonymous]
