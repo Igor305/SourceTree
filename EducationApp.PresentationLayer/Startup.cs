@@ -31,7 +31,29 @@ namespace EducationApp.PresentationLayer
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-        
+                 
+            services.AddDbContext<IdentityDbContext>(options =>
+            options.UseSqlServer(Configuration.GetConnectionString("AspNetCoreIdentityDb"),
+            optionsBuilder =>
+            optionsBuilder.MigrationsAssembly(typeof(Startup).Assembly.GetName().Name)));
+            services.AddIdentityCore<IdentityUser>(options => { });
+            services.AddScoped<IUserStore<IdentityUser>, UserOnlyStore<IdentityUser, IdentityDbContext>>();
+
+            string connection = Configuration["ConnectionString:EmployeeDB"];
+            services.AddDbContext<ApplicationContext>(opts => opts.UseSqlServer(connection));
+            services.AddTransient<Users>();
+            services.AddTransient<IEmailService, EmailService>();
+            services.AddIdentity<Users, Roles>(o => {
+                o.Password.RequireDigit = true;
+                o.Password.RequireLowercase = true;
+                o.Password.RequireUppercase = false;
+                o.Password.RequireNonAlphanumeric = false;
+                o.Password.RequiredLength = 6;
+            })
+
+                .AddEntityFrameworkStores<ApplicationContext>()
+                .AddDefaultTokenProviders();
+
             //Jwt Token
             const string signingSecurityKey = "0d5b3235a8b403c3dab9c3f4f65KYKARA4A666Masssaraksh07fcalskd234n1k41230";
             var signingKey = new SymmetricKey(signingSecurityKey);
@@ -57,29 +79,7 @@ namespace EducationApp.PresentationLayer
                         ClockSkew = TimeSpan.FromSeconds(5)
                     };
                 });
-            //
-            services.AddDbContext<IdentityDbContext>(options =>
-            options.UseSqlServer(Configuration.GetConnectionString("AspNetCoreIdentityDb"),
-            optionsBuilder =>
-            optionsBuilder.MigrationsAssembly(typeof(Startup).Assembly.GetName().Name)));
-            services.AddIdentityCore<IdentityUser>(options => { });
-            services.AddScoped<IUserStore<IdentityUser>, UserOnlyStore<IdentityUser, IdentityDbContext>>();
 
-
-            //
-            string connection = Configuration["ConnectionString:EmployeeDB"];
-            services.AddDbContext<ApplicationContext>(opts => opts.UseSqlServer(connection));
-            services.AddTransient<Users>();
-            services.AddTransient<IEmailService, EmailService>();
-            services.AddIdentity<Users, Roles>(o => {
-                o.Password.RequireDigit = true;
-                o.Password.RequireLowercase = true;
-                o.Password.RequireUppercase = false;
-                o.Password.RequireNonAlphanumeric = false;
-                o.Password.RequiredLength = 6;
-            })
-                .AddEntityFrameworkStores<ApplicationContext>()
-                .AddDefaultTokenProviders();
 
           
         }

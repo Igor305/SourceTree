@@ -21,40 +21,43 @@ namespace EducationApp.PresentationLayer.Controllers
     [Route("api/[controller]")]
     public class AccountController : Controller
     {
-        private readonly IJwtPrivateKey _jwtPrivateKey;
         private readonly UserManager<Users> _userManager;
         private readonly SignInManager<Users> _signInManager;
         private readonly ApplicationContext _applicationContext;
         private readonly IEmailService _emailService;
-        public AccountController(UserManager<Users> userManager, SignInManager<Users> signInManager, ApplicationContext applicationContext, IEmailService emailService, IJwtPrivateKey jwtPrivateKey)
+        public AccountController(UserManager<Users> userManager, SignInManager<Users> signInManager, ApplicationContext applicationContext, IEmailService emailService)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _applicationContext = applicationContext;
             _emailService = emailService;
-            _jwtPrivateKey = jwtPrivateKey;
         }
 
         [HttpGet]
         [Authorize]
-        public ActionResult<IEnumerable<string>> Get()
+        public ActionResult<IEnumerable<string>> GetToken()
         {
-            var EmailIdentifier = HttpContext.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Email);
-            return new string[] { EmailIdentifier?.Value, "value1", "value2" };
+            var email = HttpContext.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Email);
+            return new string[] { email?.Value, "value1", "value2" };
         }
 
         [HttpPost]
         [AllowAnonymous]
-        public async Task<ActionResult<string>> PostAsync(AuthenticationModel authRequest, [FromServices] IJwtPrivateKey jwtPrivateKey, [FromHeader] string email)
+        public async Task<ActionResult<string>> GenToken(AuthenticationModel authRequest, [FromServices] IJwtPrivateKey jwtPrivateKey, [FromHeader] string email, [FromHeader] string password)
         {
             // Validate email
             Users user = new Users();
-            var Findd = await _userManager.FindByEmailAsync(email);
-            if (Findd == null)
+            var findemail = await _userManager.FindByEmailAsync(email);
+            if (findemail == null)
             {
-                return Ok("Вы еще не зарегистрировались. Бегите, станьте нашим 1000-м посетителем!");
+                return Ok("Вы ввели не правильный email. Возможно вы еще не зарегистрировались. Бегите, станьте нашим 1000-м посетителем!");
             }
-
+            
+            var confirmpass = await _userManager.CheckPasswordAsync(findemail, password);
+            if (!confirmpass)
+            {
+                return Ok("Вы ввели не правильный пароль.");
+            }
             // Token.
             var claims = new Claim[]
             {
@@ -65,7 +68,7 @@ namespace EducationApp.PresentationLayer.Controllers
                 issuer: "MyJwt",
                 audience: "TheBestClient",
                 claims: claims,
-                expires: DateTime.Now.AddMinutes(5),
+                expires: DateTime.Now.AddHours(1),
                 signingCredentials: new SigningCredentials(
                         jwtPrivateKey.GetKey(),
                         jwtPrivateKey.SigningAlgorithm)
