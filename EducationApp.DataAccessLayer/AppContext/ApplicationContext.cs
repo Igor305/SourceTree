@@ -16,7 +16,7 @@ namespace EducationApp.DataAccessLayer.AppContext
         public DbSet<Orders> Orders { get; set; }
         public DbSet<OrderItems> OrderItems { get; set; }
         public DbSet<Payments> Payments { get; set; }
-        public DbSet<RefreshToken> RefreshTokens { get; set; }
+   //     public DbSet<RefreshToken> RefreshTokens { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
