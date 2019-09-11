@@ -6,46 +6,45 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace EducationApp.DataAccessLayer.AppContext
 {
-    public class ApplicationContext : IdentityDbContext<Users,Roles,int>
+    public class ApplicationContext : IdentityDbContext<Users, Role, Guid>
     {
+
         public ApplicationContext(DbContextOptions<ApplicationContext> options)
         : base(options)
         { }
-        public DbSet<Autors> Autors { get; set; }
-        public DbSet<PrintingEditions> PrintingEditions { get; set; }
-        public DbSet<Orders> Orders { get; set; }
-        public DbSet<OrderItems> OrderItems { get; set; }
-        public DbSet<Payments> Payments { get; set; }
-   //     public DbSet<RefreshToken> RefreshTokens { get; set; }
-
+        public DbSet<Autor> Autors { get; set; }
+        public DbSet<PrintingEdition> PrintingEditions { get; set; }
+        public DbSet<Order> Orders { get; set; }
+        public DbSet<OrderItem> OrderItems { get; set; }
+        public DbSet<Payment> Payments { get; set; }
+        public DbSet<RefreshToken> RefreshTokens { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
 
-            modelBuilder.Entity<UserInRoles>()
+            modelBuilder.Entity<UserInRole>()
                 .HasKey(bc => new { bc.UserId, bc.RoleId });
-            modelBuilder.Entity<UserInRoles>()
+            modelBuilder.Entity<UserInRole>()
                 .HasOne(bc => bc.User)
                 .WithMany(b => b.UserInRoly)
                 .HasForeignKey(bc => bc.UserId);
-            modelBuilder.Entity<UserInRoles>()
+            modelBuilder.Entity<UserInRole>()
                 .HasOne(bc => bc.Role)
                 .WithMany(c => c.UserInRoly)
                 .HasForeignKey(bc => bc.RoleId);
 
 
-            modelBuilder.Entity<AutorInPrintingEditions>()
+            modelBuilder.Entity<AutorInPrintingEdition>()
                 .HasKey(bc => new { bc.AutorId, bc.PrintingEditionId });
-            modelBuilder.Entity<AutorInPrintingEditions>()
+            modelBuilder.Entity<AutorInPrintingEdition>()
                 .HasOne(bc => bc.Autor)
-                .WithMany(b => b.AutorInPrintingEditionss)
+                .WithMany(b => b.AutorInPrintingEdition)
                 .HasForeignKey(bc => bc.AutorId);
-            modelBuilder.Entity<AutorInPrintingEditions>()
+            modelBuilder.Entity<AutorInPrintingEdition>()
                 .HasOne(bc => bc.PrintingEdition)
-                .WithMany(c => c.AutorInPrintingEditionss)
+                .WithMany(c => c.AutorInPrintingEdition)
                 .HasForeignKey(bc => bc.PrintingEditionId);
 
-            
             base.OnModelCreating(modelBuilder);
         }
     }

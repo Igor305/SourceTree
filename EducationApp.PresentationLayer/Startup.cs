@@ -1,4 +1,5 @@
-﻿using EducationApp.BusinessLogicLayer.Services;
+﻿using EducationApp.BusinessLogicLayer.Helpers;
+using EducationApp.BusinessLogicLayer.Services;
 using EducationApp.BusinessLogicLayer.Services.Interfaces;
 using EducationApp.DataAccessLayer.AppContext;
 using EducationApp.DataAccessLayer.Entities;
@@ -30,19 +31,14 @@ namespace EducationApp.PresentationLayer
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-                 
-            services.AddDbContext<IdentityDbContext>(options =>
-            options.UseSqlServer(Configuration.GetConnectionString("AspNetCoreIdentityDb"),
-            optionsBuilder =>
-            optionsBuilder.MigrationsAssembly(typeof(Startup).Assembly.GetName().Name)));
-            services.AddIdentityCore<IdentityUser>(options => { });
-            services.AddScoped<IUserStore<IdentityUser>, UserOnlyStore<IdentityUser, IdentityDbContext>>();
 
-            string connection = Configuration["ConnectionString:EmployeeDB"];
-            services.AddDbContext<ApplicationContext>(opts => opts.UseSqlServer(connection));
+            var connectionString = Configuration["ConnectionStrings:EmployeeDB"];
+            services.AddDbContext<ApplicationContext>(opts => opts.UseSqlServer(connectionString));
+            services.AddIdentityCore<IdentityUser>();
+            services.AddScoped<IUserStore<IdentityUser>, UserOnlyStore<IdentityUser, IdentityDbContext>>();
             services.AddTransient<Users>();
-            services.AddTransient<IEmailService, EmailService>();
-            services.AddIdentity<Users, Roles>(o => {
+            services.AddTransient<IEmailService, EmailHelper>();
+            services.AddIdentity<Users, Role>(o => {
                 o.Password.RequireDigit = true;
                 o.Password.RequireLowercase = true;
                 o.Password.RequireUppercase = false;
@@ -55,7 +51,7 @@ namespace EducationApp.PresentationLayer
 
             //Jwt Token
             const string signingSecurityKey = "0d5b3235a8b403c3dab9c3f4f65KYKARA4A666Masssaraksh07fcalskd234n1k41230";
-            var signingKey = new SymmetricKey(signingSecurityKey);
+            var signingKey = new JwtHelper(signingSecurityKey);
             services.AddSingleton<IJwtPrivateKey>(signingKey);
 
             const string jwtSchemeName = "JwtBearer";

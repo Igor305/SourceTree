@@ -13,6 +13,7 @@ using System.IdentityModel.Tokens.Jwt;
 using Microsoft.IdentityModel.Tokens;
 using System.Collections.Generic;
 using System.Linq;
+using EducationApp.BusinessLogicLayer.Helpers;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -43,17 +44,17 @@ namespace EducationApp.PresentationLayer.Controllers
 
         [HttpPost]
         [AllowAnonymous]
-        public async Task<ActionResult<string>> GenToken(AuthenticationModel authRequest, [FromServices] IJwtPrivateKey jwtPrivateKey, [FromHeader] string email, [FromHeader] string password)
+        public async Task<ActionResult<string>> GenToken([FromServices] IJwtPrivateKey jwtPrivateKey, [FromBody] LoginModel login)
         {
             // Validate email
             Users user = new Users();
-            var findemail = await _userManager.FindByEmailAsync(email);
+            var findemail = await _userManager.FindByEmailAsync(login.Email);
             if (findemail == null)
             {
                 return Ok("Вы ввели не правильный email. Возможно вы еще не зарегистрировались. Бегите, станьте нашим 1000-м посетителем!");
             }
             
-            var confirmpass = await _userManager.CheckPasswordAsync(findemail, password);
+            var confirmpass = await _userManager.CheckPasswordAsync(findemail, login.Password);
             if (!confirmpass)
             {
                 return Ok("Вы ввели не правильный пароль.");
@@ -61,9 +62,14 @@ namespace EducationApp.PresentationLayer.Controllers
             // Token.
             var claims = new Claim[]
             {
-            new Claim(ClaimTypes.Email, email)
+            new Claim(ClaimTypes.Email, login.Email)
             };
             // JWT.
+            CreateRefreshToken createrefreshToken = new CreateRefreshToken();
+            string refToken = createrefreshToken.GenerateRefreshToken();
+            RefreshToken refreshToken = new RefreshToken()
+            refreshToken.Token = refToken;
+            refreshToken.Email = login.Email;
             var token = new JwtSecurityToken(
                 issuer: "MyJwt",
                 audience: "TheBestClient",
@@ -73,9 +79,8 @@ namespace EducationApp.PresentationLayer.Controllers
                         jwtPrivateKey.GetKey(),
                         jwtPrivateKey.SigningAlgorithm)
             );
-
             string jwtToken = new JwtSecurityTokenHandler().WriteToken(token);
-            return jwtToken;
+            return refToken +""+jwtToken;
         }
 
         [HttpGet("Register")]
@@ -192,35 +197,7 @@ namespace EducationApp.PresentationLayer.Controllers
              }*/
             return Ok(result);
         }
-
-        [HttpPost("Login")]
-        public async Task<IActionResult> Login([FromBody]LoginModel log)
-        {
-
-            if (ModelState.IsValid)
-            {
-
-                var result = await _signInManager.PasswordSignInAsync(log.Email, log.Password, log.RememberMe, lockoutOnFailure: true);
-                if (result.Succeeded)
-                {
-                    // проверяем, принадлежит ли URL приложению
-                    if (!string.IsNullOrEmpty(log.ReturnUrl) && Url.IsLocalUrl(log.ReturnUrl))
-                    {
-                        return Redirect(log.ReturnUrl);
-                    }
-                    else
-                    {
-                        return Ok(log);
-                    }
-                }
-                else
-                {
-                    ModelState.AddModelError("", "Неправильный логин и (или) пароль");
-                }
-            }
-            return Ok(log);
-        }
-        [HttpPost("LogOut")]
+     /*   [HttpPost("LogOut")]
         public async Task<IActionResult> LogOut(LoginModel log)
         {
             await _signInManager.SignOutAsync();
@@ -233,6 +210,6 @@ namespace EducationApp.PresentationLayer.Controllers
             {
                 return Ok(log);
             }
-        }
+        }*/
     }
 }

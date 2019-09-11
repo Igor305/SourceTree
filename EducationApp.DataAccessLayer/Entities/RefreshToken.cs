@@ -11,7 +11,7 @@ namespace EducationApp.DataAccessLayer.Entities
     {
         [Key]
         [StringLength(450)]
-        public string Id { get; set; }
+        public Guid Id { get; set; }
 
         public DateTime IssuedUtc { get; set; }
 
@@ -21,10 +21,8 @@ namespace EducationApp.DataAccessLayer.Entities
         [StringLength(450)]
         public string Token { get; set; }
 
-        [StringLength(450)]
-        public string UserId { get; set; }
+        public string Email { get; set; }
 
-        [ForeignKey("UserId")]
         public Users User { get; set; }
     }
 }

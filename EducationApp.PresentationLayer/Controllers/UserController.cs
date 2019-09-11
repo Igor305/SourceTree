@@ -44,16 +44,6 @@ namespace CustomIdentityApp.Controllers
             }
             return Ok(model);
         }
-        public async Task<IActionResult> Edit(string id)
-        {
-            Users user = await _userManager.FindByIdAsync(id);
-            if (user == null)
-            {
-                return NotFound();
-            }
-            EditModel model = new EditModel { Email = user.Email };
-            return Ok(model);
-        }
 
         [Route("Edit")]
         [HttpPost]
@@ -86,24 +76,14 @@ namespace CustomIdentityApp.Controllers
 
         [Route("Delete")]
         [HttpPost]
-        public async Task<ActionResult> Delete([FromHeader]string id)
+        public async Task<ActionResult> Delete([FromHeader]string email)
         {
-            Users user = await _userManager.FindByIdAsync(id);
+            Users user = await _userManager.FindByEmailAsync(email);
             if (user != null)
             {
                 IdentityResult result = await _userManager.DeleteAsync(user);
             }
             return Ok(user);
-        }
-        public async Task<IActionResult> ChangePassword(string id)
-        {
-            Users user = await _userManager.FindByIdAsync(id);
-            if (user == null)
-            {
-                return NotFound();
-            }
-            ChangePasswordModel model = new ChangePasswordModel { Email = user.Email };
-            return Ok();
         }
 
         [Route("ChangePassword")]

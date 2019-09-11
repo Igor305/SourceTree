@@ -19,26 +19,10 @@ namespace EducationApp.DataAccessLayer.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("EducationApp.DataAccessLayer.Entities.AutorInPrintingEditions", b =>
+            modelBuilder.Entity("EducationApp.DataAccessLayer.Entities.Autor", b =>
                 {
-                    b.Property<int>("AutorId");
-
-                    b.Property<int>("PrintingEditionId");
-
-                    b.Property<int>("Date");
-
-                    b.HasKey("AutorId", "PrintingEditionId");
-
-                    b.HasIndex("PrintingEditionId");
-
-                    b.ToTable("AutorInPrintingEditions");
-                });
-
-            modelBuilder.Entity("EducationApp.DataAccessLayer.Entities.Autors", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
 
                     b.Property<string>("Name");
 
@@ -47,11 +31,45 @@ namespace EducationApp.DataAccessLayer.Migrations
                     b.ToTable("Autors");
                 });
 
-            modelBuilder.Entity("EducationApp.DataAccessLayer.Entities.OrderItems", b =>
+            modelBuilder.Entity("EducationApp.DataAccessLayer.Entities.AutorInPrintingEdition", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<Guid>("AutorId");
+
+                    b.Property<Guid>("PrintingEditionId");
+
+                    b.Property<int>("Date");
+
+                    b.HasKey("AutorId", "PrintingEditionId");
+
+                    b.HasIndex("PrintingEditionId");
+
+                    b.ToTable("AutorInPrintingEdition");
+                });
+
+            modelBuilder.Entity("EducationApp.DataAccessLayer.Entities.Order", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Date");
+
+                    b.Property<string>("Description");
+
+                    b.Property<Guid>("PaymentId");
+
+                    b.Property<string>("Status");
+
+                    b.Property<Guid>("UserId");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Orders");
+                });
+
+            modelBuilder.Entity("EducationApp.DataAccessLayer.Entities.OrderItem", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
 
                     b.Property<string>("Amount");
 
@@ -59,9 +77,9 @@ namespace EducationApp.DataAccessLayer.Migrations
 
                     b.Property<string>("Currency");
 
-                    b.Property<string>("OrderId");
+                    b.Property<Guid>("OrderId");
 
-                    b.Property<string>("PrintingEditionId");
+                    b.Property<Guid>("PrintingEditionId");
 
                     b.Property<string>("UnitPrice");
 
@@ -70,45 +88,22 @@ namespace EducationApp.DataAccessLayer.Migrations
                     b.ToTable("OrderItems");
                 });
 
-            modelBuilder.Entity("EducationApp.DataAccessLayer.Entities.Orders", b =>
+            modelBuilder.Entity("EducationApp.DataAccessLayer.Entities.Payment", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
 
-                    b.Property<string>("Date");
-
-                    b.Property<string>("Description");
-
-                    b.Property<string>("PaymentId");
-
-                    b.Property<string>("Status");
-
-                    b.Property<string>("UserId");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Orders");
-                });
-
-            modelBuilder.Entity("EducationApp.DataAccessLayer.Entities.Payments", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("TransactionId");
+                    b.Property<Guid>("TransactionId");
 
                     b.HasKey("Id");
 
                     b.ToTable("Payments");
                 });
 
-            modelBuilder.Entity("EducationApp.DataAccessLayer.Entities.PrintingEditions", b =>
+            modelBuilder.Entity("EducationApp.DataAccessLayer.Entities.PrintingEdition", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
 
                     b.Property<string>("Description");
 
@@ -125,11 +120,35 @@ namespace EducationApp.DataAccessLayer.Migrations
                     b.ToTable("PrintingEditions");
                 });
 
-            modelBuilder.Entity("EducationApp.DataAccessLayer.Entities.Roles", b =>
+            modelBuilder.Entity("EducationApp.DataAccessLayer.Entities.RefreshToken", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasMaxLength(450);
+
+                    b.Property<string>("Email");
+
+                    b.Property<DateTime>("ExpiresUtc");
+
+                    b.Property<DateTime>("IssuedUtc");
+
+                    b.Property<string>("Token")
+                        .IsRequired()
+                        .HasMaxLength(450);
+
+                    b.Property<Guid?>("UserId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("AspNetRefreshTokens");
+                });
+
+            modelBuilder.Entity("EducationApp.DataAccessLayer.Entities.Role", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken();
@@ -150,24 +169,23 @@ namespace EducationApp.DataAccessLayer.Migrations
                     b.ToTable("AspNetRoles");
                 });
 
-            modelBuilder.Entity("EducationApp.DataAccessLayer.Entities.UserInRoles", b =>
+            modelBuilder.Entity("EducationApp.DataAccessLayer.Entities.UserInRole", b =>
                 {
-                    b.Property<int>("UserId");
+                    b.Property<Guid>("UserId");
 
-                    b.Property<int>("RoleId");
+                    b.Property<Guid>("RoleId");
 
                     b.HasKey("UserId", "RoleId");
 
                     b.HasAlternateKey("RoleId", "UserId");
 
-                    b.ToTable("UserInRoles");
+                    b.ToTable("UserInRole");
                 });
 
             modelBuilder.Entity("EducationApp.DataAccessLayer.Entities.Users", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
 
                     b.Property<int>("AccessFailedCount");
 
@@ -219,7 +237,7 @@ namespace EducationApp.DataAccessLayer.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -229,7 +247,7 @@ namespace EducationApp.DataAccessLayer.Migrations
 
                     b.Property<string>("ClaimValue");
 
-                    b.Property<int>("RoleId");
+                    b.Property<Guid>("RoleId");
 
                     b.HasKey("Id");
 
@@ -238,7 +256,7 @@ namespace EducationApp.DataAccessLayer.Migrations
                     b.ToTable("AspNetRoleClaims");
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<int>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<System.Guid>", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -248,7 +266,7 @@ namespace EducationApp.DataAccessLayer.Migrations
 
                     b.Property<string>("ClaimValue");
 
-                    b.Property<int>("UserId");
+                    b.Property<Guid>("UserId");
 
                     b.HasKey("Id");
 
@@ -257,7 +275,7 @@ namespace EducationApp.DataAccessLayer.Migrations
                     b.ToTable("AspNetUserClaims");
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<int>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<System.Guid>", b =>
                 {
                     b.Property<string>("LoginProvider");
 
@@ -265,7 +283,7 @@ namespace EducationApp.DataAccessLayer.Migrations
 
                     b.Property<string>("ProviderDisplayName");
 
-                    b.Property<int>("UserId");
+                    b.Property<Guid>("UserId");
 
                     b.HasKey("LoginProvider", "ProviderKey");
 
@@ -274,11 +292,11 @@ namespace EducationApp.DataAccessLayer.Migrations
                     b.ToTable("AspNetUserLogins");
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<int>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<System.Guid>", b =>
                 {
-                    b.Property<int>("UserId");
+                    b.Property<Guid>("UserId");
 
-                    b.Property<int>("RoleId");
+                    b.Property<Guid>("RoleId");
 
                     b.HasKey("UserId", "RoleId");
 
@@ -287,9 +305,9 @@ namespace EducationApp.DataAccessLayer.Migrations
                     b.ToTable("AspNetUserRoles");
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<int>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<System.Guid>", b =>
                 {
-                    b.Property<int>("UserId");
+                    b.Property<Guid>("UserId");
 
                     b.Property<string>("LoginProvider");
 
@@ -302,22 +320,29 @@ namespace EducationApp.DataAccessLayer.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("EducationApp.DataAccessLayer.Entities.AutorInPrintingEditions", b =>
+            modelBuilder.Entity("EducationApp.DataAccessLayer.Entities.AutorInPrintingEdition", b =>
                 {
-                    b.HasOne("EducationApp.DataAccessLayer.Entities.Autors", "Autor")
-                        .WithMany("AutorInPrintingEditionss")
+                    b.HasOne("EducationApp.DataAccessLayer.Entities.Autor", "Autor")
+                        .WithMany("AutorInPrintingEdition")
                         .HasForeignKey("AutorId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("EducationApp.DataAccessLayer.Entities.PrintingEditions", "PrintingEdition")
-                        .WithMany("AutorInPrintingEditionss")
+                    b.HasOne("EducationApp.DataAccessLayer.Entities.PrintingEdition", "PrintingEdition")
+                        .WithMany("AutorInPrintingEdition")
                         .HasForeignKey("PrintingEditionId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("EducationApp.DataAccessLayer.Entities.UserInRoles", b =>
+            modelBuilder.Entity("EducationApp.DataAccessLayer.Entities.RefreshToken", b =>
                 {
-                    b.HasOne("EducationApp.DataAccessLayer.Entities.Roles", "Role")
+                    b.HasOne("EducationApp.DataAccessLayer.Entities.Users", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+                });
+
+            modelBuilder.Entity("EducationApp.DataAccessLayer.Entities.UserInRole", b =>
+                {
+                    b.HasOne("EducationApp.DataAccessLayer.Entities.Role", "Role")
                         .WithMany("UserInRoly")
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -328,15 +353,15 @@ namespace EducationApp.DataAccessLayer.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
                 {
-                    b.HasOne("EducationApp.DataAccessLayer.Entities.Roles")
+                    b.HasOne("EducationApp.DataAccessLayer.Entities.Role")
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<int>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<System.Guid>", b =>
                 {
                     b.HasOne("EducationApp.DataAccessLayer.Entities.Users")
                         .WithMany()
@@ -344,7 +369,7 @@ namespace EducationApp.DataAccessLayer.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<int>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<System.Guid>", b =>
                 {
                     b.HasOne("EducationApp.DataAccessLayer.Entities.Users")
                         .WithMany()
@@ -352,9 +377,9 @@ namespace EducationApp.DataAccessLayer.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<int>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<System.Guid>", b =>
                 {
-                    b.HasOne("EducationApp.DataAccessLayer.Entities.Roles")
+                    b.HasOne("EducationApp.DataAccessLayer.Entities.Role")
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -365,7 +390,7 @@ namespace EducationApp.DataAccessLayer.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<int>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<System.Guid>", b =>
                 {
                     b.HasOne("EducationApp.DataAccessLayer.Entities.Users")
                         .WithMany()
