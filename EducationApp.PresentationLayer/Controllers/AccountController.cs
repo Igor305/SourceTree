@@ -35,16 +35,15 @@ namespace EducationApp.PresentationLayer.Controllers
         }
 
         [HttpGet]
-        [Authorize]
         public ActionResult<IEnumerable<string>> GetToken()
-        {
+        { 
             var email = HttpContext.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Email);
             return new string[] { email?.Value, "value1", "value2" };
         }
 
         [HttpPost]
         [AllowAnonymous]
-        public async Task<ActionResult<string>> GenToken([FromServices] IJwtPrivateKey jwtPrivateKey, [FromBody] LoginModel login)
+        public async Task<ActionResult<string>> GenToken([FromServices] IJwtPrivateKey jwtPrivateKey, [FromServices] IJwtRefresh jwtRefresh, [FromBody] LoginModel login)
         {
             // Validate email
             Users user = new Users();
@@ -53,34 +52,45 @@ namespace EducationApp.PresentationLayer.Controllers
             {
                 return Ok("Вы ввели не правильный email. Возможно вы еще не зарегистрировались. Бегите, станьте нашим 1000-м посетителем!");
             }
-            
             var confirmpass = await _userManager.CheckPasswordAsync(findemail, login.Password);
             if (!confirmpass)
             {
                 return Ok("Вы ввели не правильный пароль.");
             }
-            // Token.
-            var claims = new Claim[]
+            // Token.    
+            var claims = new List<Claim>()
             {
-            new Claim(ClaimTypes.Email, login.Email)
+            new Claim(ClaimTypes.Email,login.Email),
+            new Claim(ClaimTypes.Hash, login.Password)
             };
             // JWT.
-            CreateRefreshToken createrefreshToken = new CreateRefreshToken();
-            string refToken = createrefreshToken.GenerateRefreshToken();
-            RefreshToken refreshToken = new RefreshToken()
-            refreshToken.Token = refToken;
-            refreshToken.Email = login.Email;
             var token = new JwtSecurityToken(
                 issuer: "MyJwt",
                 audience: "TheBestClient",
                 claims: claims,
-                expires: DateTime.Now.AddHours(1),
+                expires: DateTime.Now.AddSeconds(30),
                 signingCredentials: new SigningCredentials(
                         jwtPrivateKey.GetKey(),
                         jwtPrivateKey.SigningAlgorithm)
             );
             string jwtToken = new JwtSecurityTokenHandler().WriteToken(token);
-            return refToken +""+jwtToken;
+
+            var claimsref = new List<Claim>()
+            {
+            new Claim(ClaimTypes.Email, login.Email)
+            };
+            // JWT.
+            var refreshtoken = new JwtSecurityToken(
+                issuer: "MyJwt",
+                audience: "TheBestClient",
+                claims: claimsref,
+                expires: DateTime.Now.AddMonths(1),
+                signingCredentials: new SigningCredentials(
+                        jwtRefresh.GetKey(),
+                        jwtRefresh.SigningAlgorithm)
+            );
+            string refreshToken = new JwtSecurityTokenHandler().WriteToken(refreshtoken);
+            return "RefreshToken =      " + refreshToken + "    AccessToken  =     " + jwtToken;
         }
 
         [HttpGet("Register")]

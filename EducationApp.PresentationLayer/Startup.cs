@@ -49,13 +49,19 @@ namespace EducationApp.PresentationLayer
                 .AddEntityFrameworkStores<ApplicationContext>()
                 .AddDefaultTokenProviders();
 
+            //Jwt Refresh
+            const string refreshSecurityKey = "0d5b3235a8132POPROBYI248673425609879rfghert545234n1k41230";
+            var refreshKey = new JwtRefresh(refreshSecurityKey);
+            services.AddSingleton<IJwtRefresh>(refreshKey);
+
+
             //Jwt Token
-            const string signingSecurityKey = "0d5b3235a8b403c3dab9c3f4f65KYKARA4A666Masssaraksh07fcalskd234n1k41230";
-            var signingKey = new JwtHelper(signingSecurityKey);
-            services.AddSingleton<IJwtPrivateKey>(signingKey);
+            const string accessSecurityKey = "0d5b3235a8b403c3dab9c3f4f65KYKARA4A666Masssaraksh07fcalskd234n1k41230";
+            var accessKey = new JwtHelper(accessSecurityKey);
+            services.AddSingleton<IJwtPrivateKey>(accessKey);
 
             const string jwtSchemeName = "JwtBearer";
-            var signingDecodingKey = (IJwtPrivateKey)signingKey;
+            var signingDecodingKey = (IJwtPrivateKey)accessKey;
             services
                 .AddAuthentication(options => {
                     options.DefaultAuthenticateScheme = jwtSchemeName;

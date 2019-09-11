@@ -7,19 +7,16 @@ using System.Text;
 
 namespace EducationApp.BusinessLogicLayer.Helpers
 {
-    public class JwtHelper : IJwtPrivateKey, IJwtPublicKey
+    public class JwtHelper : IJwtPrivateKey
     {
-        private readonly SymmetricSecurityKey _secretKey;
-
+        private readonly SymmetricSecurityKey _accesstoken;
         public string SigningAlgorithm { get; } = SecurityAlgorithms.HmacSha256;
 
-        public JwtHelper(string key)
+        public JwtHelper(string keyaccesstoken)
         {
-            this._secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(key));
+            this._accesstoken = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(keyaccesstoken));
         }
-
-        public SecurityKey GetKey() => this._secretKey;
-
+        public SecurityKey GetKey() => this._accesstoken;
     }
 }
 
