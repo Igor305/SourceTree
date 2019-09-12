@@ -10,12 +10,12 @@ namespace EducationApp.DataAccessLayer.Repositories.Interfaces
     {
         IQueryable<T> GetAll();
 
-        /*Task<T> GetById(int id);
+       /* Task<T> GetById(Guid id);
 
         Task Create(T entity);
 
-        Task Update(int id, T entity);
+        Task Update(Guid id, T entity);
 
-        Task Delete(int id);*/
+        Task Delete(Guid id);*/
     }
 }

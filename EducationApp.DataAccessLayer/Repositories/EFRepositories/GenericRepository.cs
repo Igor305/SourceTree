@@ -21,7 +21,7 @@ namespace EducationApp.DataAccessLayer.Repositories.EFRepositories
         {
             return _applicationContext.Set<T>().AsNoTracking();
         }
-       /* public async Task<T> GetById(int id)
+      /*  public async Task<T> GetById(Guid id)
         {
             return _applicationContext.Find(id);
         }
@@ -31,13 +31,13 @@ namespace EducationApp.DataAccessLayer.Repositories.EFRepositories
             await _applicationContext.SaveChangesAsync();
         }
 
-        public async Task Update(int id, T entity)
+        public async Task Update(Guid id, T entity)
         {
             _applicationContext.Set<T>().Update(entity);
             await _applicationContext.SaveChangesAsync();
         }
 
-        public async Task Delete(int id)
+        public async Task Delete(Guid id)
         {
             var entity = await GetById(id);
             _applicationContext.Set<T>().Remove(entity);

@@ -39,7 +39,11 @@ namespace EducationApp.DataAccessLayer.Migrations
 
                     b.Property<int>("Date");
 
+                    b.Property<Guid?>("OrderId");
+
                     b.HasKey("AutorId", "PrintingEditionId");
+
+                    b.HasIndex("OrderId");
 
                     b.HasIndex("PrintingEditionId");
 
@@ -61,7 +65,11 @@ namespace EducationApp.DataAccessLayer.Migrations
 
                     b.Property<Guid>("UserId");
 
+                    b.Property<Guid?>("UsersId");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("UsersId");
 
                     b.ToTable("Orders");
                 });
@@ -118,31 +126,6 @@ namespace EducationApp.DataAccessLayer.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("PrintingEditions");
-                });
-
-            modelBuilder.Entity("EducationApp.DataAccessLayer.Entities.RefreshToken", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasMaxLength(450);
-
-                    b.Property<string>("Email");
-
-                    b.Property<DateTime>("ExpiresUtc");
-
-                    b.Property<DateTime>("IssuedUtc");
-
-                    b.Property<string>("Token")
-                        .IsRequired()
-                        .HasMaxLength(450);
-
-                    b.Property<Guid?>("UserId");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("AspNetRefreshTokens");
                 });
 
             modelBuilder.Entity("EducationApp.DataAccessLayer.Entities.Role", b =>
@@ -327,17 +310,21 @@ namespace EducationApp.DataAccessLayer.Migrations
                         .HasForeignKey("AutorId")
                         .OnDelete(DeleteBehavior.Cascade);
 
+                    b.HasOne("EducationApp.DataAccessLayer.Entities.Order")
+                        .WithMany("AutorInPrintingEdition")
+                        .HasForeignKey("OrderId");
+
                     b.HasOne("EducationApp.DataAccessLayer.Entities.PrintingEdition", "PrintingEdition")
                         .WithMany("AutorInPrintingEdition")
                         .HasForeignKey("PrintingEditionId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("EducationApp.DataAccessLayer.Entities.RefreshToken", b =>
+            modelBuilder.Entity("EducationApp.DataAccessLayer.Entities.Order", b =>
                 {
-                    b.HasOne("EducationApp.DataAccessLayer.Entities.Users", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId");
+                    b.HasOne("EducationApp.DataAccessLayer.Entities.Users")
+                        .WithMany("AutorInPrintingEdition")
+                        .HasForeignKey("UsersId");
                 });
 
             modelBuilder.Entity("EducationApp.DataAccessLayer.Entities.UserInRole", b =>

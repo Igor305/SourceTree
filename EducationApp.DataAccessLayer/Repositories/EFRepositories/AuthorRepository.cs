@@ -8,11 +8,6 @@ namespace EducationApp.DataAccessLayer.Repositories.EFRepositories
 {
     public class AuthorRepository : IAuthorRepository
     {
-        public AuthorRepository()
-        {
-
-        }
-
         public int Id()
         {
             return 1;

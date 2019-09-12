@@ -17,7 +17,6 @@ namespace EducationApp.DataAccessLayer.AppContext
         public DbSet<Order> Orders { get; set; }
         public DbSet<OrderItem> OrderItems { get; set; }
         public DbSet<Payment> Payments { get; set; }
-        public DbSet<RefreshToken> RefreshTokens { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -44,6 +43,11 @@ namespace EducationApp.DataAccessLayer.AppContext
                 .HasOne(bc => bc.PrintingEdition)
                 .WithMany(c => c.AutorInPrintingEdition)
                 .HasForeignKey(bc => bc.PrintingEditionId);
+
+            modelBuilder.Entity<Users>()
+                .HasOne(bc => bc.Order)
+                .WithMany(a => a.Users)
+                .HasForeignKey(bc => bc.Order);
 
             base.OnModelCreating(modelBuilder);
         }

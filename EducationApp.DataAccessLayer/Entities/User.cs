@@ -13,6 +13,7 @@ namespace EducationApp.DataAccessLayer.Entities
 
 
         public List<UserInRole> UserInRoly { get; set; }
+        public Order Order { get; set; }
 
     }
 }
