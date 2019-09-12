@@ -14,6 +14,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.Collections.Generic;
 using System.Linq;
 using EducationApp.BusinessLogicLayer.Helpers;
+using System.Text;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -34,34 +35,24 @@ namespace EducationApp.PresentationLayer.Controllers
             _emailService = emailService;
         }
 
-        [HttpGet]
-        public ActionResult<IEnumerable<string>> GetToken()
-        { 
-            var email = HttpContext.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Email);
-            return new string[] { email?.Value, "value1", "value2" };
-        }
-
-        [HttpPost]
-        [AllowAnonymous]
-        public async Task<ActionResult<string>> GenToken([FromServices] IJwtPrivateKey jwtPrivateKey, [FromServices] IJwtRefresh jwtRefresh, [FromBody] LoginModel login)
+        [HttpGet("RefreshToken")]
+        public async Task<ActionResult<string>>RegreshToken([FromHeader] string tokenString, [FromServices] IJwtPrivateKey jwtPrivateKey, [FromServices] IJwtRefresh jwtRefresh)
         {
-            // Validate email
+            var jwtEncodedString = tokenString.Substring(7);
             Users user = new Users();
-            var findemail = await _userManager.FindByEmailAsync(login.Email);
-            if (findemail == null)
+            var dtoken = new JwtSecurityToken(jwtEncodedString: jwtEncodedString);
+            string decodingtoken = dtoken.Claims.First(c => c.Type == "Refresh").Value;
+            var UserX = await _userManager.FindByEmailAsync(decodingtoken);
+            if (UserX == null)
             {
-                return Ok("Вы ввели не правильный email. Возможно вы еще не зарегистрировались. Бегите, станьте нашим 1000-м посетителем!");
-            }
-            var confirmpass = await _userManager.CheckPasswordAsync(findemail, login.Password);
-            if (!confirmpass)
-            {
-                return Ok("Вы ввели не правильный пароль.");
+                return Ok("Тебя нету в бд");
             }
             // Token.    
             var claims = new List<Claim>()
             {
-            new Claim(ClaimTypes.Email,login.Email),
-            new Claim(ClaimTypes.Hash, login.Password)
+            new Claim(ClaimTypes.NameIdentifier, UserX.Id.ToString()),
+            new Claim(ClaimTypes.Email,UserX.Email),
+            new Claim(ClaimTypes.Hash, UserX.PasswordHash),
             };
             // JWT.
             var token = new JwtSecurityToken(
@@ -77,7 +68,76 @@ namespace EducationApp.PresentationLayer.Controllers
 
             var claimsref = new List<Claim>()
             {
-            new Claim(ClaimTypes.Email, login.Email)
+            new Claim("Refresh", UserX.Email)
+            };
+            // JWT.
+            var refreshtoken = new JwtSecurityToken(
+                issuer: "MyJwt",
+                audience: "TheBestClient",
+                claims: claimsref,
+                expires: DateTime.Now.AddMonths(1),
+                signingCredentials: new SigningCredentials(
+                        jwtRefresh.GetKey(),
+                        jwtRefresh.SigningAlgorithm)
+            );
+            string refreshToken = new JwtSecurityTokenHandler().WriteToken(refreshtoken);
+            return "RefreshToken =      " + refreshToken + "    AccessToken  =     " + jwtToken;
+
+        }
+        [HttpGet("Auth")]
+        [Authorize]
+        public ActionResult<IEnumerable<string>> GetToken()
+        {
+            var Id = HttpContext.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier);
+            var email = HttpContext.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Email);
+            var PassHash = HttpContext.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Hash);           
+            if (Response.StatusCode == 401)
+            {
+                Response.StatusCode = 200;
+                var refresh = HttpContext.User.Claims.FirstOrDefault(x => x.Type == "Refresh");
+                return new string[] {"wertwe"};
+            }
+            return new string[] {Id?.Value, email?.Value, PassHash?.Value};
+        }
+  
+    [HttpPost("Auth")]
+        [AllowAnonymous]
+        public async Task<ActionResult<string>> GenToken([FromServices] IJwtPrivateKey jwtPrivateKey, [FromServices] IJwtRefresh jwtRefresh, [FromBody] LoginModel login)
+        {
+            // Validate email
+            Users user = new Users();
+            var UserX = await _userManager.FindByEmailAsync(login.Email);
+            if (UserX == null)
+            {
+                return Ok("Вы ввели не правильный email. Возможно вы еще не зарегистрировались. Бегите, станьте нашим 1000-м посетителем!");
+            }
+            var confirmpass = await _userManager.CheckPasswordAsync(UserX, login.Password);
+            if (!confirmpass)
+            {
+                return Ok("Вы ввели не правильный пароль.");
+            }
+            // Token.    
+            var claims = new List<Claim>()
+            {
+            new Claim(ClaimTypes.NameIdentifier, UserX.Id.ToString()),
+            new Claim(ClaimTypes.Email,UserX.Email),
+            new Claim(ClaimTypes.Hash, UserX.PasswordHash),
+            };
+            // JWT.
+            var token = new JwtSecurityToken(
+                issuer: "MyJwt",
+                audience: "TheBestClient",
+                claims: claims,
+                expires: DateTime.Now.AddSeconds(30),
+                signingCredentials: new SigningCredentials(
+                        jwtPrivateKey.GetKey(),
+                        jwtPrivateKey.SigningAlgorithm)
+            );
+            string jwtToken = new JwtSecurityTokenHandler().WriteToken(token);
+
+            var claimsref = new List<Claim>()
+            {
+            new Claim("Refresh", UserX.Email)
             };
             // JWT.
             var refreshtoken = new JwtSecurityToken(
@@ -201,25 +261,18 @@ namespace EducationApp.PresentationLayer.Controllers
             {
                 return Ok(user);
             }
-            /* foreach (var error in result.Errors)
+             foreach (var error in result.Errors)
              {
                  ModelState.AddModelError(string.Empty, error.Description);
-             }*/
+             }
             return Ok(result);
         }
-     /*   [HttpPost("LogOut")]
+        [HttpPost("LogOut")]
         public async Task<IActionResult> LogOut(LoginModel log)
         {
             await _signInManager.SignOutAsync();
             log.Email = log.Password = null;
-            if (log.ReturnUrl != null)
-            {
-                return LocalRedirect(log.ReturnUrl);
-            }
-            else
-            {
-                return Ok(log);
-            }
-        }*/
+            return Ok(log);
+        }
     }
 }

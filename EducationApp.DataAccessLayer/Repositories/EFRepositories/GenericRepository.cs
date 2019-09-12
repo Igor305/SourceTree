@@ -21,12 +21,10 @@ namespace EducationApp.DataAccessLayer.Repositories.EFRepositories
         {
             return _applicationContext.Set<T>().AsNoTracking();
         }
-      /*  public async Task<T> GetById(int id)
+       /* public async Task<T> GetById(int id)
         {
-            return await _applicationContext.Set<T>()
-                        .AsNoTracking()
-                        .FirstOrDefaultAsync(e => e.Id == id);
-        }*/
+            return _applicationContext.Find(id);
+        }
         public async Task Create(T entity)
         {
             await _applicationContext.Set<T>().AddAsync(entity);
@@ -39,7 +37,7 @@ namespace EducationApp.DataAccessLayer.Repositories.EFRepositories
             await _applicationContext.SaveChangesAsync();
         }
 
-     /*   public async Task Delete(int id)
+        public async Task Delete(int id)
         {
             var entity = await GetById(id);
             _applicationContext.Set<T>().Remove(entity);
