@@ -39,11 +39,7 @@ namespace EducationApp.DataAccessLayer.Migrations
 
                     b.Property<int>("Date");
 
-                    b.Property<Guid?>("OrderId");
-
                     b.HasKey("AutorId", "PrintingEditionId");
-
-                    b.HasIndex("OrderId");
 
                     b.HasIndex("PrintingEditionId");
 
@@ -65,11 +61,7 @@ namespace EducationApp.DataAccessLayer.Migrations
 
                     b.Property<Guid>("UserId");
 
-                    b.Property<Guid?>("UsersId");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("UsersId");
 
                     b.ToTable("Orders");
                 });
@@ -310,21 +302,10 @@ namespace EducationApp.DataAccessLayer.Migrations
                         .HasForeignKey("AutorId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("EducationApp.DataAccessLayer.Entities.Order")
-                        .WithMany("AutorInPrintingEdition")
-                        .HasForeignKey("OrderId");
-
                     b.HasOne("EducationApp.DataAccessLayer.Entities.PrintingEdition", "PrintingEdition")
                         .WithMany("AutorInPrintingEdition")
                         .HasForeignKey("PrintingEditionId")
                         .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("EducationApp.DataAccessLayer.Entities.Order", b =>
-                {
-                    b.HasOne("EducationApp.DataAccessLayer.Entities.Users")
-                        .WithMany("AutorInPrintingEdition")
-                        .HasForeignKey("UsersId");
                 });
 
             modelBuilder.Entity("EducationApp.DataAccessLayer.Entities.UserInRole", b =>

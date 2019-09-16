@@ -5,22 +5,21 @@ using Microsoft.AspNetCore.Identity;
 using EducationApp.DataAccessLayer.Entities;
 using EducationApp.BusinessLogicLayer.Models.User;
 using Microsoft.AspNetCore.Authorization;
+using EducationApp.DataAccessLayer.Repositories.Interfaces;
+using EducationApp.BusinessLogicLayer.Services.Interfaces;
+using System;
 
 namespace CustomIdentityApp.Controllers
 {
     [Route("api/[controller]")]
     public class UserController : Controller
     {
-        UserManager<Users> _userManager;
+        private readonly IUserService _userService;
 
-        public UserController(UserManager<Users> userManager)
+        public UserController(IUserService userService)
         {
-            _userManager = userManager;
+            _userService = userService;
         }
-
-        public IActionResult Index() => View(_userManager.Users.ToList());
-
-        public IActionResult Create() => View();
 
         [Route("Create")]
         [HttpPost]
@@ -28,11 +27,10 @@ namespace CustomIdentityApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                Users user = new Users { Email = model.Email, UserName = model.Email };
-                var result = await _userManager.CreateAsync(user, model.Password);
+                var result = await _userService.CreateAsync(model);
                 if (result.Succeeded)
                 {
-                    return Ok("Данные внесены " + user);
+                    return Ok("Данные внесены ");
                 }
                 else
                 {
@@ -51,16 +49,10 @@ namespace CustomIdentityApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                Users user = await _userManager.FindByIdAsync(model.Id);
-                if (user != null)
-                {
-                    user.Email = model.Email;
-                    user.UserName = model.Email;
-
-                    var result = await _userManager.UpdateAsync(user);
+                    var result = await _userService.EditAsync(model);
                     if (result.Succeeded)
                     {
-                        return Ok("Изменены данные пользвателя " + user);
+                        return Ok("Изменены данные пользвателя ");
                     }
                     else
                     {
@@ -70,20 +62,15 @@ namespace CustomIdentityApp.Controllers
                         }
                     }
                 }
-            }
             return Ok(model);
         }
 
         [Route("Delete")]
         [HttpPost]
-        public async Task<ActionResult> Delete([FromHeader]string email)
+        public async Task<ActionResult> Delete([FromBody]Guid id)
         {
-            Users user = await _userManager.FindByEmailAsync(email);
-            if (user != null)
-            {
-                IdentityResult result = await _userManager.DeleteAsync(user);
-            }
-            return Ok(user);
+            var result = await _userService.Delete(id);
+            return Ok("Пользователь под номером"+id+" был удачно удалён");
         }
 
         [Route("ChangePassword")]
@@ -92,28 +79,23 @@ namespace CustomIdentityApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                Users user = await _userManager.FindByIdAsync(model.Id);
-                if (user != null)
+                var result = await _userService.ChangePassword(model);
+                if (result.Succeeded)
                 {
-                    IdentityResult result =
-                        await _userManager.ChangePasswordAsync(user, model.OldPassword, model.NewPassword);
-                    if (result.Succeeded)
-                    {
-                        return Ok("Вы поменяли свой пароль");
-                    }
-                    else
-                    {
-                        // return Ok(result);
-                        foreach (var error in result.Errors)
-                        {
-                            ModelState.AddModelError(string.Empty, error.Description);
-                        }
-                    }
+                    return Ok("Вы поменяли свой пароль");
                 }
                 else
                 {
-                    ModelState.AddModelError(string.Empty, "Пользователь не найден");
+                    // return Ok(result);
+                    foreach (var error in result.Errors)
+                    {
+                        ModelState.AddModelError(string.Empty, error.Description);
+                    }
                 }
+            }
+            else
+            {
+                ModelState.AddModelError(string.Empty, "Пользователь не найден");
             }
             return Ok(model);
         }

@@ -44,11 +44,6 @@ namespace EducationApp.DataAccessLayer.AppContext
                 .WithMany(c => c.AutorInPrintingEdition)
                 .HasForeignKey(bc => bc.PrintingEditionId);
 
-            modelBuilder.Entity<Users>()
-                .HasOne(bc => bc.Order)
-                .WithMany(a => a.Users)
-                .HasForeignKey(bc => bc.Order);
-
             base.OnModelCreating(modelBuilder);
         }
     }

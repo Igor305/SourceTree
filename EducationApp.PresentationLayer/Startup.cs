@@ -3,6 +3,8 @@ using EducationApp.BusinessLogicLayer.Services;
 using EducationApp.BusinessLogicLayer.Services.Interfaces;
 using EducationApp.DataAccessLayer.AppContext;
 using EducationApp.DataAccessLayer.Entities;
+using EducationApp.DataAccessLayer.Repositories.EFRepositories;
+using EducationApp.DataAccessLayer.Repositories.Interfaces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
@@ -31,11 +33,11 @@ namespace EducationApp.PresentationLayer
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-
             var connectionString = Configuration["ConnectionStrings:EmployeeDB"];
-            services.AddDbContext<ApplicationContext>(opts => opts.UseSqlServer(connectionString));
+            services.AddDbContext<ApplicationContext>(opts => opts.UseSqlServer(connectionString)); 
             services.AddIdentityCore<IdentityUser>();
             services.AddScoped<IUserStore<IdentityUser>, UserOnlyStore<IdentityUser, IdentityDbContext>>();
+            services.AddScoped<IUserRepository, UserRepository>();
             services.AddTransient<Users>();
             services.AddTransient<IEmailService, EmailHelper>();
             services.AddIdentity<Users, Role>(o => {

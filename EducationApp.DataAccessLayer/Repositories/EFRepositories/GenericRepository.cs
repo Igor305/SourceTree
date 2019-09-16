@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace EducationApp.DataAccessLayer.Repositories.EFRepositories
 {
-    public class GenericRepository<T> : IGenericRepository<T> where T : class
+    public class GenericRepository<T> : IGenericRepository<T>where T: class
     {
         private readonly ApplicationContext _applicationContext;
 
@@ -21,17 +21,20 @@ namespace EducationApp.DataAccessLayer.Repositories.EFRepositories
         {
             return _applicationContext.Set<T>().AsNoTracking();
         }
-      /*  public async Task<T> GetById(Guid id)
+        /*public async Task<T> GetById(Guid id)
         {
-            return _applicationContext.Find(id);
-        }
+
+            return await _applicationContext.Set<T>()
+               .AsNoTracking()
+               .FirstOrDefaultAsync(e => e.Id == id);
+        }*/
         public async Task Create(T entity)
         {
             await _applicationContext.Set<T>().AddAsync(entity);
             await _applicationContext.SaveChangesAsync();
         }
 
-        public async Task Update(Guid id, T entity)
+      /*  public async Task Update(Guid id, T entity)
         {
             _applicationContext.Set<T>().Update(entity);
             await _applicationContext.SaveChangesAsync();

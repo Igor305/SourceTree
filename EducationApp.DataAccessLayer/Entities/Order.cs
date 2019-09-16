@@ -12,6 +12,5 @@ namespace EducationApp.DataAccessLayer.Entities
         public string Date { get; set; }
         public Guid PaymentId { get; set; }
         public string Status { get; set; }
-        public List<Users> Users { get; set; }
     }
 }
