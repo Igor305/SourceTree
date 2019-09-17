@@ -1,13 +1,7 @@
-﻿using EducationApp.BusinessLogicLayer.Helpers;
-using EducationApp.BusinessLogicLayer.Models.User;
+﻿using EducationApp.BusinessLogicLayer.Models.User;
 using EducationApp.BusinessLogicLayer.Services.Interfaces;
-using EducationApp.DataAccessLayer.Entities;
 using EducationApp.DataAccessLayer.Repositories.Interfaces;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.Options;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace EducationApp.BusinessLogicLayer.Services
@@ -20,17 +14,17 @@ namespace EducationApp.BusinessLogicLayer.Services
         {
             _userRepository = userRepository;
         }
-        public async Task<IdentityResult> CreateAsync(CreateModel createmodel)
+        public async Task<IdentityResult> Create(CreateModel createModel)
         {
-            return await _userRepository.CreateAsync(createmodel.Email, createmodel.Password);
+            return await _userRepository.Create(createModel.Email, createModel.Password);
         }
-        public async Task<IdentityResult> EditAsync(EditModel editmodel)
+        public async Task<IdentityResult> Update(EditModel editModel)
         {
-            return await _userRepository.EditAsync(editmodel.Id, editmodel.Email, editmodel.FirstName, editmodel.LastName, editmodel.PhoneNumber);
+            return await _userRepository.Update(editModel.Id, editModel.Email, editModel.FirstName, editModel.LastName, editModel.PhoneNumber);
         }
-        public async Task<IdentityResult> Delete(Guid id)
+        public async Task Delete(DeleteModel deleteModel)
         {
-            return await _userRepository.Delete(id);
+        await _userRepository.Delete(deleteModel.id);
         }
         public async Task<IdentityResult> ChangePassword(ChangePasswordModel changePasswordModel)
         {

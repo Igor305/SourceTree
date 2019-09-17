@@ -27,7 +27,7 @@ namespace CustomIdentityApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                var result = await _userService.CreateAsync(model);
+                var result = await _userService.Create(model);
                 if (result.Succeeded)
                 {
                     return Ok("Данные внесены ");
@@ -43,13 +43,13 @@ namespace CustomIdentityApp.Controllers
             return Ok(model);
         }
 
-        [Route("Edit")]
+        [Route("Update")]
         [HttpPost]
-        public async Task<IActionResult> Edit([FromBody]EditModel model)
+        public async Task<IActionResult> Update([FromBody]EditModel model)
         {
             if (ModelState.IsValid)
             {
-                    var result = await _userService.EditAsync(model);
+                    var result = await _userService.Update(model);
                     if (result.Succeeded)
                     {
                         return Ok("Изменены данные пользвателя ");
@@ -67,10 +67,10 @@ namespace CustomIdentityApp.Controllers
 
         [Route("Delete")]
         [HttpPost]
-        public async Task<ActionResult> Delete([FromBody]Guid id)
+        public async Task<ActionResult> Delete([FromBody]DeleteModel model)
         {
-            var result = await _userService.Delete(id);
-            return Ok("Пользователь под номером"+id+" был удачно удалён");
+            await _userService.Delete(model);
+            return Ok("Пользователь под номером "+model.id+" был удачно удалён");
         }
 
         [Route("ChangePassword")]

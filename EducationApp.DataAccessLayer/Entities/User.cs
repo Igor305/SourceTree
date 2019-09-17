@@ -10,7 +10,9 @@ namespace EducationApp.DataAccessLayer.Entities
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }
-
+        public DateTime CreateDateTime { get; set; }
+        public DateTime UpdateDateTime { get; set; }
+        public bool IsDeleted { get; set; }
 
         public List<UserInRole> UserInRoly { get; set; }
 

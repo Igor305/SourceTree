@@ -1,4 +1,4 @@
-﻿using EducationApp.DataAccessLayer.AppContext;
+﻿ using EducationApp.DataAccessLayer.AppContext;
 using EducationApp.DataAccessLayer.Entities;
 using EducationApp.DataAccessLayer.Repositories.Interfaces;
 using Microsoft.AspNetCore.Identity;
@@ -16,35 +16,30 @@ namespace EducationApp.DataAccessLayer.Repositories.EFRepositories
         {
             _userManager = userManager;
         }
-        public async Task<IdentityResult> CreateAsync(string Email, string password)
+        public async Task<IdentityResult> Create(string Email, string password)
         {
             Users user = new Users { Email =  Email, UserName = Email };
+            user.CreateDateTime = DateTime.Now;
+            user.UpdateDateTime = DateTime.Now;
             IdentityResult result = await _userManager.CreateAsync(user, password);
             return result;
         }
-        public async Task<IdentityResult> EditAsync(Guid Id, string Email, string FirstName, string LastName, string PhoneNumber)
+        public async Task<IdentityResult> Update(Guid Id, string Email, string FirstName, string LastName, string PhoneNumber)
         {
-            Users user = await _userManager.FindByIdAsync(Convert.ToString(Id));           
-            if (user != null)
-            {
-                user.Email = Email;
-                user.UserName = Email;
-                user.FirstName = FirstName;
-                user.LastName = LastName;
-                user.PhoneNumber = PhoneNumber;
-            }
+            Users user = await _userManager.FindByIdAsync(Convert.ToString(Id));
+            user.UpdateDateTime = DateTime.Now;
+            user.Email = Email;
+            user.UserName = Email;
+            user.FirstName = FirstName;
+            user.LastName = LastName;
+            user.PhoneNumber = PhoneNumber;
             IdentityResult result = await _userManager.UpdateAsync(user);
             return result;
         }
-        public async Task<IdentityResult> Delete(Guid id)
+        public async Task Delete(Guid id)
         {
             Users user = await _userManager.FindByIdAsync(Convert.ToString(id));
-            if (user != null)
-            {
-
-            }
-            IdentityResult result = await _userManager.DeleteAsync(user);
-            return result;
+            user.IsDeleted = true;
         }
         public async Task<IdentityResult> ChangePassword(Guid id, string oldPassword, string newPassword)
         {

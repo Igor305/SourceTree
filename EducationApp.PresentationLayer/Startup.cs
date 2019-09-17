@@ -38,6 +38,10 @@ namespace EducationApp.PresentationLayer
             services.AddIdentityCore<IdentityUser>();
             services.AddScoped<IUserStore<IdentityUser>, UserOnlyStore<IdentityUser, IdentityDbContext>>();
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IPrintingEditionsRepository, PrintingEditionsRepository>();
+            services.AddScoped<IPrintingEditionService, PrintingEditionService>();
+            services.AddScoped<IUserService, UserService>();
             services.AddTransient<Users>();
             services.AddTransient<IEmailService, EmailHelper>();
             services.AddIdentity<Users, Role>(o => {

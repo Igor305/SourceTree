@@ -24,7 +24,13 @@ namespace EducationApp.DataAccessLayer.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<DateTime>("CreateDateTime");
+
+                    b.Property<bool>("IsDeleted");
+
                     b.Property<string>("Name");
+
+                    b.Property<DateTime>("UpdateDateTime");
 
                     b.HasKey("Id");
 
@@ -51,13 +57,19 @@ namespace EducationApp.DataAccessLayer.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<DateTime>("CreateDateTime");
+
                     b.Property<string>("Date");
 
                     b.Property<string>("Description");
 
+                    b.Property<bool>("IsDeleted");
+
                     b.Property<Guid>("PaymentId");
 
                     b.Property<string>("Status");
+
+                    b.Property<DateTime>("UpdateDateTime");
 
                     b.Property<Guid>("UserId");
 
@@ -75,13 +87,19 @@ namespace EducationApp.DataAccessLayer.Migrations
 
                     b.Property<string>("Count");
 
+                    b.Property<DateTime>("CreateDateTime");
+
                     b.Property<string>("Currency");
+
+                    b.Property<bool>("IsDeleted");
 
                     b.Property<Guid>("OrderId");
 
                     b.Property<Guid>("PrintingEditionId");
 
                     b.Property<string>("UnitPrice");
+
+                    b.Property<DateTime>("UpdateDateTime");
 
                     b.HasKey("Id");
 
@@ -93,7 +111,13 @@ namespace EducationApp.DataAccessLayer.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<DateTime>("CreateDateTime");
+
+                    b.Property<bool>("IsDeleted");
+
                     b.Property<Guid>("TransactionId");
+
+                    b.Property<DateTime>("UpdateDateTime");
 
                     b.HasKey("Id");
 
@@ -105,15 +129,23 @@ namespace EducationApp.DataAccessLayer.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<DateTime>("CreateDateTime");
+
+                    b.Property<int>("Currency");
+
                     b.Property<string>("Description");
 
-                    b.Property<string>("IsRemoved");
+                    b.Property<bool>("IsDeleted");
 
                     b.Property<string>("Name");
 
                     b.Property<string>("Price");
 
+                    b.Property<int>("Status");
+
                     b.Property<string>("Type");
+
+                    b.Property<DateTime>("UpdateDateTime");
 
                     b.HasKey("Id");
 
@@ -128,11 +160,17 @@ namespace EducationApp.DataAccessLayer.Migrations
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken();
 
+                    b.Property<DateTime>("CreateDateTime");
+
+                    b.Property<bool>("IsDeleted");
+
                     b.Property<string>("Name")
                         .HasMaxLength(256);
 
                     b.Property<string>("NormalizedName")
                         .HasMaxLength(256);
+
+                    b.Property<DateTime>("UpdateDateTime");
 
                     b.HasKey("Id");
 
@@ -167,12 +205,16 @@ namespace EducationApp.DataAccessLayer.Migrations
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken();
 
+                    b.Property<DateTime>("CreateDateTime");
+
                     b.Property<string>("Email")
                         .HasMaxLength(256);
 
                     b.Property<bool>("EmailConfirmed");
 
                     b.Property<string>("FirstName");
+
+                    b.Property<bool>("IsDeleted");
 
                     b.Property<string>("LastName");
 
@@ -195,6 +237,8 @@ namespace EducationApp.DataAccessLayer.Migrations
                     b.Property<string>("SecurityStamp");
 
                     b.Property<bool>("TwoFactorEnabled");
+
+                    b.Property<DateTime>("UpdateDateTime");
 
                     b.Property<string>("UserName")
                         .HasMaxLength(256);
