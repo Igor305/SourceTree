@@ -41,7 +41,8 @@ namespace EducationApp.PresentationLayer
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IPrintingEditionsRepository, PrintingEditionsRepository>();
             services.AddScoped<IPrintingEditionService, PrintingEditionService>();
-            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IAuthorRepository, AuthorRepository>();
+            services.AddScoped<IAuthorService, AuthorService>();
             services.AddTransient<Users>();
             services.AddTransient<IEmailService, EmailHelper>();
             services.AddIdentity<Users, Role>(o => {

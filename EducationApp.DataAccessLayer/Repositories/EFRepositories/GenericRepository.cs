@@ -11,41 +11,44 @@ namespace EducationApp.DataAccessLayer.Repositories.EFRepositories
 {
     public class GenericRepository<T> : IGenericRepository<T>where T: class
     {
-        private readonly ApplicationContext _applicationContext;
+        internal ApplicationContext applicationContext;
+        internal DbSet<T> dbSet;
 
         public GenericRepository(ApplicationContext applicationContext)
         {
-            _applicationContext = applicationContext;
+            this.applicationContext = applicationContext;
+            dbSet = applicationContext.Set<T>();
         }
-        public IQueryable<T> GetAll()
+        public IEnumerable<T> GetAll()
         {
-            return _applicationContext.Set<T>().AsNoTracking();
+            return dbSet.ToList();
         }
-        /*public async Task<T> GetById(Guid id)
+        public  T GetById(Guid id)
         {
-
-            return await _applicationContext.Set<T>()
-               .AsNoTracking()
-               .FirstOrDefaultAsync(e => e.Id == id);
-        }*/
-        public async Task Create(T entity)
-        {
-            await _applicationContext.Set<T>().AddAsync(entity);
-            await _applicationContext.SaveChangesAsync();
+            return dbSet.Find(id);
         }
-
-      /*  public async Task Update(Guid id, T entity)
+        public string Find(string findName, string getType)
         {
-            _applicationContext.Set<T>().Update(entity);
-            await _applicationContext.SaveChangesAsync();
+           string first = dbSet.FirstOrDefault().ToString();
+           return first;
+        }
+        public void Create(T entity)
+        {
+            dbSet.Add(entity);
+            applicationContext.SaveChanges();
         }
 
-        public async Task Delete(Guid id)
+        public void Update(T entity)
         {
-            var entity = await GetById(id);
-            _applicationContext.Set<T>().Remove(entity);
-            await _applicationContext.SaveChangesAsync();
-        }*/
+            dbSet.Update(entity);
+            applicationContext.SaveChanges();
+        }
+
+        public void Delete(Guid id)
+        {
+            var entity = GetById(id);
+            dbSet.Remove(entity);
+        }
     }
 }
 

@@ -12,7 +12,7 @@ namespace EducationApp.DataAccessLayer.AppContext
         public ApplicationContext(DbContextOptions<ApplicationContext> options)
         : base(options)
         { }
-        public DbSet<Autor> Autors { get; set; }
+        public DbSet<Author> Autors { get; set; }
         public DbSet<PrintingEdition> PrintingEditions { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<OrderItem> OrderItems { get; set; }

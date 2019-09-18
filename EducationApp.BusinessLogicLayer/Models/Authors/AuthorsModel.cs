@@ -8,8 +8,6 @@ namespace EducationApp.BusinessLogicLayer.Models.Autors
 {
     public class AuthorsModel 
     {
-
-
-
+        public string Name { get; set; }
     }
 }

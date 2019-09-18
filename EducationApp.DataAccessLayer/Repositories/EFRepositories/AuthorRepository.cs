@@ -1,20 +1,36 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
+using EducationApp.DataAccessLayer.AppContext;
+using EducationApp.DataAccessLayer.Entities;
 using EducationApp.DataAccessLayer.Repositories.Interfaces;
 
 namespace EducationApp.DataAccessLayer.Repositories.EFRepositories
 {
-    public class AuthorRepository : IAuthorRepository
+    public class AuthorRepository : GenericRepository<Author>, IAuthorRepository 
     {
-        public int Id()
+        public AuthorRepository(ApplicationContext applicationContext) : base(applicationContext)
         {
-            return 1;
         }
-        public string Name()
+        public void CreateAuthor(string Name)
+        {               
+            Author author = new Author();
+            author.Name = Name;
+            author.CreateDateTime = DateTime.Now;
+            author.UpdateDateTime = DateTime.Now;
+            Create(author);
+        }
+        public void UpdateAuthor(string Name)
         {
-            return "Мульберан";
+            Author author = new Author();
+            author.Name = Name;
+            author.UpdateDateTime = DateTime.Now;
+            Update(author);
+        }
+        public void DeleteAuthor(Guid Id)
+        {
+            Author author = new Author();
+            var del = applicationContext.Autors.Find(Id);
+            author.IsDeleted = true;
+            Update(del);
         }
     }
 }

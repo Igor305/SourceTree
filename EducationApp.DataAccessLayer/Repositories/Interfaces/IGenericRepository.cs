@@ -8,15 +8,15 @@ namespace EducationApp.DataAccessLayer.Repositories.Interfaces
 {
     public interface IGenericRepository<T> 
     {
-        IQueryable<T> GetAll();
+        IEnumerable<T> GetAll();
 
-       /* Task<T> GetById(Guid id);*/
+        T GetById(Guid id);
+        string Find(string name, string getType);
 
-        Task Create(T entity);
+        void Create(T entity);
 
+        void Update(T entity);
 
-        /*Task Update(Guid id, T entity);
-
-        Task Delete(Guid id);*/
+        void Delete(Guid id);
     }
 }

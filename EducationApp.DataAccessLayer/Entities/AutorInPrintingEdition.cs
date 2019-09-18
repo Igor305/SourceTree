@@ -8,7 +8,7 @@ namespace EducationApp.DataAccessLayer.Entities
     public class AutorInPrintingEdition
     {
         public Guid AutorId { get; set; }
-        public Autor Autor { get; set; }
+        public Author Autor { get; set; }
         public Guid PrintingEditionId { get; set; }
         public PrintingEdition PrintingEdition { get; set; }
         public int Date { get; set; }

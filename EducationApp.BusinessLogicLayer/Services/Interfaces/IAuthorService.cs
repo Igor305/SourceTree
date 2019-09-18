@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using EducationApp.BusinessLogicLayer.Models.Authors;
 
 namespace EducationApp.BusinessLogicLayer.Services.Interfaces
 {
     public interface IAuthorService
     {
-        int Id();
-        string Name();
+        string Create(CreateAuthorModel createAuthorModel);
+        void Update(UpdateAuthorModel updateAuthorModel);
+        void Delete(DeleteAuthorModel deleteAuthorModel);
     }
 }
