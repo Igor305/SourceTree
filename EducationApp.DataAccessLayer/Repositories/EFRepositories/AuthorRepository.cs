@@ -11,7 +11,7 @@ namespace EducationApp.DataAccessLayer.Repositories.EFRepositories
         {
         }
         public void CreateAuthor(string Name)
-        {               
+        {                       
             Author author = new Author();
             author.Name = Name;
             author.CreateDateTime = DateTime.Now;
@@ -28,7 +28,7 @@ namespace EducationApp.DataAccessLayer.Repositories.EFRepositories
         public void DeleteAuthor(Guid Id)
         {
             Author author = new Author();
-            var del = applicationContext.Autors.Find(Id);
+            var del = _applicationContext.Authors.Find(Id);
             author.IsDeleted = true;
             Update(del);
         }

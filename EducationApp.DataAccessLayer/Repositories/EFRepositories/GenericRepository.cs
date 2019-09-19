@@ -9,45 +9,46 @@ using Microsoft.EntityFrameworkCore;
 
 namespace EducationApp.DataAccessLayer.Repositories.EFRepositories
 {
-    public class GenericRepository<T> : IGenericRepository<T>where T: class
+    public class GenericRepository<T> : IGenericRepository<T> where T : class
     {
-        internal ApplicationContext applicationContext;
-        internal DbSet<T> dbSet;
+        public ApplicationContext _applicationContext;
+        private DbSet<T> _dbSet;
 
         public GenericRepository(ApplicationContext applicationContext)
         {
-            this.applicationContext = applicationContext;
-            dbSet = applicationContext.Set<T>();
+            _applicationContext = applicationContext;
+            _dbSet = applicationContext.Set<T>();
         }
         public IEnumerable<T> GetAll()
         {
-            return dbSet.ToList();
+            return _dbSet.ToList();
         }
-        public  T GetById(Guid id)
+        public T GetById(Guid id)
         {
-            return dbSet.Find(id);
+            return _dbSet.Find(id);
         }
-        public string Find(string findName, string getType)
+        public bool VerrifyName(string name, string columnname)
         {
-           string first = dbSet.FirstOrDefault().ToString();
-           return first;
+            bool test = _applicationContext.Authors.Any(x => x.Name == name);
+            //bool fd = dbSet.Any(x =>x.columnname == Equals(name));
+            return test;
         }
         public void Create(T entity)
         {
-            dbSet.Add(entity);
-            applicationContext.SaveChanges();
+            _dbSet.Add(entity);
+            _applicationContext.SaveChanges();
         }
 
         public void Update(T entity)
         {
-            dbSet.Update(entity);
-            applicationContext.SaveChanges();
+            _dbSet.Update(entity);
+            _applicationContext.SaveChanges();
         }
 
         public void Delete(Guid id)
         {
             var entity = GetById(id);
-            dbSet.Remove(entity);
+            _dbSet.Remove(entity);
         }
     }
 }

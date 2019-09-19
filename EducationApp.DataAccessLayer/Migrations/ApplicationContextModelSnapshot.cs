@@ -19,7 +19,7 @@ namespace EducationApp.DataAccessLayer.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("EducationApp.DataAccessLayer.Entities.Autor", b =>
+            modelBuilder.Entity("EducationApp.DataAccessLayer.Entities.Author", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
@@ -34,7 +34,11 @@ namespace EducationApp.DataAccessLayer.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Autors");
+                    b.HasIndex("Name")
+                        .IsUnique()
+                        .HasFilter("[Name] IS NOT NULL");
+
+                    b.ToTable("Authors");
                 });
 
             modelBuilder.Entity("EducationApp.DataAccessLayer.Entities.AutorInPrintingEdition", b =>
@@ -341,7 +345,7 @@ namespace EducationApp.DataAccessLayer.Migrations
 
             modelBuilder.Entity("EducationApp.DataAccessLayer.Entities.AutorInPrintingEdition", b =>
                 {
-                    b.HasOne("EducationApp.DataAccessLayer.Entities.Autor", "Autor")
+                    b.HasOne("EducationApp.DataAccessLayer.Entities.Author", "Autor")
                         .WithMany("AutorInPrintingEdition")
                         .HasForeignKey("AutorId")
                         .OnDelete(DeleteBehavior.Cascade);

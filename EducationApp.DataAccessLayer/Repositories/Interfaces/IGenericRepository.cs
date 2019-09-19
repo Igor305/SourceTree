@@ -11,7 +11,7 @@ namespace EducationApp.DataAccessLayer.Repositories.Interfaces
         IEnumerable<T> GetAll();
 
         T GetById(Guid id);
-        string Find(string name, string getType);
+        bool VerrifyName(string name, string columnname);
 
         void Create(T entity);
 

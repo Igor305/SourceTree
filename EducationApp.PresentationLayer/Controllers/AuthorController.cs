@@ -1,6 +1,7 @@
 ﻿using EducationApp.BusinessLogicLayer.Models.Authors;
 using EducationApp.BusinessLogicLayer.Services;
 using EducationApp.BusinessLogicLayer.Services.Interfaces;
+using EducationApp.DataAccessLayer.Repositories.EFRepositories;
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -15,15 +16,15 @@ namespace EducationApp.PresentationLayer.Controllers
         {
             this.authorService = authorService;
         }
-
+        [AcceptVerbs("Get","Post")]
         [HttpPost("{Create}")]
         public string Create([FromBody]CreateAuthorModel createAuthorModel)
         {
             if (ModelState.IsValid)
             {
-                return authorService.Create(createAuthorModel);
+                  return authorService.Create(createAuthorModel);
             }
-            return $"{createAuthorModel.Name} - Где значение?)";
+            return $"{createAuthorModel.Name} - где значение?)";
         }
         [HttpPost("{Update}")]
         public string Update([FromBody]UpdateAuthorModel updateAuthorModel)

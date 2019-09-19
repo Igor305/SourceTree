@@ -12,7 +12,7 @@ namespace EducationApp.DataAccessLayer.AppContext
         public ApplicationContext(DbContextOptions<ApplicationContext> options)
         : base(options)
         { }
-        public DbSet<Author> Autors { get; set; }
+        public DbSet<Author> Authors { get; set; }
         public DbSet<PrintingEdition> PrintingEditions { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<OrderItem> OrderItems { get; set; }
@@ -43,6 +43,10 @@ namespace EducationApp.DataAccessLayer.AppContext
                 .HasOne(bc => bc.PrintingEdition)
                 .WithMany(c => c.AutorInPrintingEdition)
                 .HasForeignKey(bc => bc.PrintingEditionId);
+
+            modelBuilder.Entity<Author>()
+                .HasIndex(u => u.Name)
+                .IsUnique();
 
             base.OnModelCreating(modelBuilder);
         }
