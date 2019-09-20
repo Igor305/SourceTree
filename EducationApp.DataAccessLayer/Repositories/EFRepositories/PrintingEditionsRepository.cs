@@ -3,15 +3,21 @@ using EducationApp.DataAccessLayer.Entities;
 using EducationApp.DataAccessLayer.Entities.Enum;
 using EducationApp.DataAccessLayer.Repositories.Interfaces;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace EducationApp.DataAccessLayer.Repositories.EFRepositories
 {
-    public class PrintingEditionsRepository : IPrintingEditionsRepository
+    public class PrintingEditionsRepository : GenericRepository<PrintingEdition>, IPrintingEditionsRepository
     {
-        private readonly ApplicationContext _applicationContext;
-        public PrintingEditionsRepository(ApplicationContext applicationContext) 
+        public PrintingEditionsRepository(ApplicationContext applicationContext) : base(applicationContext)
         {
-            _applicationContext = applicationContext;
+        }
+        public List<PrintingEdition> GetAll()
+        {
+            PrintingEdition printingEdition = new PrintingEdition();
+            var all = _applicationContext.PrintingEditions.ToList();
+            return all;
         }
         public void CreatePrintingEdition(string Name, string Description, string Price, TypeStatus Status, TypeCurrency Currency, string Type)
         {
@@ -24,8 +30,7 @@ namespace EducationApp.DataAccessLayer.Repositories.EFRepositories
             printingEdition.Type = Type;
             printingEdition.CreateDateTime = DateTime.Now;
             printingEdition.UpdateDateTime = DateTime.Now;
-            _applicationContext.PrintingEditions.Add(printingEdition);
-            _applicationContext.SaveChanges();
+            Create(printingEdition);
             
         }
         public void UpdatePrintingEdition(string Name, string Description, string Price, TypeStatus Status, TypeCurrency Currency, string Type)
@@ -38,8 +43,7 @@ namespace EducationApp.DataAccessLayer.Repositories.EFRepositories
             printingEdition.Currency = Currency;
             printingEdition.Type = Type;
             printingEdition.UpdateDateTime = DateTime.Now;
-            _applicationContext.PrintingEditions.Update(printingEdition);
-            _applicationContext.SaveChanges();
+            Update(printingEdition);
             
         }
         public void DeletePrintingEdition(Guid id)
@@ -47,8 +51,7 @@ namespace EducationApp.DataAccessLayer.Repositories.EFRepositories
             var del = _applicationContext.PrintingEditions.Find(id);
             PrintingEdition printingEdition = new PrintingEdition();
             printingEdition.IsDeleted = true;
-            _applicationContext.PrintingEditions.Update(del);
-            _applicationContext.SaveChanges();
+            Update(del);
         }
     }
 }

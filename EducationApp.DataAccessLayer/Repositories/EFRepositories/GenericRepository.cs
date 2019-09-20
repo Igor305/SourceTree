@@ -11,27 +11,17 @@ namespace EducationApp.DataAccessLayer.Repositories.EFRepositories
 {
     public class GenericRepository<T> : IGenericRepository<T> where T : class
     {
-        public ApplicationContext _applicationContext;
-        private DbSet<T> _dbSet;
+        protected ApplicationContext _applicationContext;
+        protected DbSet<T> _dbSet;
 
         public GenericRepository(ApplicationContext applicationContext)
         {
             _applicationContext = applicationContext;
             _dbSet = applicationContext.Set<T>();
         }
-        public IEnumerable<T> GetAll()
-        {
-            return _dbSet.ToList();
-        }
         public T GetById(Guid id)
         {
             return _dbSet.Find(id);
-        }
-        public bool VerrifyName(string name, string columnname)
-        {
-            bool test = _applicationContext.Authors.Any(x => x.Name == name);
-            //bool fd = dbSet.Any(x =>x.columnname == Equals(name));
-            return test;
         }
         public void Create(T entity)
         {

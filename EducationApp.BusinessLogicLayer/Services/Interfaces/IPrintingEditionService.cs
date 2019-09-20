@@ -9,8 +9,9 @@ namespace EducationApp.BusinessLogicLayer.Services.Interfaces
 {
     public interface IPrintingEditionService
     {
-        void CreatePrintingEdition(CreatePrintingEditionModel createPrintingEditionModel);
-        void UpdatePrintingEdition(UpdatePrintingEditionModel updatePrintingEditionModel);
-        void DeletePrintingEdition(DeletePrintingEditionModel deletePrintingEditionModel);
+        void GetAll();
+        void Create(CreatePrintingEditionModel createPrintingEditionModel);
+        void Update(UpdatePrintingEditionModel updatePrintingEditionModel);
+        void Delete(DeletePrintingEditionModel deletePrintingEditionModel);
     }
 }

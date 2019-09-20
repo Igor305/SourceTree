@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using EducationApp.DataAccessLayer.AppContext;
 using EducationApp.DataAccessLayer.Entities;
 using EducationApp.DataAccessLayer.Repositories.Interfaces;
@@ -10,6 +13,11 @@ namespace EducationApp.DataAccessLayer.Repositories.EFRepositories
         public AuthorRepository(ApplicationContext applicationContext) : base(applicationContext)
         {
         }
+        public List<Author> GetAll()
+        {
+            var selectedTeams = _applicationContext.Authors.ToList();
+            return selectedTeams;
+        } 
         public void CreateAuthor(string Name)
         {                       
             Author author = new Author();

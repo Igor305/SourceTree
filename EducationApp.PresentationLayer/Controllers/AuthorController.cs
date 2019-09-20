@@ -11,32 +11,15 @@ namespace EducationApp.PresentationLayer.Controllers
     [Route("api/[controller]")]
     public class AuthorController : Controller
     {
-        private readonly IAuthorService authorService;
+        private readonly IAuthorService _authorService;
         public AuthorController(IAuthorService authorService)
         {
-            this.authorService = authorService;
+            _authorService = authorService;
         }
-        [AcceptVerbs("Get","Post")]
-        [HttpPost("{Create}")]
-        public string Create([FromBody]CreateAuthorModel createAuthorModel)
+        [HttpPost("{GetAll}")]
+        public void GetAll()
         {
-            if (ModelState.IsValid)
-            {
-                  return authorService.Create(createAuthorModel);
-            }
-            return $"{createAuthorModel.Name} - где значение?)";
-        }
-        [HttpPost("{Update}")]
-        public string Update([FromBody]UpdateAuthorModel updateAuthorModel)
-        {
-            authorService.Update(updateAuthorModel);
-            return $"{updateAuthorModel.Name} был успешно обновлён";
-        }
-        [HttpPost("{Delete}")]
-        public string Delete([FromBody]DeleteAuthorModel deleteAuthorModel)
-        {
-            authorService.Delete(deleteAuthorModel);
-            return $"{deleteAuthorModel.Id} был успешно удалён";
+            _authorService.GetAll();
         }
     }
 }
