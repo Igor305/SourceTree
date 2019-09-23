@@ -4,9 +4,10 @@ namespace EducationApp.BusinessLogicLayer.Services.Interfaces
 {
     public interface IAuthorService
     {
-        void GetAll();
+        object GetAll();
+        object GetName(GetNameAuthorModel getNameAuthorModel);
         string Create(CreateAuthorModel createAuthorModel);
         void Update(UpdateAuthorModel updateAuthorModel);
-        void Delete(DeleteAuthorModel deleteAuthorModel);
+        void Delete(DeleteAuthorModel deleteAuthorModel); 
     }
 }

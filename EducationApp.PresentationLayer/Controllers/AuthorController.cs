@@ -15,11 +15,56 @@ namespace EducationApp.PresentationLayer.Controllers
         public AuthorController(IAuthorService authorService)
         {
             _authorService = authorService;
-        }
-        [HttpPost("{GetAll}")]
-        public void GetAll()
+        } 
+        [HttpGet("{GetAll}")]
+        public object GetAll()
         {
-            _authorService.GetAll();
+            if (ModelState.IsValid)
+            {
+                var all =_authorService.GetAll();
+                return all;
+            }
+            return "Запись не валидна(";
+        }
+        [HttpGet("GetName")]
+        public object GetName([FromBody]GetNameAuthorModel getNameAuthorModel)
+        {
+            if (ModelState.IsValid)
+            {
+                var all = _authorService.GetName(getNameAuthorModel);
+                return all;
+            }
+            return "Запись не валидна(";
+        }
+        [HttpPost("Create")]
+        public string Create([FromBody]CreateAuthorModel createAuthorModel)
+        {
+            if (ModelState.IsValid)
+            {
+                _authorService.Create(createAuthorModel);
+                return "Добавлена новая запись";
+            }
+            return "Запись не валидна(";
+        }
+        [HttpPost("Update")]
+        public string Update([FromBody]UpdateAuthorModel updateAuthorModel)
+        {
+            if (ModelState.IsValid)
+            {
+                _authorService.Update(updateAuthorModel);
+                return "Запись обновлена";
+            }
+            return "Запись не валидна(";
+        }
+        [HttpPost("Delete")]
+        public string Delete([FromBody]DeleteAuthorModel deleteAuthorModel)
+        {
+            if (ModelState.IsValid)
+            {
+                _authorService.Delete(deleteAuthorModel);
+                return "Запись удалена";
+            }
+            return "Запись не валидна(";
         }
     }
 }

@@ -15,7 +15,6 @@ namespace EducationApp.DataAccessLayer.Repositories.EFRepositories
         }
         public List<PrintingEdition> GetAll()
         {
-            PrintingEdition printingEdition = new PrintingEdition();
             var all = _applicationContext.PrintingEditions.ToList();
             return all;
         }
@@ -53,5 +52,35 @@ namespace EducationApp.DataAccessLayer.Repositories.EFRepositories
             printingEdition.IsDeleted = true;
             Update(del);
         }
+        public object SortId()
+        {
+            var sortId =_applicationContext.PrintingEditions.OrderBy(s => s.Id);
+            return sortId;
+        }
+        public object SortName()
+        {
+            var sortName = _applicationContext.PrintingEditions.OrderBy(s => s.Name);
+            return sortName;
+        }
+        public object SortPrice()
+        {
+            var sortPrice = _applicationContext.PrintingEditions.OrderBy(s => s.Price);
+            return sortPrice;
+        }
+        public object FilterName(string Name)
+        {
+            var filterName = _applicationContext.PrintingEditions.Where(x => x.Name == Name);
+            return filterName;
+        }
+        public object FilterPrice(string Price)
+        {
+            var filterPrice = _applicationContext.PrintingEditions.Where(x => x.Price == Price);
+            return filterPrice;
+        }
+        public object FilterStatus(TypeStatus Status)
+        {
+            var filterStatus = _applicationContext.PrintingEditions.Where(x => x.Status == Status);
+            return filterStatus;
+        }       
     }
 }

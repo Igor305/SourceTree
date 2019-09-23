@@ -15,9 +15,14 @@ namespace EducationApp.DataAccessLayer.Repositories.EFRepositories
         }
         public List<Author> GetAll()
         {
-            var selectedTeams = _applicationContext.Authors.ToList();
-            return selectedTeams;
+            var all = _applicationContext.Authors.ToList();
+            return all;
         } 
+        public object GetName(string Name)
+        {
+            var name = _applicationContext.Authors.Where(x => x.Name == Name);
+            return name;
+        }
         public void CreateAuthor(string Name)
         {                       
             Author author = new Author();

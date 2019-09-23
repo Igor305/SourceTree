@@ -1,7 +1,6 @@
 ﻿using EducationApp.BusinessLogicLayer.Models.PrintingEditions;
 using EducationApp.BusinessLogicLayer.Services.Interfaces;
 using EducationApp.DataAccessLayer.Repositories.Interfaces;
-using System.Collections.Generic;
 
 namespace EducationApp.BusinessLogicLayer.Services
 {
@@ -12,9 +11,10 @@ namespace EducationApp.BusinessLogicLayer.Services
         {
             _printingEditionsRepository = printingEditionsRepository;
         }
-        public void GetAll()
+        public object GetAll()
         {
-            _printingEditionsRepository.GetAll();
+            object all = _printingEditionsRepository.GetAll();
+            return all;
         }
         public void Create(CreatePrintingEditionModel createPrintingEditionModel)
         {
@@ -27,6 +27,40 @@ namespace EducationApp.BusinessLogicLayer.Services
         public void Delete(DeletePrintingEditionModel deletePrintingEditionModel)
         {
             _printingEditionsRepository.DeletePrintingEdition(deletePrintingEditionModel.Id);
+        }
+        public object Sort(SortPrintingEditionModel sortPrintingEditionModel)
+        {
+            switch (sortPrintingEditionModel.NameSort)
+            {
+                case "Id":
+                   var sortId = _printingEditionsRepository.SortId();
+                    return sortId; 
+                case "Name":
+                    var sortName = _printingEditionsRepository.SortName();
+                    return sortName;
+                case "Price":
+                    var sortPrice = _printingEditionsRepository.SortPrice();
+                    return sortPrice;
+                default:
+                    return "Чёт не так)";
+            }
+        }
+        public object Filter(FiltrationPrintingEditionModel filtrationPrintingEditionModel )
+        {
+            switch (filtrationPrintingEditionModel.NameFilter)
+            {
+                case "Name":
+                    var filterName = _printingEditionsRepository.FilterName(filtrationPrintingEditionModel.ValueStringFilter);
+                    return filterName;
+                case "Price":
+                    var filterPrice = _printingEditionsRepository.FilterPrice(filtrationPrintingEditionModel.ValueStringFilter);
+                    return filterPrice;
+                case "Status":
+                    var filterStatus = _printingEditionsRepository.FilterStatus(filtrationPrintingEditionModel.Status);
+                    return filterStatus;
+                default:
+                    return "Чет не так";
+            }
         }
     }
 }

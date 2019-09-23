@@ -1,14 +1,11 @@
 ﻿using EducationApp.DataAccessLayer.Entities.Enum;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace EducationApp.BusinessLogicLayer.Models.PrintingEditions
 {
-    class FiltrationPrintingEditionModel
+    public class FiltrationPrintingEditionModel
     {
-        public string Name { get; set; }
+        public string NameFilter { get; set; }
+        public string ValueStringFilter { get; set; }
         public TypeStatus Status { get; set; }
-        public string Price { get; set; }
     }
 }

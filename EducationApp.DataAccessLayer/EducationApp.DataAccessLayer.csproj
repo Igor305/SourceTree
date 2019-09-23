@@ -8,8 +8,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Initialization\" />
-    <Folder Include="Repositories\Base\" />
+    <Compile Remove="Initialization\**" />
+    <Compile Remove="Repositories\Base\**" />
+    <EmbeddedResource Remove="Initialization\**" />
+    <EmbeddedResource Remove="Repositories\Base\**" />
+    <None Remove="Initialization\**" />
+    <None Remove="Repositories\Base\**" />
   </ItemGroup>
 
   <ItemGroup>

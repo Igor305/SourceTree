@@ -1,8 +1,6 @@
 ﻿using EducationApp.BusinessLogicLayer.Models.Authors;
 using EducationApp.BusinessLogicLayer.Services.Interfaces;
 using EducationApp.DataAccessLayer.Repositories.Interfaces;
-using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
 
 namespace EducationApp.BusinessLogicLayer.Services
 {
@@ -13,9 +11,15 @@ namespace EducationApp.BusinessLogicLayer.Services
         {
             _authorRepository = authorRepository;
         }
-        public void GetAll()
+        public object GetAll()
         {
-            _authorRepository.GetAll();
+            var all = _authorRepository.GetAll();
+            return all;
+        }
+        public object GetName(GetNameAuthorModel getNameAuthorModel)
+        {
+            var name = _authorRepository.GetName(getNameAuthorModel.Name);
+            return name;
         }
         public string Create(CreateAuthorModel createAuthorModel)
         {

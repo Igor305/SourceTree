@@ -14,16 +14,64 @@ namespace EducationApp.PresentationLayer.Controllers
         {
             _printingEditionService = printingEditionService;
         }
-        [HttpPost("GetAll")]
-        public void GetAll()
+        [HttpGet("GetAll")]
+        public object GetAll()
         {
-            _printingEditionService.GetAll();
+            if (ModelState.IsValid)
+            {
+                var getAll = _printingEditionService.GetAll();
+                return getAll;
+            }
+            return "Модель не валидная(";
         }
         [HttpPost("Create")]
-        public void Create()
+        public string Create([FromBody]CreatePrintingEditionModel createPrintingEditionModel)
         {
-            CreatePrintingEditionModel createPrintingEditionModel = new CreatePrintingEditionModel();
-            _printingEditionService.Create(createPrintingEditionModel);
+            if (ModelState.IsValid)
+            {
+                _printingEditionService.Create(createPrintingEditionModel);
+                return "Добавлена новая запись";
+            }
+            return "Модель не валидная(";
+        }
+        [HttpPost("Update")]
+        public string Update([FromBody]UpdatePrintingEditionModel updatePrintingEditionModel)
+        {
+            if (ModelState.IsValid)
+            {
+                _printingEditionService.Update(updatePrintingEditionModel);
+                return "Запись обновлена";
+            }
+            return "Запись не валидна(";
+        }
+        public string Delete([FromBody]DeletePrintingEditionModel deletePrintingEditionModel)
+        {
+            if (ModelState.IsValid)
+            {
+                _printingEditionService.Delete(deletePrintingEditionModel);
+                return "Запись удалена";
+            }
+            return "Запись не валидна(";
+        }
+        [HttpPost("Sort")]
+        public object Sort([FromBody]SortPrintingEditionModel sortPrintingEditionModel)
+        {
+            if (ModelState.IsValid)
+            {
+                var sort = _printingEditionService.Sort(sortPrintingEditionModel);
+                return sort;
+            }
+            return "Модель не валидная(";
+        }
+        [HttpPost("Filter")]
+        public object Filter([FromBody]FiltrationPrintingEditionModel filtrationPrintingEditionModel)
+        {
+            if (ModelState.IsValid)
+            {
+                var filter = _printingEditionService.Filter(filtrationPrintingEditionModel);
+                return filter;
+            }
+            return "Модель не валидная(";
         }
     }
 }
