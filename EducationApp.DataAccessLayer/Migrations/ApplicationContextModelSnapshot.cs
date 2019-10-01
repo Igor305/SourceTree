@@ -35,9 +35,6 @@ namespace EducationApp.DataAccessLayer.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Name")
-                        .IsUnique();
-
                     b.ToTable("Authors");
                 });
 
@@ -46,8 +43,6 @@ namespace EducationApp.DataAccessLayer.Migrations
                     b.Property<Guid>("AutorId");
 
                     b.Property<Guid>("PrintingEditionId");
-
-                    b.Property<int>("Date");
 
                     b.HasKey("AutorId", "PrintingEditionId");
 

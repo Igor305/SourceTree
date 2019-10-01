@@ -10,11 +10,21 @@ namespace EducationApp.DataAccessLayer.Repositories.EFRepositories
 {
     public class AuthorRepository : GenericRepository<Author>, IAuthorRepository 
     {
+
         public AuthorRepository(ApplicationContext applicationContext) : base(applicationContext)
-        {
+        {              
         }
+
         public List<Author> GetAll()
         {
+            var authors = _applicationContext.Authors.ToList();
+            foreach (Author author in authors)
+            {
+                Console.Write($"{author.Name}:");
+                foreach (AutorInPrintingEdition autorInPrintingEdition in author.AutorInPrintingEdition)
+                    Console.Write($"{autorInPrintingEdition.PrintingEditionId} ");
+                Console.WriteLine();
+            }
             var all = _applicationContext.Authors.ToList();
             return all;
         } 

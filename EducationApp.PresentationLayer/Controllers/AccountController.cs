@@ -27,16 +27,18 @@ namespace EducationApp.PresentationLayer.Controllers
         private readonly SignInManager<Users> _signInManager;
         private readonly ApplicationContext _applicationContext;
         private readonly IEmailService _emailService;
-        public AccountController(UserManager<Users> userManager, SignInManager<Users> signInManager, ApplicationContext applicationContext, IEmailService emailService)
+        private readonly RoleManager<IdentityRole> _roleManager;
+        public AccountController(UserManager<Users> userManager, SignInManager<Users> signInManager, ApplicationContext applicationContext, IEmailService emailService, RoleManager<IdentityRole> roleManager)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _applicationContext = applicationContext;
             _emailService = emailService;
+            _roleManager = roleManager;
         }
 
         [HttpGet("RefreshToken")]
-        public async Task<ActionResult<string>>RegreshToken([FromHeader] string tokenString, [FromServices] IJwtPrivateKey jwtPrivateKey, [FromServices] IJwtRefresh jwtRefresh)
+        public async Task<ActionResult<string>> RegreshToken([FromHeader] string tokenString, [FromServices] IJwtPrivateKey jwtPrivateKey, [FromServices] IJwtRefresh jwtRefresh)
         {
             var jwtEncodedString = tokenString.Substring(7);
             Users user = new Users();
@@ -90,17 +92,17 @@ namespace EducationApp.PresentationLayer.Controllers
         {
             var Id = HttpContext.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier);
             var email = HttpContext.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Email);
-            var PassHash = HttpContext.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Hash);           
+            var PassHash = HttpContext.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Hash);
             if (Response.StatusCode == 401)
             {
                 Response.StatusCode = 200;
                 var refresh = HttpContext.User.Claims.FirstOrDefault(x => x.Type == "Refresh");
-                return new string[] {"wertwe"};
+                return new string[] { "wertwe" };
             }
-            return new string[] {Id?.Value, email?.Value, PassHash?.Value};
+            return new string[] { Id?.Value, email?.Value, PassHash?.Value };
         }
-  
-    [HttpPost("Auth")]
+
+        [HttpPost("Auth")]
         [AllowAnonymous]
         public async Task<ActionResult<string>> GenToken([FromServices] IJwtPrivateKey jwtPrivateKey, [FromServices] IJwtRefresh jwtRefresh, [FromBody] LoginModel login)
         {
@@ -261,18 +263,54 @@ namespace EducationApp.PresentationLayer.Controllers
             {
                 return Ok(user);
             }
-             foreach (var error in result.Errors)
-             {
-                 ModelState.AddModelError(string.Empty, error.Description);
-             }
+            foreach (var error in result.Errors)
+            {
+                ModelState.AddModelError(string.Empty, error.Description);
+            }
             return Ok(result);
         }
+
         [HttpPost("LogOut")]
         public async Task<IActionResult> LogOut(LoginModel log)
         {
             await _signInManager.SignOutAsync();
             log.Email = log.Password = null;
             return Ok(log);
+        }
+
+        [HttpGet("Roles/GetAll")]
+        public IActionResult Index() => Ok(_roleManager.Roles.ToList());
+
+        [HttpPost("Roles/Create")]
+        public async Task<IActionResult> Create([FromBody]string Name)
+        {
+            if (!string.IsNullOrEmpty(Name))
+            {
+                IdentityResult result = await _roleManager.CreateAsync(new IdentityRole(Name));
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    foreach (var error in result.Errors)
+                    {
+                        ModelState.AddModelError(string.Empty, error.Description);
+                    }
+                }
+            }
+            return Ok(Name);
+        }
+
+        [HttpPost("Roles/Delete")]
+        public async Task<IActionResult> Delete([FromBody]string id)
+        {
+            IdentityRole role = await _roleManager.FindByIdAsync(id);
+            if (role != null)
+            {
+                IdentityResult result = await _roleManager.DeleteAsync(role);
+            }
+            return RedirectToAction("Index");
         }
     }
 }

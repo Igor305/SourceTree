@@ -18,6 +18,8 @@ namespace EducationApp.DataAccessLayer.AppContext
         public DbSet<OrderItem> OrderItems { get; set; }
         public DbSet<Payment> Payments { get; set; }
 
+
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
 
@@ -43,10 +45,6 @@ namespace EducationApp.DataAccessLayer.AppContext
                 .HasOne(bc => bc.PrintingEdition)
                 .WithMany(c => c.AutorInPrintingEdition)
                 .HasForeignKey(bc => bc.PrintingEditionId);
-
-            modelBuilder.Entity<Author>()
-                .HasIndex(u => u.Name)
-                .IsUnique();
 
             base.OnModelCreating(modelBuilder);
         }

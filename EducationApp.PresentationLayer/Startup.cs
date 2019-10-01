@@ -5,7 +5,6 @@ using EducationApp.DataAccessLayer.AppContext;
 using EducationApp.DataAccessLayer.Entities;
 using EducationApp.DataAccessLayer.Repositories.EFRepositories;
 using EducationApp.DataAccessLayer.Repositories.Interfaces;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -34,8 +33,11 @@ namespace EducationApp.PresentationLayer
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             var connectionString = Configuration["ConnectionStrings:EmployeeDB"];
-            services.AddDbContext<ApplicationContext>(opts => opts.UseSqlServer(connectionString)); 
+            services.AddDbContext<ApplicationContext>(opts => opts.UseSqlServer(connectionString));
             services.AddIdentityCore<IdentityUser>();
+            services.AddDefaultIdentity<Users>()
+            .AddRoles<IdentityRole<Guid>>()
+            .AddEntityFrameworkStores<ApplicationContext>();
             services.AddScoped<IUserStore<IdentityUser>, UserOnlyStore<IdentityUser, IdentityDbContext>>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IUserService, UserService>();
@@ -45,16 +47,6 @@ namespace EducationApp.PresentationLayer
             services.AddScoped<IAuthorService, AuthorService>();
             services.AddTransient<Users>();
             services.AddTransient<IEmailService, EmailHelper>();
-            services.AddIdentity<Users, Role>(o => {
-                o.Password.RequireDigit = true;
-                o.Password.RequireLowercase = true;
-                o.Password.RequireUppercase = false;
-                o.Password.RequireNonAlphanumeric = false;
-                o.Password.RequiredLength = 6;
-            })
-
-                .AddEntityFrameworkStores<ApplicationContext>()
-                .AddDefaultTokenProviders();
 
             //Jwt Refresh
             const string refreshSecurityKey = "0d5b3235a8132POPROBYI248673425609879rfghert545234n1k41230";

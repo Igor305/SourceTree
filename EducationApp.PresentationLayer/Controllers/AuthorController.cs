@@ -2,6 +2,7 @@
 using EducationApp.BusinessLogicLayer.Services;
 using EducationApp.BusinessLogicLayer.Services.Interfaces;
 using EducationApp.DataAccessLayer.Repositories.EFRepositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -37,6 +38,7 @@ namespace EducationApp.PresentationLayer.Controllers
             return "Запись не валидна(";
         }
         [HttpPost("Create")]
+        [Authorize(Roles = "admin")]
         public string Create([FromBody]CreateAuthorModel createAuthorModel)
         {
             if (ModelState.IsValid)
@@ -47,6 +49,7 @@ namespace EducationApp.PresentationLayer.Controllers
             return "Запись не валидна(";
         }
         [HttpPost("Update")]
+        [Authorize(Roles = "admin")]
         public string Update([FromBody]UpdateAuthorModel updateAuthorModel)
         {
             if (ModelState.IsValid)
@@ -57,6 +60,7 @@ namespace EducationApp.PresentationLayer.Controllers
             return "Запись не валидна(";
         }
         [HttpPost("Delete")]
+        [Authorize(Roles = "admin")]
         public string Delete([FromBody]DeleteAuthorModel deleteAuthorModel)
         {
             if (ModelState.IsValid)
