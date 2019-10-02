@@ -28,7 +28,7 @@ namespace EducationApp.BusinessLogicLayer.Services
         }
         public  void Update(UpdateAuthorModel updateAuthorModel)
         {
-            _authorRepository.UpdateAuthor(updateAuthorModel.Name);
+            _authorRepository.UpdateAuthor(updateAuthorModel.Id, updateAuthorModel.Name);
         }
         public void Delete(DeleteAuthorModel deleteAuthorModel)
         {

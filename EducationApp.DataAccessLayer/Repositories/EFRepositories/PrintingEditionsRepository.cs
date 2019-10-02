@@ -18,6 +18,12 @@ namespace EducationApp.DataAccessLayer.Repositories.EFRepositories
             var all = _applicationContext.PrintingEditions.ToList();
             return all;
         }
+        public object Buy(Guid Id)
+        {
+            var findBuyPrintingEdition = _applicationContext.PrintingEditions.Find(Id);
+            return findBuyPrintingEdition;
+
+        }
         public void CreatePrintingEdition(string Name, string Description, string Price, TypeStatus Status, TypeCurrency Currency, string Type)
         {
             PrintingEdition printingEdition = new PrintingEdition();
@@ -32,24 +38,23 @@ namespace EducationApp.DataAccessLayer.Repositories.EFRepositories
             Create(printingEdition);
             
         }
-        public void UpdatePrintingEdition(string Name, string Description, string Price, TypeStatus Status, TypeCurrency Currency, string Type)
+        public void UpdatePrintingEdition(Guid Id, string Name, string Description, string Price, TypeStatus Status, TypeCurrency Currency, string Type)
         {
-            PrintingEdition printingEdition = new PrintingEdition();
-            printingEdition.Name = Name;
-            printingEdition.Description = Description;
-            printingEdition.Price = Price;
-            printingEdition.Status = Status;
-            printingEdition.Currency = Currency;
-            printingEdition.Type = Type;
-            printingEdition.UpdateDateTime = DateTime.Now;
-            Update(printingEdition);
+            var findPrintingEdition = _applicationContext.PrintingEditions.Find(Id);
+            findPrintingEdition.Name = Name;
+            findPrintingEdition.Description = Description;
+            findPrintingEdition.Price = Price;
+            findPrintingEdition.Status = Status;
+            findPrintingEdition.Currency = Currency;
+            findPrintingEdition.Type = Type;
+            findPrintingEdition.UpdateDateTime = DateTime.Now;
+            Update(findPrintingEdition);
             
         }
         public void DeletePrintingEdition(Guid id)
         {
             var del = _applicationContext.PrintingEditions.Find(id);
-            PrintingEdition printingEdition = new PrintingEdition();
-            printingEdition.IsDeleted = true;
+            del.IsDeleted = true;
             Update(del);
         }
         public object SortId()

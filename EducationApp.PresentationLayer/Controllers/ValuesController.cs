@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
+using EducationApp.BusinessLogicLayer.Models.Stripe;
 using EducationApp.DataAccessLayer.AppContext;
 using EducationApp.DataAccessLayer.Entities;
 using Microsoft.AspNetCore.Mvc;
+using Stripe;
 
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -35,18 +38,46 @@ namespace EducationApp.PresentationLayer.Controllers
 
         // POST api/<controller>
         [HttpPost]
-        public string Post([FromBody]Users user)
+        public IActionResult Charge([FromBody]StripeModel stripeModel)
         {
-            if (_applicationcontext.Users == null)
-            {
-            _applicationcontext.Users.Add(new Users { FirstName = " ",LastName = " ", PasswordHash = " ", Email = "@mardan@" });
-            _applicationcontext.SaveChanges();
-                return "Я внес новые данные";
-            }
+            var customers = new CustomerService();
+            var charges = new ChargeService();
 
-            _applicationcontext.SaveChanges();
-            return "Я сохранился";
+          /*  var options = new TokenCreateOptions
+            {
+                Card = new CreditCardOptions
+                {
+                    Number = "4242424242424242",
+                    ExpYear = 2020,
+                    ExpMonth = 10,
+                    Cvc = "123"
+                }
+            };
+            var service = new TokenService();
+            Token stripeToken = service.Create(options);*/
+
+            var customer = customers.Create(new CustomerCreateOptions
+            {
+                Email = stripeModel.stripeEmail,
+                Source = "tok_visa"
+            });
+
+            var charge = charges.Create(new ChargeCreateOptions
+            {
+
+                Amount = 50000,
+                Description = "WoW",
+                Currency = "usd",
+                CustomerId = customer.Id
+            });
+            if (charge.Status == "succeeded")
+            {
+                string BalanceTransactionId = charge.BalanceTransactionId;
+                return Ok(BalanceTransactionId);
+            }
+            return Ok(customer.Id);
         }
+
 
         // PUT api/<controller>/5
         [HttpPut("{id}")]

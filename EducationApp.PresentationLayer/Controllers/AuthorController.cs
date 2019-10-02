@@ -48,7 +48,7 @@ namespace EducationApp.PresentationLayer.Controllers
             }
             return "Запись не валидна(";
         }
-        [HttpPost("Update")]
+        [HttpPut("Update")]
         [Authorize(Roles = "admin")]
         public string Update([FromBody]UpdateAuthorModel updateAuthorModel)
         {
@@ -59,7 +59,7 @@ namespace EducationApp.PresentationLayer.Controllers
             }
             return "Запись не валидна(";
         }
-        [HttpPost("Delete")]
+        [HttpDelete("Delete")]
         [Authorize(Roles = "admin")]
         public string Delete([FromBody]DeleteAuthorModel deleteAuthorModel)
         {

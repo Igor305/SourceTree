@@ -58,15 +58,13 @@ namespace EducationApp.DataAccessLayer.Migrations
 
                     b.Property<DateTime>("CreateDateTime");
 
-                    b.Property<string>("Date");
-
                     b.Property<string>("Description");
 
                     b.Property<bool>("IsDeleted");
 
                     b.Property<Guid>("PaymentId");
 
-                    b.Property<string>("Status");
+                    b.Property<int>("Status");
 
                     b.Property<DateTime>("UpdateDateTime");
 
@@ -82,13 +80,13 @@ namespace EducationApp.DataAccessLayer.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("Amount");
+                    b.Property<int>("Amount");
 
-                    b.Property<string>("Count");
+                    b.Property<decimal>("Count");
 
                     b.Property<DateTime>("CreateDateTime");
 
-                    b.Property<string>("Currency");
+                    b.Property<int>("Currency");
 
                     b.Property<bool>("IsDeleted");
 
@@ -96,7 +94,7 @@ namespace EducationApp.DataAccessLayer.Migrations
 
                     b.Property<Guid>("PrintingEditionId");
 
-                    b.Property<string>("UnitPrice");
+                    b.Property<decimal>("UnitPrice");
 
                     b.Property<DateTime>("UpdateDateTime");
 
@@ -114,7 +112,7 @@ namespace EducationApp.DataAccessLayer.Migrations
 
                     b.Property<bool>("IsDeleted");
 
-                    b.Property<Guid>("TransactionId");
+                    b.Property<string>("TransactionId");
 
                     b.Property<DateTime>("UpdateDateTime");
 
@@ -295,9 +293,11 @@ namespace EducationApp.DataAccessLayer.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<System.Guid>", b =>
                 {
-                    b.Property<string>("LoginProvider");
+                    b.Property<string>("LoginProvider")
+                        .HasMaxLength(128);
 
-                    b.Property<string>("ProviderKey");
+                    b.Property<string>("ProviderKey")
+                        .HasMaxLength(128);
 
                     b.Property<string>("ProviderDisplayName");
 
@@ -327,9 +327,11 @@ namespace EducationApp.DataAccessLayer.Migrations
                 {
                     b.Property<Guid>("UserId");
 
-                    b.Property<string>("LoginProvider");
+                    b.Property<string>("LoginProvider")
+                        .HasMaxLength(128);
 
-                    b.Property<string>("Name");
+                    b.Property<string>("Name")
+                        .HasMaxLength(128);
 
                     b.Property<string>("Value");
 

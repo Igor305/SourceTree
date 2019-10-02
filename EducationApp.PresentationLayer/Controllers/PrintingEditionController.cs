@@ -24,6 +24,16 @@ namespace EducationApp.PresentationLayer.Controllers
             }
             return "Модель не валидная(";
         }
+        [HttpPost("Buy")]
+        public object Buy([FromBody]BuyPrintingEditionModel buyPrintingEditionModel)
+        {
+            if (ModelState.IsValid)
+            {
+                var buy = _printingEditionService.Buy(buyPrintingEditionModel);
+                return buy;
+            }
+            return "Модель не валидная";
+        }
         [HttpPost("Create")]
         public string Create([FromBody]CreatePrintingEditionModel createPrintingEditionModel)
         {
@@ -34,7 +44,7 @@ namespace EducationApp.PresentationLayer.Controllers
             }
             return "Модель не валидная(";
         }
-        [HttpPost("Update")]
+        [HttpPut("Update")]
         public string Update([FromBody]UpdatePrintingEditionModel updatePrintingEditionModel)
         {
             if (ModelState.IsValid)
@@ -44,6 +54,7 @@ namespace EducationApp.PresentationLayer.Controllers
             }
             return "Запись не валидна(";
         }
+        [HttpDelete("Delete")]
         public string Delete([FromBody]DeletePrintingEditionModel deletePrintingEditionModel)
         {
             if (ModelState.IsValid)

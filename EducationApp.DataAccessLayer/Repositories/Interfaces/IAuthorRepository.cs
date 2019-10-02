@@ -9,7 +9,7 @@ namespace EducationApp.DataAccessLayer.Repositories.Interfaces
         List<Author> GetAll();
         object GetName(string Name);
         void CreateAuthor(string Name);
-        void UpdateAuthor(string Name);
+        void UpdateAuthor(Guid Id,string Name);
         void DeleteAuthor(Guid Id);
     }
 }

@@ -60,6 +60,10 @@
             "Sendgrid": {
               "target": "Package",
               "version": "[9.12.0, )"
+            },
+            "Stripe.net": {
+              "target": "Package",
+              "version": "[29.5.0, )"
             }
           },
           "imports": [
@@ -109,6 +113,10 @@
       "frameworks": {
         "netstandard2.0": {
           "dependencies": {
+            "LocalStorage": {
+              "target": "Package",
+              "version": "[2.0.0, )"
+            },
             "MailKit": {
               "target": "Package",
               "version": "[2.2.0, )"

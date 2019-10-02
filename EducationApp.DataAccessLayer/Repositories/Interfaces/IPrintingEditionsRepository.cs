@@ -8,8 +8,9 @@ namespace EducationApp.DataAccessLayer.Repositories.Interfaces
     public interface IPrintingEditionsRepository
     {
         List<PrintingEdition> GetAll();
+        object Buy(Guid Id);
         void CreatePrintingEdition(string Name, string Description, string Price, TypeStatus Status, TypeCurrency Currency, string Type);
-        void UpdatePrintingEdition(string Name, string Description, string Price, TypeStatus Status, TypeCurrency Currency, string Type);
+        void UpdatePrintingEdition(Guid Id,string Name, string Description, string Price, TypeStatus Status, TypeCurrency Currency, string Type);
         void DeletePrintingEdition(Guid id);
         object SortId();
         object SortName();

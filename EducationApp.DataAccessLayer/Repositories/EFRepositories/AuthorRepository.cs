@@ -17,14 +17,6 @@ namespace EducationApp.DataAccessLayer.Repositories.EFRepositories
 
         public List<Author> GetAll()
         {
-            var authors = _applicationContext.Authors.ToList();
-            foreach (Author author in authors)
-            {
-                Console.Write($"{author.Name}:");
-                foreach (AutorInPrintingEdition autorInPrintingEdition in author.AutorInPrintingEdition)
-                    Console.Write($"{autorInPrintingEdition.PrintingEditionId} ");
-                Console.WriteLine();
-            }
             var all = _applicationContext.Authors.ToList();
             return all;
         } 
@@ -41,18 +33,17 @@ namespace EducationApp.DataAccessLayer.Repositories.EFRepositories
             author.UpdateDateTime = DateTime.Now;
             Create(author);
         }
-        public void UpdateAuthor(string Name)
+        public void UpdateAuthor(Guid Id, string Name)
         {
-            Author author = new Author();
-            author.Name = Name;
-            author.UpdateDateTime = DateTime.Now;
-            Update(author);
+            var findAuhor = _applicationContext.Authors.Find(Id);
+            findAuhor.Name = Name;
+            findAuhor.UpdateDateTime = DateTime.Now;
+            Update(findAuhor);
         }
         public void DeleteAuthor(Guid Id)
         {
-            Author author = new Author();
             var del = _applicationContext.Authors.Find(Id);
-            author.IsDeleted = true;
+            del.IsDeleted = true;
             Update(del);
         }
     }

@@ -1,6 +1,7 @@
 ﻿using EducationApp.BusinessLogicLayer.Helpers;
 using EducationApp.BusinessLogicLayer.Services;
 using EducationApp.BusinessLogicLayer.Services.Interfaces;
+using EducationApp.BusinessLogicLayer.Stripe.Infrastructure;
 using EducationApp.DataAccessLayer.AppContext;
 using EducationApp.DataAccessLayer.Entities;
 using EducationApp.DataAccessLayer.Repositories.EFRepositories;
@@ -16,6 +17,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
+using Stripe;
 using System;
 
 namespace EducationApp.PresentationLayer
@@ -37,7 +39,7 @@ namespace EducationApp.PresentationLayer
             services.AddIdentityCore<IdentityUser>();
             services.AddDefaultIdentity<Users>()
             .AddRoles<IdentityRole<Guid>>()
-            .AddEntityFrameworkStores<ApplicationContext>();
+            .AddEntityFrameworkStores<ApplicationContext>();     
             services.AddScoped<IUserStore<IdentityUser>, UserOnlyStore<IdentityUser, IdentityDbContext>>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IUserService, UserService>();
@@ -47,6 +49,7 @@ namespace EducationApp.PresentationLayer
             services.AddScoped<IAuthorService, AuthorService>();
             services.AddTransient<Users>();
             services.AddTransient<IEmailService, EmailHelper>();
+            services.Configure<StripeSettings>(Configuration.GetSection("Stripe"));
 
             //Jwt Refresh
             const string refreshSecurityKey = "0d5b3235a8132POPROBYI248673425609879rfghert545234n1k41230";
@@ -87,7 +90,7 @@ namespace EducationApp.PresentationLayer
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
-            //loggerFactory.AddDebug();
+            StripeConfiguration.ApiKey = Configuration.GetSection("Stripe")["SecretKey"];   
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

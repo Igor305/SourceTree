@@ -43,6 +43,10 @@
       "frameworks": {
         "netstandard2.0": {
           "dependencies": {
+            "LocalStorage": {
+              "target": "Package",
+              "version": "[2.0.0, )"
+            },
             "MailKit": {
               "target": "Package",
               "version": "[2.2.0, )"
@@ -58,10 +62,6 @@
             "Microsoft.EntityFrameworkCore": {
               "target": "Package",
               "version": "[2.2.6, )"
-            },
-            "Microsoft.EntityFrameworkCore.Proxies": {
-              "target": "Package",
-              "version": "[3.0.0, )"
             },
             "Microsoft.EntityFrameworkCore.Relational": {
               "target": "Package",
