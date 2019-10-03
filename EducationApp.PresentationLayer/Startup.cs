@@ -47,6 +47,8 @@ namespace EducationApp.PresentationLayer
             services.AddScoped<IPrintingEditionService, PrintingEditionService>();
             services.AddScoped<IAuthorRepository, AuthorRepository>();
             services.AddScoped<IAuthorService, AuthorService>();
+            services.AddScoped<IPaymentRepository, PaymentRepository>();
+            services.AddScoped<IPaymentService, PaymentService>();
             services.AddTransient<Users>();
             services.AddTransient<IEmailService, EmailHelper>();
             services.Configure<StripeSettings>(Configuration.GetSection("Stripe"));

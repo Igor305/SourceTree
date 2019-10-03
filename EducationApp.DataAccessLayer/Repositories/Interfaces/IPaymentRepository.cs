@@ -5,7 +5,7 @@ using System.Text;
 
 namespace EducationApp.DataAccessLayer.Repositories.Interfaces
 {
-    interface IPaymentRepository
+    public interface IPaymentRepository
     {
         List<Payment> GetAll();
         void CreatePayment(string TransactionId);

@@ -38,7 +38,6 @@ namespace EducationApp.PresentationLayer.Controllers
             return "Запись не валидна(";
         }
         [HttpPost("Create")]
-        [Authorize(Roles = "admin")]
         public string Create([FromBody]CreateAuthorModel createAuthorModel)
         {
             if (ModelState.IsValid)
@@ -49,7 +48,6 @@ namespace EducationApp.PresentationLayer.Controllers
             return "Запись не валидна(";
         }
         [HttpPut("Update")]
-        [Authorize(Roles = "admin")]
         public string Update([FromBody]UpdateAuthorModel updateAuthorModel)
         {
             if (ModelState.IsValid)

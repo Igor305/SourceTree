@@ -1,4 +1,6 @@
-﻿using System;
+﻿using EducationApp.BusinessLogicLayer.Models.Enums;
+using EducationApp.BusinessLogicLayer.Models.Orders;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -6,11 +8,9 @@ namespace EducationApp.BusinessLogicLayer.Services.Interfaces
 {
     public interface IOrderService
     {
-        int Id();
-        string Description();
-        string UserId();
-        string Date();
-        string PaymentId();
-        string Status();
+        object GetAll();
+        void Create(CreateOrderModel createOrderModel);
+        void Update(UpdateOrderModel updateOrderModel);
+        void Delete(DeleteOderModel deleteOderModel);
     }
 }

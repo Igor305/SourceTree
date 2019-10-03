@@ -6,11 +6,11 @@ using System.Text;
 
 namespace EducationApp.DataAccessLayer.Repositories.Interfaces
 {
-    interface IOrderItemRepository
+    public interface IOrderItemRepository
     {
         List<OrderItem> GetAll();
-        void CreateOrderItem(int Amount, TypeCurrency Currency, decimal UnitPrice);
-        void UpdateOrderItem(Guid Id, int Amount, TypeCurrency Currency, decimal UnitPrice);
+        void CreateOrderItem(int Amount, TypeCurrency Currency, decimal UnitPrice, decimal Count);
+        void UpdateOrderItem(Guid Id, int Amount, TypeCurrency Currency, decimal UnitPrice, decimal Count);
         void DeleteOrderItem(Guid Id);
     }
 }

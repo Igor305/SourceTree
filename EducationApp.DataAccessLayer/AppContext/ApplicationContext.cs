@@ -1,5 +1,4 @@
 ﻿using EducationApp.DataAccessLayer.Entities;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -45,6 +44,8 @@ namespace EducationApp.DataAccessLayer.AppContext
                 .HasOne(bc => bc.PrintingEdition)
                 .WithMany(c => c.AutorInPrintingEdition)
                 .HasForeignKey(bc => bc.PrintingEditionId);
+
+
 
             base.OnModelCreating(modelBuilder);
         }

@@ -20,20 +20,18 @@ namespace EducationApp.DataAccessLayer.Repositories.EFRepositories
             return all;
 
         }
-        public void CreateOrder(string Description, TypeStatus Status)
+        public void CreateOrder(string Description)
         {
             Order order = new Order();
             order.Description = Description;
-            order.Status = Status;
             order.CreateDateTime = DateTime.Now;
             order.UpdateDateTime = DateTime.Now;
             Create(order);
         }
-        public void UpdateOrder(Guid Id, string Descriptioin, TypeStatus Status)
+        public void UpdateOrder(Guid Id, string Descriptioin)
         {
             var findOrder = _applicationContext.Orders.Find(Id);
             findOrder.Description = Descriptioin;
-            findOrder.Status = Status;
             findOrder.UpdateDateTime = DateTime.Now;
             Update(findOrder);
         }
