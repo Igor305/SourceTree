@@ -1,6 +1,10 @@
 ﻿using EducationApp.BusinessLogicLayer.Models.PrintingEditions;
 using EducationApp.BusinessLogicLayer.Services.Interfaces;
+using EducationApp.DataAccessLayer.Entities;
 using EducationApp.DataAccessLayer.Repositories.Interfaces;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace EducationApp.BusinessLogicLayer.Services
 {
@@ -11,44 +15,67 @@ namespace EducationApp.BusinessLogicLayer.Services
         {
             _printingEditionsRepository = printingEditionsRepository;
         }
-        public object GetAll()
+        public List<PrintingEdition> GetAll()
         {
-            object all = _printingEditionsRepository.GetAll();
+            var all = _printingEditionsRepository.GetAll();
             return all;
         }
         public object Buy(BuyPrintingEditionModel buyPrintingEditionModel)
         {
-            var buyPrintingEdition = _printingEditionsRepository.Buy(buyPrintingEditionModel.Id);
-            if (buyPrintingEdition == null)
+            var all = _printingEditionsRepository.GetAll();
+            var findbuyPrintingEdition = all.Find(x => x.Id == buyPrintingEditionModel.Id);
+            if (findbuyPrintingEdition == null)
             {
                 return "Нету печатного издания с таким Id";
             }
-            return buyPrintingEditionModel;
+            return findbuyPrintingEdition;
         }
         public void Create(CreatePrintingEditionModel createPrintingEditionModel)
         {
-             _printingEditionsRepository.CreatePrintingEdition(createPrintingEditionModel.Name, createPrintingEditionModel.Description, createPrintingEditionModel.Price, createPrintingEditionModel.Status, createPrintingEditionModel.Currency, createPrintingEditionModel.Type);
+            PrintingEdition printingEdition = new PrintingEdition();
+            printingEdition.Name = createPrintingEditionModel.Name;
+            printingEdition.Description = createPrintingEditionModel.Description;
+            printingEdition.Price = createPrintingEditionModel.Price;
+            printingEdition.Status = createPrintingEditionModel.Status;
+            printingEdition.Currency = createPrintingEditionModel.Currency;
+            printingEdition.Type = createPrintingEditionModel.Type;
+            printingEdition.CreateDateTime = DateTime.Now;
+            printingEdition.UpdateDateTime = DateTime.Now;
+            _printingEditionsRepository.Create(printingEdition);
         }
         public void Update(UpdatePrintingEditionModel updatePrintingEditionModel)
         {
-            _printingEditionsRepository.UpdatePrintingEdition(updatePrintingEditionModel.Id, updatePrintingEditionModel.Name, updatePrintingEditionModel.Description, updatePrintingEditionModel.Price, updatePrintingEditionModel.Status, updatePrintingEditionModel.Currency, updatePrintingEditionModel.Type);
+            var all = _printingEditionsRepository.GetAll();
+            var findPrintingEdition = all.Find(x => x.Id == updatePrintingEditionModel.Id);
+            findPrintingEdition.Name = updatePrintingEditionModel.Name;
+            findPrintingEdition.Description = updatePrintingEditionModel.Description;
+            findPrintingEdition.Price = updatePrintingEditionModel.Price;
+            findPrintingEdition.Status = updatePrintingEditionModel.Status;
+            findPrintingEdition.Currency = updatePrintingEditionModel.Currency;
+            findPrintingEdition.Type = updatePrintingEditionModel.Type;
+            findPrintingEdition.UpdateDateTime = DateTime.Now;
+            _printingEditionsRepository.Update(findPrintingEdition);
         }
         public void Delete(DeletePrintingEditionModel deletePrintingEditionModel)
         {
-            _printingEditionsRepository.DeletePrintingEdition(deletePrintingEditionModel.Id);
+            var all = _printingEditionsRepository.GetAll();
+            var findPrintingEdition = all.Find(x => x.Id == deletePrintingEditionModel.Id);
+            findPrintingEdition.IsDeleted = true;
+            _printingEditionsRepository.Update(findPrintingEdition);
         }
         public object Sort(SortPrintingEditionModel sortPrintingEditionModel)
         {
+            var all = _printingEditionsRepository.GetAll();
             switch (sortPrintingEditionModel.NameSort)
             {
                 case "Id":
-                   var sortId = _printingEditionsRepository.SortId();
+                    var sortId = all.OrderBy(x => x.Id);
                     return sortId; 
                 case "Name":
-                    var sortName = _printingEditionsRepository.SortName();
+                    var sortName = all.OrderBy(x => x.Name);
                     return sortName;
                 case "Price":
-                    var sortPrice = _printingEditionsRepository.SortPrice();
+                    var sortPrice = all.OrderBy(x => x.Price);
                     return sortPrice;
                 default:
                     return "Чёт не так)";
@@ -56,16 +83,17 @@ namespace EducationApp.BusinessLogicLayer.Services
         }
         public object Filter(FiltrationPrintingEditionModel filtrationPrintingEditionModel )
         {
+            var all = _printingEditionsRepository.GetAll();
             switch (filtrationPrintingEditionModel.NameFilter)
             {
                 case "Name":
-                    var filterName = _printingEditionsRepository.FilterName(filtrationPrintingEditionModel.ValueStringFilter);
+                    var filterName = all.Where(x => x.Name == filtrationPrintingEditionModel.Name);
                     return filterName;
                 case "Price":
-                    var filterPrice = _printingEditionsRepository.FilterPrice(filtrationPrintingEditionModel.ValueStringFilter);
+                    var filterPrice = all.Where(x => x.Price == filtrationPrintingEditionModel.Price);
                     return filterPrice;
                 case "Status":
-                    var filterStatus = _printingEditionsRepository.FilterStatus(filtrationPrintingEditionModel.Status);
+                    var filterStatus = all.Where(x => x.Status == filtrationPrintingEditionModel.Status);
                     return filterStatus;
                 default:
                     return "Чет не так";

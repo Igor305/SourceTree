@@ -15,7 +15,7 @@ namespace EducationApp.BusinessLogicLayer.Services
         {
             _authorRepository = authorRepository;
         }
-        public object GetAll()
+        public List<Author> GetAll()
         {
             var all = _authorRepository.GetAll();
             return all;

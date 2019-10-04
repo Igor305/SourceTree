@@ -6,6 +6,6 @@ namespace EducationApp.BusinessLogicLayer.Models.User
 {
     public class DeleteModel
     {
-        public Guid id { get; set; }
+        public Guid Id { get; set; }
     }
 }

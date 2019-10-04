@@ -6,11 +6,8 @@ using System.Text;
 
 namespace EducationApp.DataAccessLayer.Repositories.Interfaces
 {
-    public interface IOrderItemRepository
+    public interface IOrderItemRepository : IGenericRepository<OrderItem>
     {
         List<OrderItem> GetAll();
-        void CreateOrderItem(int Amount, TypeCurrency Currency, decimal UnitPrice, decimal Count);
-        void UpdateOrderItem(Guid Id, int Amount, TypeCurrency Currency, decimal UnitPrice, decimal Count);
-        void DeleteOrderItem(Guid Id);
     }
 }

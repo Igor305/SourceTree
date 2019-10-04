@@ -1,9 +1,9 @@
 ﻿using EducationApp.BusinessLogicLayer.Models.OrderItems;
 using EducationApp.BusinessLogicLayer.Services.Interfaces;
+using EducationApp.DataAccessLayer.Entities;
 using EducationApp.DataAccessLayer.Repositories.Interfaces;
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace EducationApp.BusinessLogicLayer.Services
 {
@@ -14,25 +14,42 @@ namespace EducationApp.BusinessLogicLayer.Services
         {
             _orderItemRepository = orderItemRepository; 
         }
-        public object GetAll()
+        public List<OrderItem> GetAll()
         {
             var all = _orderItemRepository.GetAll();
             return all;
         }
         public void Create(CreateOrderItemModel createOrderItemModel, decimal count)
         {
+            OrderItem orderItem = new OrderItem();
+            orderItem.Amount = createOrderItemModel.Amount;
+            orderItem.UnitPrice = createOrderItemModel.UnitPrice;
             count = createOrderItemModel.Amount * createOrderItemModel.UnitPrice;
-           _orderItemRepository.CreateOrderItem(createOrderItemModel.Amount, createOrderItemModel.Currency, createOrderItemModel.UnitPrice, count);
+            orderItem.Count = count;
+            orderItem.Currency = createOrderItemModel.Currency;
+            orderItem.CreateDateTime = DateTime.Now;
+            orderItem.UpdateDateTime = DateTime.Now;
+            _orderItemRepository.Create(orderItem);
                        
         }
         public void Update(UpdateOrderItemModel updateOrderItemModel, decimal count)
         {
+            var all = _orderItemRepository.GetAll();
+            var findOrderItem = all.Find(x => x.Id == updateOrderItemModel.Id);
+            findOrderItem.Amount = updateOrderItemModel.Amount;
+            findOrderItem.UnitPrice = updateOrderItemModel.UnitPrice;
             count = updateOrderItemModel.Amount * updateOrderItemModel.UnitPrice;
-            _orderItemRepository.UpdateOrderItem(updateOrderItemModel.Id, updateOrderItemModel.Amount, updateOrderItemModel.Currency, updateOrderItemModel.UnitPrice, count);
+            findOrderItem.Count = count;
+            findOrderItem.Currency = updateOrderItemModel.Currency;
+            findOrderItem.UpdateDateTime = DateTime.Now;
+            _orderItemRepository.Update(findOrderItem);
         }
         public void Delete(DeleteOrderItemModel deleteOrderItemModel)
         {
-            _orderItemRepository.DeleteOrderItem(deleteOrderItemModel.Id);
+            var all = _orderItemRepository.GetAll();
+            var findOrderItem = all.Find(x => x.Id == deleteOrderItemModel.Id);
+            findOrderItem.IsDeleted = true;
+            _orderItemRepository.Update(findOrderItem);
         }
     }
 }

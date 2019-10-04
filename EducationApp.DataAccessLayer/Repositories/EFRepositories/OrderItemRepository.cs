@@ -20,32 +20,5 @@ namespace EducationApp.DataAccessLayer.Repositories.EFRepositories
             var all = _applicationContext.OrderItems.ToList();
             return all;
         }
-        public void CreateOrderItem(int Amount, TypeCurrency Currency, decimal UnitPrice, decimal Count)
-        {
-            OrderItem orderItem = new OrderItem();
-            orderItem.Amount = Amount;
-            orderItem.UnitPrice = UnitPrice;
-            orderItem.Count = Count;
-            orderItem.Currency = Currency;
-            orderItem.CreateDateTime = DateTime.Now;
-            orderItem.UpdateDateTime = DateTime.Now;
-            Create(orderItem);
-        }
-        public void UpdateOrderItem(Guid Id, int Amount, TypeCurrency Currency, decimal UnitPrice, decimal Count)
-        {
-            var findOrderItem = _applicationContext.OrderItems.Find(Id);
-            findOrderItem.Amount = Amount;
-            findOrderItem.UnitPrice = UnitPrice;
-            findOrderItem.Count = Count;
-            findOrderItem.Currency = Currency;
-            findOrderItem.UpdateDateTime = DateTime.Now;
-            Update(findOrderItem);
-        }
-        public void DeleteOrderItem(Guid Id)
-        {
-            var findOrderItem = _applicationContext.OrderItems.Find(Id);
-            findOrderItem.IsDeleted = true;
-            Update(findOrderItem);
-        }
     }
 }

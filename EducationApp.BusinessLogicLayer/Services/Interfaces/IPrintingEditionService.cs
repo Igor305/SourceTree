@@ -1,4 +1,5 @@
 ﻿using EducationApp.BusinessLogicLayer.Models.PrintingEditions;
+using EducationApp.DataAccessLayer.Entities;
 using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
@@ -9,7 +10,7 @@ namespace EducationApp.BusinessLogicLayer.Services.Interfaces
 {
     public interface IPrintingEditionService
     {
-        object GetAll();
+        List<PrintingEdition> GetAll();
         object Buy(BuyPrintingEditionModel buyPrintingEditionModel);
         void Create(CreatePrintingEditionModel createPrintingEditionModel);
         void Update(UpdatePrintingEditionModel updatePrintingEditionModel);

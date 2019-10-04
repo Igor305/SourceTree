@@ -1,14 +1,12 @@
-﻿using EducationApp.BusinessLogicLayer.Models.Enums;
-using EducationApp.BusinessLogicLayer.Models.Orders;
-using System;
+﻿using EducationApp.BusinessLogicLayer.Models.Orders;
+using EducationApp.DataAccessLayer.Entities;
 using System.Collections.Generic;
-using System.Text;
 
 namespace EducationApp.BusinessLogicLayer.Services.Interfaces
 {
     public interface IOrderService
     {
-        object GetAll();
+        List<Order> GetAll();
         void Create(CreateOrderModel createOrderModel);
         void Update(UpdateOrderModel updateOrderModel);
         void Delete(DeleteOderModel deleteOderModel);

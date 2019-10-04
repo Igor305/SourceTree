@@ -1,34 +1,59 @@
 ﻿using EducationApp.BusinessLogicLayer.Models.User;
 using EducationApp.BusinessLogicLayer.Services.Interfaces;
+using EducationApp.DataAccessLayer.Entities;
 using EducationApp.DataAccessLayer.Repositories.Interfaces;
 using Microsoft.AspNetCore.Identity;
+using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace EducationApp.BusinessLogicLayer.Services
 {
     public class UserService : IUserService
     {
-        private readonly IUserRepository userRepository;
+        private readonly IUserRepository _userRepository;
 
         public UserService(IUserRepository userRepository)
         {
-            this.userRepository = userRepository;
+            _userRepository = userRepository;
         }
-        public async Task<IdentityResult> Create(CreateModel createModel)
+        public List<Users> GetAll()
         {
-            return await userRepository.Create(createModel.Email, createModel.Password);
+            var all = _userRepository.GetAll();
+            return all;
         }
-        public async Task<IdentityResult> Update(EditModel editModel)
+        public void Create(CreateModel createModel)
         {
-            return await userRepository.Update(editModel.Id, editModel.Email, editModel.FirstName, editModel.LastName, editModel.PhoneNumber);
+            Users user = new Users
+            {
+                Email = createModel.Email,
+                UserName = createModel.UserName,
+                FirstName = createModel.FirstName,
+                LastName = createModel.LastName,
+                PhoneNumber = createModel.PhoneNumber,
+                CreateDateTime = DateTime.Now,
+                UpdateDateTime = DateTime.Now
+            };
+            _userRepository.Create(user);
         }
-        public async Task Delete(DeleteModel deleteModel)
+        public void Update(EditModel editModel)
         {
-        await userRepository.Delete(deleteModel.id);
+            var all = _userRepository.GetAll();
+            var findUser = all.Find(x => x.Id == editModel.Id);
+            findUser.Email = editModel.Email;
+            findUser.UserName = editModel.UserName;
+            findUser.FirstName = editModel.FirstName;
+            findUser.LastName = editModel.LastName;
+            findUser.PhoneNumber = editModel.PhoneNumber;
+            findUser.UpdateDateTime = DateTime.Now;
+            _userRepository.Update(findUser);
         }
-        public async Task<IdentityResult> ChangePassword(ChangePasswordModel changePasswordModel)
+        public void Delete(DeleteModel deleteModel)
         {
-            return await userRepository.ChangePassword(changePasswordModel.Id, changePasswordModel.OldPassword, changePasswordModel.NewPassword);
+            var all = _userRepository.GetAll();
+            var findUser = all.Find(x => x.Id == deleteModel.Id);
+            findUser.IsDeleted = true;
+            _userRepository.Update(findUser);
         }
     }
 }

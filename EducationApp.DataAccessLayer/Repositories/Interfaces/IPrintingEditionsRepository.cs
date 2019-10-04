@@ -5,18 +5,8 @@ using System.Collections.Generic;
 
 namespace EducationApp.DataAccessLayer.Repositories.Interfaces
 {
-    public interface IPrintingEditionsRepository
+    public interface IPrintingEditionsRepository :IGenericRepository<PrintingEdition>
     {
         List<PrintingEdition> GetAll();
-        object Buy(Guid Id);
-        void CreatePrintingEdition(string Name, string Description, string Price, TypeStatus Status, TypeCurrency Currency, string Type);
-        void UpdatePrintingEdition(Guid Id,string Name, string Description, string Price, TypeStatus Status, TypeCurrency Currency, string Type);
-        void DeletePrintingEdition(Guid id);
-        object SortId();
-        object SortName();
-        object SortPrice();
-        object FilterName(string Name);
-        object FilterPrice(string Price);
-        object FilterStatus(TypeStatus Status);
     }
 }

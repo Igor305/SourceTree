@@ -6,11 +6,8 @@ using System.Text;
 
 namespace EducationApp.DataAccessLayer.Repositories.Interfaces
 {
-    public interface IOrderRepository
+    public interface IOrderRepository : IGenericRepository<Order>
     {
         List<Order> GetAll();
-        void CreateOrder(string Description);
-        void UpdateOrder(Guid Id, string Descriptioin);
-        void DeleteOrder(Guid Id);
     }
 }

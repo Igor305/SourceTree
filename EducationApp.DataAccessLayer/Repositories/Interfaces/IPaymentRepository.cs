@@ -5,11 +5,8 @@ using System.Text;
 
 namespace EducationApp.DataAccessLayer.Repositories.Interfaces
 {
-    public interface IPaymentRepository
+    public interface IPaymentRepository : IGenericRepository<Payment>
     {
         List<Payment> GetAll();
-        void CreatePayment(string TransactionId);
-        void UpdatePayment(Guid Id, string TransactionId);
-        void DeletePayment(Guid Id);
     }
 }

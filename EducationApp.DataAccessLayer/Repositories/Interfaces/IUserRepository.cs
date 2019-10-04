@@ -9,12 +9,6 @@ namespace EducationApp.DataAccessLayer.Repositories.Interfaces
 {
     public interface IUserRepository: IGenericRepository<Users>
     {
-       Task<IdentityResult> Create(string Email, string password);
-
-       Task<IdentityResult> Update(Guid Id, string Email, string FirstName, string LastName, string PhoneNumber);
-       Task Delete(Guid id);
-       Task<IdentityResult> ChangePassword(Guid id, string oldPassword, string newPassword);
-
-
+       List<Users> GetAll();
     }
 }
