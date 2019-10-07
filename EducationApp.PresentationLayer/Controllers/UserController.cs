@@ -22,128 +22,88 @@ namespace CustomIdentityApp.Controllers
             _userService = userService;
             _userManager = userManager;
         }
+        /*      [HttpGet("GetAll")]
+              public IActionResult UserList() => Ok(_userManager.Users.ToList());
+              public async Task<IActionResult> Edit(Guid userId)
+              {
+                  // получаем пользователя
+                  Users user = await _userManager.FindByIdAsync(userId.ToString());
+                  if (user != null)
+                  {
+                      // получем список ролей пользователя
+                      var userRoles = await _userManager.GetRolesAsync(user);
+                      var allRoles = _roleManager.Roles.ToList();
+                      ChangeRoleViewModel model = new ChangeRoleViewModel
+                      {
+                          UserId = user.Id.ToString(),
+                          UserEmail = user.Email,
+                          UserRoles = userRoles,
+                        //  AllRoles = allRoles
+                      };
+                      return Ok(model);
+                  }
+
+                  return NotFound();
+              }
+              [HttpPost]
+              public async Task<IActionResult> Edit(string userId, List<string> roles)
+              {
+                  // получаем пользователя
+                  Users user = await _userManager.FindByIdAsync(userId);
+                  if (user != null)
+                  {
+                      // получем список ролей пользователя
+                      var userRoles = await _userManager.GetRolesAsync(user);
+                      // получаем все роли
+                      var allRoles = _roleManager.Roles.ToList();
+                      // получаем список ролей, которые были добавлены
+                      var addedRoles = roles.Except(userRoles);
+                      // получаем роли, которые были удалены
+                      var removedRoles = userRoles.Except(roles);
+
+                      await _userManager.AddToRolesAsync(user, addedRoles);
+
+                      await _userManager.RemoveFromRolesAsync(user, removedRoles);
+
+                      return RedirectToAction("UserList");
+                  }
+
+                  return NotFound();
+              }*/
         [HttpGet("GetAll")]
-        public IActionResult UserList() => Ok(_userManager.Users.ToList());
-        public async Task<IActionResult> Edit(Guid userId)
+        public object GetAll()
         {
-            // получаем пользователя
-            Users user = await _userManager.FindByIdAsync(userId.ToString());
-            if (user != null)
-            {
-                // получем список ролей пользователя
-                var userRoles = await _userManager.GetRolesAsync(user);
-                var allRoles = _roleManager.Roles.ToList();
-                ChangeRoleViewModel model = new ChangeRoleViewModel
-                {
-                    UserId = user.Id.ToString(),
-                    UserEmail = user.Email,
-                    UserRoles = userRoles,
-                  //  AllRoles = allRoles
-                };
-                return Ok(model);
-            }
-
-            return NotFound();
-        }
-        [HttpPost]
-        public async Task<IActionResult> Edit(string userId, List<string> roles)
-        {
-            // получаем пользователя
-            Users user = await _userManager.FindByIdAsync(userId);
-            if (user != null)
-            {
-                // получем список ролей пользователя
-                var userRoles = await _userManager.GetRolesAsync(user);
-                // получаем все роли
-                var allRoles = _roleManager.Roles.ToList();
-                // получаем список ролей, которые были добавлены
-                var addedRoles = roles.Except(userRoles);
-                // получаем роли, которые были удалены
-                var removedRoles = userRoles.Except(roles);
-
-                await _userManager.AddToRolesAsync(user, addedRoles);
-
-                await _userManager.RemoveFromRolesAsync(user, removedRoles);
-
-                return RedirectToAction("UserList");
-            }
-
-            return NotFound();
+            var all = _userService.GetAll();
+            return all;
         }
 
         [HttpPost("Create")]
-        public async Task<IActionResult> Create([FromBody]CreateModel model)
+        public string Create([FromBody]CreateModel createmodel)
         {
             if (ModelState.IsValid)
             {
-                var result = await _userService.Create(model);
-                if (result.Succeeded)
-                {
-                    return Ok("Данные внесены ");
-                }
-                else
-                {
-                    foreach (var error in result.Errors)
-                    {
-                        ModelState.AddModelError(string.Empty, error.Description);
-                    }
-                }
+                _userService.Create(createmodel);
+                return "Данные внесены ";
             }
-            return Ok(model);
+            return "Что-то не так";
         }
 
-        [HttpPost("Update")]
-        public async Task<IActionResult> Update([FromBody]EditModel model)
+        [HttpPut("Update")]
+        public string Update([FromBody]EditModel model)
         {
             if (ModelState.IsValid)
             {
-                    var result = await _userService.Update(model);
-                    if (result.Succeeded)
-                    {
-                        return Ok("Изменены данные пользвателя ");
-                    }
-                    else
-                    {
-                        foreach (var error in result.Errors)
-                        {
-                            ModelState.AddModelError(string.Empty, error.Description);
-                        }
-                    }
-                }
-            return Ok(model);
+                    _userService.Update(model);
+                    return "Данные изменены ";
+            }
+            return "Что-то не так";
         }
 
-        [HttpPost("Delete")]
-        public async Task<ActionResult> Delete([FromBody]DeleteModel model)
+        [HttpDelete("Delete")]
+        public string Delete([FromBody]DeleteModel model)
         {
-            await _userService.Delete(model);
-            return Ok("Пользователь под номером "+model.id+" был удачно удалён");
-        }
-
-        [HttpPost("ChangePassword")]
-        public async Task<IActionResult> ChangePassword([FromBody]ChangePasswordModel model)
-        {
-            if (ModelState.IsValid)
-            {
-                var result = await _userService.ChangePassword(model);
-                if (result.Succeeded)
-                {
-                    return Ok("Вы поменяли свой пароль");
-                }
-                else
-                {
-                    // return Ok(result);
-                    foreach (var error in result.Errors)
-                    {
-                        ModelState.AddModelError(string.Empty, error.Description);
-                    }
-                }
-            }
-            else
-            {
-                ModelState.AddModelError(string.Empty, "Пользователь не найден");
-            }
-            return Ok(model);
+            _userService.Delete(model);
+            return "Пользователь под номером "+model.Id+" был удачно удалён";
         }
     }
 }

@@ -17,8 +17,11 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 using Stripe;
 using System;
+using System.Reflection;
+using System.IO;
 
 namespace EducationApp.PresentationLayer
 {
@@ -52,6 +55,14 @@ namespace EducationApp.PresentationLayer
             services.AddTransient<Users>();
             services.AddTransient<IEmailService, EmailHelper>();
             services.Configure<StripeSettings>(Configuration.GetSection("Stripe"));
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Education", Version = "v1" });
+                var xmlFile = "Swagger.xml";
+                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+                c.IncludeXmlComments(xmlPath);
+            });
+
 
             //Jwt Refresh
             const string refreshSecurityKey = "0d5b3235a8132POPROBYI248673425609879rfghert545234n1k41230";
@@ -84,14 +95,12 @@ namespace EducationApp.PresentationLayer
                         ClockSkew = TimeSpan.FromSeconds(5)
                     };
                 });
-
-
-          
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
+          
             StripeConfiguration.ApiKey = Configuration.GetSection("Stripe")["SecretKey"];   
             if (env.IsDevelopment())
             {
@@ -101,15 +110,16 @@ namespace EducationApp.PresentationLayer
             {
                 app.UseHsts();
             }
-
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Education V1");
+            });
             app.UseAuthentication();
             app.UseHttpsRedirection();
             app.UseMvc();
-           
-        }
-    }
+   
 
-    internal class MinimumAgeRequirement : IAuthorizationRequirement
-    {
+        }
     }
 }

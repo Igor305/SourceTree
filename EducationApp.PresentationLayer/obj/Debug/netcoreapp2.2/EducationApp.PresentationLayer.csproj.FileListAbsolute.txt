@@ -18,3 +18,14 @@ C:\Users\Anuitex-153\source\repos\SourceTree\EducationApp.PresentationLayer\obj\
 C:\Users\Anuitex-153\source\repos\SourceTree\EducationApp.PresentationLayer\obj\Debug\netcoreapp2.2\EducationApp.PresentationLayer.pdb
 C:\Users\Anuitex-153\source\repos\SourceTree\EducationApp.PresentationLayer\bin\Debug\netcoreapp2.2\EducationApp.PresentationLayer.Views.dll
 C:\Users\Anuitex-153\source\repos\SourceTree\EducationApp.PresentationLayer\obj\Debug\netcoreapp2.2\EducationApp.PresentationLayer.csprojAssemblyReference.cache
+C:\Users\Anuitex-153\source\repos\SourceTree\EducationApp.PresentationLayer\bin\Debug\netcoreapp2.2\netcoreapp2.2\EducationApp.PresentationLayer.deps.json
+C:\Users\Anuitex-153\source\repos\SourceTree\EducationApp.PresentationLayer\bin\Debug\netcoreapp2.2\netcoreapp2.2\EducationApp.PresentationLayer.runtimeconfig.json
+C:\Users\Anuitex-153\source\repos\SourceTree\EducationApp.PresentationLayer\bin\Debug\netcoreapp2.2\netcoreapp2.2\EducationApp.PresentationLayer.runtimeconfig.dev.json
+C:\Users\Anuitex-153\source\repos\SourceTree\EducationApp.PresentationLayer\bin\Debug\netcoreapp2.2\netcoreapp2.2\EducationApp.PresentationLayer.dll
+C:\Users\Anuitex-153\source\repos\SourceTree\EducationApp.PresentationLayer\bin\Debug\netcoreapp2.2\netcoreapp2.2\EducationApp.PresentationLayer.pdb
+C:\Users\Anuitex-153\source\repos\SourceTree\EducationApp.PresentationLayer\bin\Debug\netcoreapp2.2\netcoreapp2.2\EducationApp.PresentationLayer.Views.dll
+C:\Users\Anuitex-153\source\repos\SourceTree\EducationApp.PresentationLayer\bin\Debug\netcoreapp2.2\netcoreapp2.2\EducationApp.BusinessLogicLayer.dll
+C:\Users\Anuitex-153\source\repos\SourceTree\EducationApp.PresentationLayer\bin\Debug\netcoreapp2.2\netcoreapp2.2\EducationApp.DataAccessLayer.dll
+C:\Users\Anuitex-153\source\repos\SourceTree\EducationApp.PresentationLayer\bin\Debug\netcoreapp2.2\netcoreapp2.2\EducationApp.BusinessLogicLayer.pdb
+C:\Users\Anuitex-153\source\repos\SourceTree\EducationApp.PresentationLayer\bin\Debug\netcoreapp2.2\netcoreapp2.2\EducationApp.DataAccessLayer.pdb
+C:\Users\Anuitex-153\source\repos\SourceTree\EducationApp.PresentationLayer\bin\Debug\netcoreapp2.2\netcoreapp2.2\Swagger.xml

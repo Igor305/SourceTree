@@ -1,7 +1,5 @@
 ﻿using EducationApp.BusinessLogicLayer.Models.Authors;
-using EducationApp.BusinessLogicLayer.Services;
 using EducationApp.BusinessLogicLayer.Services.Interfaces;
-using EducationApp.DataAccessLayer.Repositories.EFRepositories;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -16,8 +14,11 @@ namespace EducationApp.PresentationLayer.Controllers
         public AuthorController(IAuthorService authorService)
         {
             _authorService = authorService;
-        } 
-        [HttpGet("{GetAll}")]
+        }
+        /// <summary>
+        /// Get all Author
+        /// </summary>
+        [HttpGet("GetAll")]
         public object GetAll()
         {
             if (ModelState.IsValid)
@@ -27,6 +28,18 @@ namespace EducationApp.PresentationLayer.Controllers
             }
             return "Запись не валидна(";
         }
+        /// <summary>
+        /// Get Name Author
+        /// </summary>
+        ///     /// <remarks>
+        /// Sample request:
+        ///
+        ///     GET /GetAll
+        ///     {
+        ///        "Name": "Пушкин"
+        ///     }
+        ///
+        /// </remarks>
         [HttpGet("GetName")]
         public object GetName([FromBody]GetNameAuthorModel getNameAuthorModel)
         {
@@ -37,6 +50,19 @@ namespace EducationApp.PresentationLayer.Controllers
             }
             return "Запись не валидна(";
         }
+        /// <summary>
+        /// Create new Author
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        ///
+        ///     GET /GetName
+        ///     {
+        ///        "Name": "Пушкин"
+        ///     }
+        ///
+        /// </remarks>
+        [Produces("application/json")]
         [HttpPost("Create")]
         public string Create([FromBody]CreateAuthorModel createAuthorModel)
         {
@@ -47,6 +73,19 @@ namespace EducationApp.PresentationLayer.Controllers
             }
             return "Запись не валидна(";
         }
+        /// <summary>
+        /// Udate Author for Id
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        ///
+        ///     PUT /Update
+        ///     {
+        ///         "Id": "",
+        ///         "Name": "Пушкин"
+        ///     }
+        ///
+        /// </remarks>
         [HttpPut("Update")]
         public string Update([FromBody]UpdateAuthorModel updateAuthorModel)
         {
@@ -57,6 +96,18 @@ namespace EducationApp.PresentationLayer.Controllers
             }
             return "Запись не валидна(";
         }
+        /// <summary>
+        /// Delete  Author for Id
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        ///
+        ///     DELETE /Delete
+        ///     {
+        ///         "Id": ""
+        ///     }
+        ///
+        /// </remarks>
         [HttpDelete("Delete")]
         [Authorize(Roles = "admin")]
         public string Delete([FromBody]DeleteAuthorModel deleteAuthorModel)

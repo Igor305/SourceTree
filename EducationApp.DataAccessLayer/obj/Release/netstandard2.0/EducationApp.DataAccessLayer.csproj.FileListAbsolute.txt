@@ -1,0 +1,9 @@
+C:\Users\Anuitex-153\source\repos\SourceTree\EducationApp.DataAccessLayer\bin\Release\netstandard2.0\EducationApp.DataAccessLayer.deps.json
+C:\Users\Anuitex-153\source\repos\SourceTree\EducationApp.DataAccessLayer\bin\Release\netstandard2.0\EducationApp.DataAccessLayer.dll
+C:\Users\Anuitex-153\source\repos\SourceTree\EducationApp.DataAccessLayer\bin\Release\netstandard2.0\EducationApp.DataAccessLayer.pdb
+C:\Users\Anuitex-153\source\repos\SourceTree\EducationApp.DataAccessLayer\obj\Release\netstandard2.0\EducationApp.DataAccessLayer.csprojAssemblyReference.cache
+C:\Users\Anuitex-153\source\repos\SourceTree\EducationApp.DataAccessLayer\obj\Release\netstandard2.0\EducationApp.DataAccessLayer.csproj.CoreCompileInputs.cache
+C:\Users\Anuitex-153\source\repos\SourceTree\EducationApp.DataAccessLayer\obj\Release\netstandard2.0\EducationApp.DataAccessLayer.AssemblyInfoInputs.cache
+C:\Users\Anuitex-153\source\repos\SourceTree\EducationApp.DataAccessLayer\obj\Release\netstandard2.0\EducationApp.DataAccessLayer.AssemblyInfo.cs
+C:\Users\Anuitex-153\source\repos\SourceTree\EducationApp.DataAccessLayer\obj\Release\netstandard2.0\EducationApp.DataAccessLayer.dll
+C:\Users\Anuitex-153\source\repos\SourceTree\EducationApp.DataAccessLayer\obj\Release\netstandard2.0\EducationApp.DataAccessLayer.pdb

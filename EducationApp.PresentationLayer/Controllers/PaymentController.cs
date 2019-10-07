@@ -14,10 +14,27 @@ namespace EducationApp.PresentationLayer.Controllers
         {
             _paymentService = paymentService;
         }
+        [HttpGet]
+        public object GetAll()
+        {
+            var all =_paymentService.GetAll();
+            return all;
+        }
         [HttpPost]
         public void Create([FromBody]PaymentModel paymentModel)
         {
-             _paymentService.Transaction(paymentModel);
+             _paymentService.CreateTransaction(paymentModel);
         }
+        [HttpPut]
+        public void Update([FromBody]UpdatePaymentModel updatePaymentModel)
+        {
+            _paymentService.Update(updatePaymentModel);
+        }
+        [HttpDelete]
+        public void Delete([FromBody]DeletePaymentModel deletePaymentModel)
+        {
+            _paymentService.Delete(deletePaymentModel);
+        } 
+        
     }
 }
