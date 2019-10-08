@@ -1,0 +1,70 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>EducationApp.PresentationLayer</name>
+    </assembly>
+    <members>
+        <member name="M:EducationApp.PresentationLayer.Controllers.AuthorController.GetAll">
+            <summary>
+            Get all Author
+            </summary>
+        </member>
+        <member name="M:EducationApp.PresentationLayer.Controllers.AuthorController.GetName(EducationApp.BusinessLogicLayer.Models.Authors.GetNameAuthorModel)">
+             <summary>
+             Get Name Author
+             </summary>
+                 /// <remarks>
+             Sample request:
+            
+                 GET /GetAll
+                 {
+                    "Name": "Пушкин"
+                 }
+            
+             </remarks>
+        </member>
+        <member name="M:EducationApp.PresentationLayer.Controllers.AuthorController.Create(EducationApp.BusinessLogicLayer.Models.Authors.CreateAuthorModel)">
+             <summary>
+             Create new Author
+             </summary>
+             <remarks>
+             Sample request:
+            
+                 GET /GetName
+                 {
+                    "Name": "Пушкин"
+                 }
+            
+             </remarks>
+        </member>
+        <member name="M:EducationApp.PresentationLayer.Controllers.AuthorController.Update(EducationApp.BusinessLogicLayer.Models.Authors.UpdateAuthorModel)">
+             <summary>
+             Udate Author for Id
+             </summary>
+             <remarks>
+             Sample request:
+            
+                 PUT /Update
+                 {
+                     "Id": "",
+                     "Name": "Пушкин"
+                 }
+            
+             </remarks>
+        </member>
+        <member name="M:EducationApp.PresentationLayer.Controllers.AuthorController.Delete(EducationApp.BusinessLogicLayer.Models.Authors.DeleteAuthorModel)">
+             <summary>
+             Delete  Author for Id
+             </summary>
+             <remarks>
+             Sample request:
+            
+                 DELETE /Delete
+                 {
+                     "Id": ""
+                 }
+            
+             </remarks>
+        </member>
+    </members>
+</doc>

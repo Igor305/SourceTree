@@ -5,8 +5,13 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DocumentationFile>Swagger.xml</DocumentationFile>
+    <DocumentationFile>Swagger.xml</DocumentationFile> 
     <OutputPath>bin\Debug\netcoreapp2.2\</OutputPath>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DocumentationFile>Swagger.xml</DocumentationFile>
+    <OutputPath>bin\Release\netcoreapp2.2\</OutputPath>
   </PropertyGroup>
 
   <ItemGroup>
