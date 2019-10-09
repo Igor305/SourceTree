@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Anuitex-153\\source\\repos\\SourceTree\\EducationApp.PresentationLayer\\EducationApp.PresentationLayer.csproj": {}
+    "C:\\Users\\Anuitex-153\\Desktop\\New folder\\SourceTree\\EducationApp.PresentationLayer\\EducationApp.PresentationLayer.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Anuitex-153\\source\\repos\\SourceTree\\EducationApp.BusinessLogicLayer\\EducationApp.BusinessLogicLayer.csproj": {
+    "C:\\Users\\Anuitex-153\\Desktop\\New folder\\SourceTree\\EducationApp.BusinessLogicLayer\\EducationApp.BusinessLogicLayer.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Anuitex-153\\source\\repos\\SourceTree\\EducationApp.BusinessLogicLayer\\EducationApp.BusinessLogicLayer.csproj",
+        "projectUniqueName": "C:\\Users\\Anuitex-153\\Desktop\\New folder\\SourceTree\\EducationApp.BusinessLogicLayer\\EducationApp.BusinessLogicLayer.csproj",
         "projectName": "EducationApp.BusinessLogicLayer",
-        "projectPath": "C:\\Users\\Anuitex-153\\source\\repos\\SourceTree\\EducationApp.BusinessLogicLayer\\EducationApp.BusinessLogicLayer.csproj",
+        "projectPath": "C:\\Users\\Anuitex-153\\Desktop\\New folder\\SourceTree\\EducationApp.BusinessLogicLayer\\EducationApp.BusinessLogicLayer.csproj",
         "packagesPath": "C:\\Users\\Anuitex-153\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Anuitex-153\\source\\repos\\SourceTree\\EducationApp.BusinessLogicLayer\\obj\\",
+        "outputPath": "C:\\Users\\Anuitex-153\\Desktop\\New folder\\SourceTree\\EducationApp.BusinessLogicLayer\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Microsoft\\Xamarin\\NuGet\\",
@@ -32,8 +32,8 @@
         "frameworks": {
           "netstandard2.0": {
             "projectReferences": {
-              "C:\\Users\\Anuitex-153\\source\\repos\\SourceTree\\EducationApp.DataAccessLayer\\EducationApp.DataAccessLayer.csproj": {
-                "projectPath": "C:\\Users\\Anuitex-153\\source\\repos\\SourceTree\\EducationApp.DataAccessLayer\\EducationApp.DataAccessLayer.csproj"
+              "C:\\Users\\Anuitex-153\\Desktop\\New folder\\SourceTree\\EducationApp.DataAccessLayer\\EducationApp.DataAccessLayer.csproj": {
+                "projectPath": "C:\\Users\\Anuitex-153\\Desktop\\New folder\\SourceTree\\EducationApp.DataAccessLayer\\EducationApp.DataAccessLayer.csproj"
               }
             }
           }
@@ -74,14 +74,14 @@
         }
       }
     },
-    "C:\\Users\\Anuitex-153\\source\\repos\\SourceTree\\EducationApp.DataAccessLayer\\EducationApp.DataAccessLayer.csproj": {
+    "C:\\Users\\Anuitex-153\\Desktop\\New folder\\SourceTree\\EducationApp.DataAccessLayer\\EducationApp.DataAccessLayer.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Anuitex-153\\source\\repos\\SourceTree\\EducationApp.DataAccessLayer\\EducationApp.DataAccessLayer.csproj",
+        "projectUniqueName": "C:\\Users\\Anuitex-153\\Desktop\\New folder\\SourceTree\\EducationApp.DataAccessLayer\\EducationApp.DataAccessLayer.csproj",
         "projectName": "EducationApp.DataAccessLayer",
-        "projectPath": "C:\\Users\\Anuitex-153\\source\\repos\\SourceTree\\EducationApp.DataAccessLayer\\EducationApp.DataAccessLayer.csproj",
+        "projectPath": "C:\\Users\\Anuitex-153\\Desktop\\New folder\\SourceTree\\EducationApp.DataAccessLayer\\EducationApp.DataAccessLayer.csproj",
         "packagesPath": "C:\\Users\\Anuitex-153\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Anuitex-153\\source\\repos\\SourceTree\\EducationApp.DataAccessLayer\\obj\\",
+        "outputPath": "C:\\Users\\Anuitex-153\\Desktop\\New folder\\SourceTree\\EducationApp.DataAccessLayer\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Microsoft\\Xamarin\\NuGet\\",
@@ -162,14 +162,14 @@
         }
       }
     },
-    "C:\\Users\\Anuitex-153\\source\\repos\\SourceTree\\EducationApp.PresentationLayer\\EducationApp.PresentationLayer.csproj": {
+    "C:\\Users\\Anuitex-153\\Desktop\\New folder\\SourceTree\\EducationApp.PresentationLayer\\EducationApp.PresentationLayer.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Anuitex-153\\source\\repos\\SourceTree\\EducationApp.PresentationLayer\\EducationApp.PresentationLayer.csproj",
+        "projectUniqueName": "C:\\Users\\Anuitex-153\\Desktop\\New folder\\SourceTree\\EducationApp.PresentationLayer\\EducationApp.PresentationLayer.csproj",
         "projectName": "EducationApp.PresentationLayer",
-        "projectPath": "C:\\Users\\Anuitex-153\\source\\repos\\SourceTree\\EducationApp.PresentationLayer\\EducationApp.PresentationLayer.csproj",
+        "projectPath": "C:\\Users\\Anuitex-153\\Desktop\\New folder\\SourceTree\\EducationApp.PresentationLayer\\EducationApp.PresentationLayer.csproj",
         "packagesPath": "C:\\Users\\Anuitex-153\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Anuitex-153\\source\\repos\\SourceTree\\EducationApp.PresentationLayer\\obj\\",
+        "outputPath": "C:\\Users\\Anuitex-153\\Desktop\\New folder\\SourceTree\\EducationApp.PresentationLayer\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Microsoft\\Xamarin\\NuGet\\",
@@ -190,8 +190,8 @@
         "frameworks": {
           "netcoreapp2.2": {
             "projectReferences": {
-              "C:\\Users\\Anuitex-153\\source\\repos\\SourceTree\\EducationApp.BusinessLogicLayer\\EducationApp.BusinessLogicLayer.csproj": {
-                "projectPath": "C:\\Users\\Anuitex-153\\source\\repos\\SourceTree\\EducationApp.BusinessLogicLayer\\EducationApp.BusinessLogicLayer.csproj"
+              "C:\\Users\\Anuitex-153\\Desktop\\New folder\\SourceTree\\EducationApp.BusinessLogicLayer\\EducationApp.BusinessLogicLayer.csproj": {
+                "projectPath": "C:\\Users\\Anuitex-153\\Desktop\\New folder\\SourceTree\\EducationApp.BusinessLogicLayer\\EducationApp.BusinessLogicLayer.csproj"
               }
             }
           }
