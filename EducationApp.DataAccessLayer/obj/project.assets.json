@@ -6284,11 +6284,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Anuitex-153\\source\\repos\\SourceTree\\EducationApp.DataAccessLayer\\EducationApp.DataAccessLayer.csproj",
+      "projectUniqueName": "C:\\Users\\Anuitex-153\\Desktop\\New folder\\SourceTree\\EducationApp.DataAccessLayer\\EducationApp.DataAccessLayer.csproj",
       "projectName": "EducationApp.DataAccessLayer",
-      "projectPath": "C:\\Users\\Anuitex-153\\source\\repos\\SourceTree\\EducationApp.DataAccessLayer\\EducationApp.DataAccessLayer.csproj",
+      "projectPath": "C:\\Users\\Anuitex-153\\Desktop\\New folder\\SourceTree\\EducationApp.DataAccessLayer\\EducationApp.DataAccessLayer.csproj",
       "packagesPath": "C:\\Users\\Anuitex-153\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Anuitex-153\\source\\repos\\SourceTree\\EducationApp.DataAccessLayer\\obj\\",
+      "outputPath": "C:\\Users\\Anuitex-153\\Desktop\\New folder\\SourceTree\\EducationApp.DataAccessLayer\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Microsoft\\Xamarin\\NuGet\\",
