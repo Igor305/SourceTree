@@ -26,6 +26,10 @@ namespace EducationApp.DataAccessLayer.Migrations
 
                     b.Property<DateTime>("CreateDateTime");
 
+                    b.Property<DateTime?>("DataBirth");
+
+                    b.Property<DateTime?>("DataDeath");
+
                     b.Property<bool>("IsDeleted");
 
                     b.Property<string>("Name")
@@ -63,8 +67,6 @@ namespace EducationApp.DataAccessLayer.Migrations
                     b.Property<bool>("IsDeleted");
 
                     b.Property<Guid>("PaymentId");
-
-                    b.Property<int>("Status");
 
                     b.Property<DateTime>("UpdateDateTime");
 

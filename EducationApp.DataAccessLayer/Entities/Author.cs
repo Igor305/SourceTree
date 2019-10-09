@@ -1,5 +1,5 @@
 ﻿using EducationApp.DataAccessLayer.Entities.Base;
-using Microsoft.EntityFrameworkCore.Infrastructure;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
@@ -7,9 +7,12 @@ namespace EducationApp.DataAccessLayer.Entities
 {
     public class Author : Basic
     {
-        
+
         [Required]
         public string Name { get; set; }
+        public DateTime? DataBirth { get; set; }
+        public DateTime? DataDeath { get; set; }
+
         private ICollection<AutorInPrintingEdition> _autorInPrintingEditions;
         public virtual ICollection<AutorInPrintingEdition> AutorInPrintingEdition
         {

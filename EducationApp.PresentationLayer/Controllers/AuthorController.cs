@@ -16,6 +16,19 @@ namespace EducationApp.PresentationLayer.Controllers
             _authorService = authorService;
         }
         /// <summary>
+        /// Get all Author (IsDeleted = true)
+        /// </summary>
+        [HttpGet("GetAllIsDeleted")]
+        public object GetAllIsDeleted()
+        {
+            if (ModelState.IsValid)
+            {
+                var allIsDeleted = _authorService.GetAllIsDeleted();
+                return allIsDeleted;
+            }
+            return "Запись не валидна(";
+        }
+        /// <summary>
         /// Get all Author
         /// </summary>
         [HttpGet("GetAll")]
@@ -59,6 +72,8 @@ namespace EducationApp.PresentationLayer.Controllers
         ///     GET /GetName
         ///     {
         ///        "Name": "Пушкин"
+        ///        "DateBirth":"1805-10-09T08:38:40.163Z",
+        ///        "DatadDeath": "1855-10-09T08:38:40.163Z",
         ///     }
         ///
         /// </remarks>
@@ -68,10 +83,10 @@ namespace EducationApp.PresentationLayer.Controllers
         {
             if (ModelState.IsValid)
             {
-                _authorService.Create(createAuthorModel);
-                return "Добавлена новая запись";
+                string result = _authorService.Create(createAuthorModel);
+                return result;
             }
-            return "Запись не валидна(";
+           return "Запись не валидна(";
         }
         /// <summary>
         /// Udate Author for Id
@@ -83,16 +98,19 @@ namespace EducationApp.PresentationLayer.Controllers
         ///     {
         ///         "Id": "",
         ///         "Name": "Пушкин"
+        ///         "DateBirth":"1805-10-09T08:38:40.163Z",
+        ///         "DatadDeath": "1855-10-09T08:38:40.163Z",
         ///     }
         ///
         /// </remarks>
+        [Produces("application/json")]
         [HttpPut("Update")]
         public string Update([FromBody]UpdateAuthorModel updateAuthorModel)
         {
             if (ModelState.IsValid)
             {
-                _authorService.Update(updateAuthorModel);
-                return "Запись обновлена";
+                var result = _authorService.Update(updateAuthorModel);
+                return result;
             }
             return "Запись не валидна(";
         }
@@ -108,8 +126,8 @@ namespace EducationApp.PresentationLayer.Controllers
         ///     }
         ///
         /// </remarks>
+        [Produces("application/json")]
         [HttpDelete("Delete")]
-        [Authorize(Roles = "admin")]
         public string Delete([FromBody]DeleteAuthorModel deleteAuthorModel)
         {
             if (ModelState.IsValid)

@@ -7,9 +7,10 @@ namespace EducationApp.BusinessLogicLayer.Services.Interfaces
     public interface IAuthorService
     {
         List<Author> GetAll();
+        List<Author> GetAllIsDeleted();
         IEnumerable<Author> GetName(GetNameAuthorModel getNameAuthorModel);
-        void Create(CreateAuthorModel createAuthorModel);
-        void Update(UpdateAuthorModel updateAuthorModel);
+        string Create(CreateAuthorModel createAuthorModel);
+        string Update(UpdateAuthorModel updateAuthorModel);
         void Delete(DeleteAuthorModel deleteAuthorModel); 
     }
 }

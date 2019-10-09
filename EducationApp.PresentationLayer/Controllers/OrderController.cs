@@ -25,7 +25,7 @@ namespace EducationApp.PresentationLayer.Controllers
             var all =_orderService.GetAll();
             return all;
         }
-        [HttpPost]
+        [HttpPost("Create")]
         public void Create([FromBody]CreateOrderModel createOrderModel)
         {
             _orderService.Create(createOrderModel);

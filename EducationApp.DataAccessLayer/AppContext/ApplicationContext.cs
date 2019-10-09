@@ -22,6 +22,10 @@ namespace EducationApp.DataAccessLayer.AppContext
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
 
+            modelBuilder.Entity<Author>().HasQueryFilter(e => !e.IsDeleted);
+
+        
+
             modelBuilder.Entity<UserInRole>()
                 .HasKey(bc => new { bc.UserId, bc.RoleId });
             modelBuilder.Entity<UserInRole>()

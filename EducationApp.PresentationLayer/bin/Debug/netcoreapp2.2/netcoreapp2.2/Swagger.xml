@@ -4,6 +4,11 @@
         <name>EducationApp.PresentationLayer</name>
     </assembly>
     <members>
+        <member name="M:EducationApp.PresentationLayer.Controllers.AuthorController.GetAllIsDeleted">
+            <summary>
+            Get all Author (IsDeleted = true)
+            </summary>
+        </member>
         <member name="M:EducationApp.PresentationLayer.Controllers.AuthorController.GetAll">
             <summary>
             Get all Author
@@ -33,6 +38,8 @@
                  GET /GetName
                  {
                     "Name": "Пушкин"
+                    "DateBirth":"1805-10-09T08:38:40.163Z",
+                    "DatadDeath": "1855-10-09T08:38:40.163Z",
                  }
             
              </remarks>
@@ -48,6 +55,8 @@
                  {
                      "Id": "",
                      "Name": "Пушкин"
+                     "DateBirth":"1805-10-09T08:38:40.163Z",
+                     "DatadDeath": "1855-10-09T08:38:40.163Z",
                  }
             
              </remarks>

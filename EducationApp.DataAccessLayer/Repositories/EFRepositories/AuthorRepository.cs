@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using EducationApp.DataAccessLayer.AppContext;
 using EducationApp.DataAccessLayer.Entities;
 using EducationApp.DataAccessLayer.Repositories.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace EducationApp.DataAccessLayer.Repositories.EFRepositories
 {
@@ -19,6 +20,11 @@ namespace EducationApp.DataAccessLayer.Repositories.EFRepositories
         {
             var all = _applicationContext.Authors.ToList();
             return all;
-        } 
+        }
+        public List<Author> GetAllIsDeleted()
+        {
+            var  all = _applicationContext.Authors.IgnoreQueryFilters().ToList();
+            return all;
+        }
     }
 }
