@@ -6,5 +6,6 @@ namespace EducationApp.DataAccessLayer.Entities
     public class Payment : Basic
     {
         public string TransactionId { get; set; }
+        public Order Order { get; set; }
     }
 }

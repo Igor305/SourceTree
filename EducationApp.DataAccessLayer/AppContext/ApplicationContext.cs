@@ -40,7 +40,6 @@ namespace EducationApp.DataAccessLayer.AppContext
                 .WithMany(c => c.UserInRoly)
                 .HasForeignKey(bc => bc.RoleId);
 
-
             modelBuilder.Entity<AutorInPrintingEdition>()
                 .HasKey(bc => new { bc.AutorId, bc.PrintingEditionId });
             modelBuilder.Entity<AutorInPrintingEdition>()
@@ -51,8 +50,6 @@ namespace EducationApp.DataAccessLayer.AppContext
                 .HasOne(bc => bc.PrintingEdition)
                 .WithMany(c => c.AutorInPrintingEdition)
                 .HasForeignKey(bc => bc.PrintingEditionId);
-
-
 
             base.OnModelCreating(modelBuilder);
         }

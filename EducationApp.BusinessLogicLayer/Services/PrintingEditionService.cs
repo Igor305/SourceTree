@@ -1,4 +1,5 @@
-﻿using EducationApp.BusinessLogicLayer.Models.PrintingEditions;
+﻿using EducationApp.BusinessLogicLayer.Models.Enums;
+using EducationApp.BusinessLogicLayer.Models.PrintingEditions;
 using EducationApp.BusinessLogicLayer.Services.Interfaces;
 using EducationApp.DataAccessLayer.Entities;
 using EducationApp.DataAccessLayer.Repositories.Interfaces;
@@ -73,31 +74,32 @@ namespace EducationApp.BusinessLogicLayer.Services
             var all = _printingEditionsRepository.GetAll();
             switch (sortPrintingEditionModel.NameSort)
             {
-                case "Id":
+                case PrintingEditionNameSort.Id:
                     var sortId = all.OrderBy(x => x.Id);
-                    return sortId; 
-                case "Name":
+                    return sortId;
+                case PrintingEditionNameSort.Name:
                     var sortName = all.OrderBy(x => x.Name);
                     return sortName;
-                case "Price":
+                case PrintingEditionNameSort.Price:
                     var sortPrice = all.OrderBy(x => x.Price);
                     return sortPrice;
                 default:
                     return "Чёт не так)";
             }
+
         }
         public object Filter(FiltrationPrintingEditionModel filtrationPrintingEditionModel )
         {
             var all = _printingEditionsRepository.GetAll();
             switch (filtrationPrintingEditionModel.NameFilter)
             {
-                case "Name":
+                case PrintingEditionNameFilter.Name:
                     var filterName = all.Where(x => x.Name == filtrationPrintingEditionModel.Name);
                     return filterName;
-                case "Price":
+                case PrintingEditionNameFilter.Price:
                     var filterPrice = all.Where(x => x.Price == filtrationPrintingEditionModel.Price);
                     return filterPrice;
-                case "Status":
+                case PrintingEditionNameFilter.Status:
                     var filterStatus = all.Where(x => x.Status == filtrationPrintingEditionModel.Status);
                     return filterStatus;
                 default:

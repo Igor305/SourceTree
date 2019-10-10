@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using EducationApp.DataAccessLayer.Repositories.Interfaces;
 
 namespace EducationApp.DataAccessLayer.Repositories.DapperRepositories
 {
-    class PrintingEditionsRepository
+    public class PrintingEditionsRepository
     {
     }
 }
