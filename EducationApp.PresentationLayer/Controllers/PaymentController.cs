@@ -1,40 +1,108 @@
-﻿using EducationApp.BusinessLogicLayer.Models.Payments;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using EducationApp.BusinessLogicLayer.Models.Payments;
 using EducationApp.BusinessLogicLayer.Services.Interfaces;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace EducationApp.PresentationLayer.Controllers
 {
     [Route("api/[controller]")]
-    public class PaymentController : Controller
+    [ApiController]
+    public class PaymentController : ControllerBase
     {
         private readonly IPaymentService _paymentService;
         public PaymentController(IPaymentService paymentService)
         {
             _paymentService = paymentService;
         }
-        [HttpGet]
+        /// <summary>
+        /// Get all Payment (IsDeleted = true)
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        ///
+        ///     Get/GetAllIsDeleted
+        ///
+        /// </remarks>
+        [HttpGet("GetAllIsDeleted")]
+        public object GetAllIsDeleted()
+        {
+            var allIsDeleted = _paymentService.GetAllIsDeleted();
+            return allIsDeleted;
+        }
+        /// <summary>
+        /// Get all Payment 
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        ///
+        ///     Get/GetAll
+        ///
+        /// </remarks>
+        [HttpGet("GetAll")]
         public object GetAll()
         {
-            var all =_paymentService.GetAll();
+            var all = _paymentService.GetAll();
             return all;
         }
-        [HttpPost]
+        /// <summary>
+        /// Create new Payment
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        ///
+        ///     Post/Create
+        ///     {
+        ///         "Email": "",
+        ///         "Source": "",
+        ///         "Description": "Выгодный товар",
+        ///         "Currency": "",
+        ///         "Amount": ""
+        ///     }
+        ///
+        /// </remarks>
+        [HttpPost("Create")]
         public void Create([FromBody]PaymentModel paymentModel)
         {
-             _paymentService.CreateTransaction(paymentModel);
+            _paymentService.CreateTransaction(paymentModel);
         }
-        [HttpPut]
+        /// <summary>
+        /// Update Order for Id
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        ///
+        ///     PUT/Update
+        ///     {
+        ///         "Id": "",
+        ///         "TransactionId": "",
+        ///     }
+        ///
+        /// </remarks>
+        [HttpPut("Update")]
         public void Update([FromBody]UpdatePaymentModel updatePaymentModel)
         {
             _paymentService.Update(updatePaymentModel);
         }
-        [HttpDelete]
+        /// <summary>
+        /// Delete Order for Id
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        ///
+        ///     DELETE/Delete
+        ///     {
+        ///         "Id": ""
+        ///     }
+        ///
+        /// </remarks>
+        [HttpDelete("Delete")]
         public void Delete([FromBody]DeletePaymentModel deletePaymentModel)
         {
             _paymentService.Delete(deletePaymentModel);
-        } 
-        
+        }
     }
 }

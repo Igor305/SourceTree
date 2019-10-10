@@ -9,6 +9,7 @@ namespace EducationApp.DataAccessLayer.Repositories.Interfaces
 {
     public interface IUserRepository: IGenericRepository<Users>
     {
-       List<Users> GetAll();
+        List<Users> GetAllIsDeleted();
+        List<Users> GetAll();
     }
 }

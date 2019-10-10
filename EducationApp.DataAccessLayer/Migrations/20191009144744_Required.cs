@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace EducationApp.DataAccessLayer.Migrations
 {
-    public partial class DateTimeNoNull : Migration
+    public partial class Required : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -63,7 +63,7 @@ namespace EducationApp.DataAccessLayer.Migrations
                     CreateDateTime = table.Column<DateTime>(nullable: false),
                     UpdateDateTime = table.Column<DateTime>(nullable: false),
                     IsDeleted = table.Column<bool>(nullable: false),
-                    Name = table.Column<string>(nullable: false),
+                    Name = table.Column<string>(nullable: true),
                     DataBirth = table.Column<DateTime>(nullable: true),
                     DataDeath = table.Column<DateTime>(nullable: true)
                 },

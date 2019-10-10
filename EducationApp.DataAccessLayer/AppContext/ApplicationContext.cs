@@ -23,8 +23,11 @@ namespace EducationApp.DataAccessLayer.AppContext
         {
 
             modelBuilder.Entity<Author>().HasQueryFilter(e => !e.IsDeleted);
-
-        
+            modelBuilder.Entity<Order>().HasQueryFilter(e => !e.IsDeleted);
+            modelBuilder.Entity<OrderItem>().HasQueryFilter(e => !e.IsDeleted);
+            modelBuilder.Entity<Payment>().HasQueryFilter(e => !e.IsDeleted);
+            modelBuilder.Entity<PrintingEdition>().HasQueryFilter(e => !e.IsDeleted);
+            modelBuilder.Entity<Users>().HasQueryFilter(e => !e.IsDeleted);
 
             modelBuilder.Entity<UserInRole>()
                 .HasKey(bc => new { bc.UserId, bc.RoleId });

@@ -6,7 +6,6 @@ using EducationApp.DataAccessLayer.AppContext;
 using EducationApp.DataAccessLayer.Entities;
 using EducationApp.DataAccessLayer.Repositories.EFRepositories;
 using EducationApp.DataAccessLayer.Repositories.Interfaces;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -20,8 +19,8 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Stripe;
 using System;
-using System.Reflection;
 using System.IO;
+using OrderService = EducationApp.BusinessLogicLayer.Services.OrderService;
 
 namespace EducationApp.PresentationLayer
 {
@@ -52,6 +51,10 @@ namespace EducationApp.PresentationLayer
             services.AddScoped<IAuthorService, AuthorService>();
             services.AddScoped<IPaymentRepository, PaymentRepository>();
             services.AddScoped<IPaymentService, PaymentService>();
+            services.AddScoped<IOrderRepository, OrderRepository>();
+            services.AddScoped<IOrderService, OrderService>();
+            services.AddScoped<IOrderItemRepository, OrderItemRepository>();
+            services.AddScoped<IOrderItemService, OrderItemService>();
             services.AddTransient<Users>();
             services.AddTransient<IEmailService, EmailHelper>();
             services.Configure<StripeSettings>(Configuration.GetSection("Stripe"));

@@ -8,7 +8,7 @@ namespace EducationApp.BusinessLogicLayer.Services.Interfaces
     {
         List<Author> GetAll();
         List<Author> GetAllIsDeleted();
-        IEnumerable<Author> GetName(GetNameAuthorModel getNameAuthorModel);
+        IEnumerable<Author> FindName(GetNameAuthorModel getNameAuthorModel);
         string Create(CreateAuthorModel createAuthorModel);
         string Update(UpdateAuthorModel updateAuthorModel);
         void Delete(DeleteAuthorModel deleteAuthorModel); 

@@ -8,6 +8,7 @@ namespace EducationApp.DataAccessLayer.Repositories.Interfaces
 {
     public interface IOrderRepository : IGenericRepository<Order>
     {
+        List<Order> GetAllIsDeleted();
         List<Order> GetAll();
     }
 }

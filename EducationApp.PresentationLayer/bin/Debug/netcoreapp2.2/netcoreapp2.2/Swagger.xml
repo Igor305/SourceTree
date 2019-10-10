@@ -5,23 +5,35 @@
     </assembly>
     <members>
         <member name="M:EducationApp.PresentationLayer.Controllers.AuthorController.GetAllIsDeleted">
-            <summary>
-            Get all Author (IsDeleted = true)
-            </summary>
+             <summary>
+             Get all Author (IsDeleted = true)
+             </summary>
+             <remarks>
+             Sample request:
+            
+                 Get/GetAllIsDeleted
+            
+             </remarks>
         </member>
         <member name="M:EducationApp.PresentationLayer.Controllers.AuthorController.GetAll">
-            <summary>
-            Get all Author
-            </summary>
+             <summary>
+             Get All Author
+             </summary>
+             <remarks>
+             Sample request:
+            
+                 Get/GetAll
+            
+             </remarks>
         </member>
-        <member name="M:EducationApp.PresentationLayer.Controllers.AuthorController.GetName(EducationApp.BusinessLogicLayer.Models.Authors.GetNameAuthorModel)">
+        <member name="M:EducationApp.PresentationLayer.Controllers.AuthorController.FindName(EducationApp.BusinessLogicLayer.Models.Authors.GetNameAuthorModel)">
              <summary>
              Get Name Author
              </summary>
-                 /// <remarks>
+            <remarks>
              Sample request:
             
-                 GET /GetAll
+                 Post/Find Name
                  {
                     "Name": "Пушкин"
                  }
@@ -35,9 +47,9 @@
              <remarks>
              Sample request:
             
-                 GET /GetName
+                 POST/Create
                  {
-                    "Name": "Пушкин"
+                    "Name": "Пушкин",
                     "DateBirth":"1805-10-09T08:38:40.163Z",
                     "DatadDeath": "1855-10-09T08:38:40.163Z",
                  }
@@ -46,15 +58,15 @@
         </member>
         <member name="M:EducationApp.PresentationLayer.Controllers.AuthorController.Update(EducationApp.BusinessLogicLayer.Models.Authors.UpdateAuthorModel)">
              <summary>
-             Udate Author for Id
+             Update Author for Id
              </summary>
              <remarks>
              Sample request:
             
-                 PUT /Update
+                 PUT/Update
                  {
                      "Id": "",
-                     "Name": "Пушкин"
+                     "Name": "Пушкин",
                      "DateBirth":"1805-10-09T08:38:40.163Z",
                      "DatadDeath": "1855-10-09T08:38:40.163Z",
                  }
@@ -68,7 +80,397 @@
              <remarks>
              Sample request:
             
-                 DELETE /Delete
+                 DELETE/Delete
+                 {
+                     "Id": ""
+                 }
+            
+             </remarks>
+        </member>
+        <member name="M:EducationApp.PresentationLayer.Controllers.OrderController.GetAllIsDeleted">
+             <summary>
+             Get all Order (IsDeleted = true)
+             </summary>
+             <remarks>
+             Sample request:
+            
+                 Get/GetAllIsDeleted
+            
+             </remarks>
+        </member>
+        <member name="M:EducationApp.PresentationLayer.Controllers.OrderController.GetAll">
+             <summary>
+             Get all Order
+             </summary>
+             <remarks>
+             Sample request:
+            
+                 Get/GetAll
+            
+             </remarks>
+        </member>
+        <member name="M:EducationApp.PresentationLayer.Controllers.OrderController.Create(EducationApp.BusinessLogicLayer.Models.Orders.CreateOrderModel)">
+             <summary>
+             Create new Order
+             </summary>
+             <remarks>
+             Sample request:
+            
+                 POST/Create
+                 {
+                     "Description": "Выгодный товар"
+                 }
+            
+             </remarks>
+        </member>
+        <member name="M:EducationApp.PresentationLayer.Controllers.OrderController.Update(EducationApp.BusinessLogicLayer.Models.Orders.UpdateOrderModel)">
+             <summary>
+             Update Order for Id
+             </summary>
+             <remarks>
+             Sample request:
+            
+                 PUT/Update
+                 {
+                     "Id": "",
+                     "Description": "Выгодный товар"
+                 }
+            
+             </remarks>
+        </member>
+        <member name="M:EducationApp.PresentationLayer.Controllers.OrderController.Delete(EducationApp.BusinessLogicLayer.Models.Orders.DeleteOderModel)">
+             <summary>
+             Delete Order for Id
+             </summary>
+             <remarks>
+             Sample request:
+            
+                 DELETE/Delete
+                 {
+                     "Id": ""
+                 }
+            
+             </remarks>
+        </member>
+        <member name="M:EducationApp.PresentationLayer.Controllers.OrderItemController.GetAllIsDeleted">
+             <summary>
+             Get all OrderItem (IsDeleted = true)
+             </summary>
+             <remarks>
+             Sample request:
+            
+                 Get/GetAllIsDeleted
+            
+             </remarks>
+        </member>
+        <member name="M:EducationApp.PresentationLayer.Controllers.OrderItemController.GetAll">
+             <summary>
+             Get all OrderItem
+             </summary>
+             <remarks>
+             Sample request:
+            
+                 Get/GetAll
+            
+             </remarks>
+        </member>
+        <member name="M:EducationApp.PresentationLayer.Controllers.OrderItemController.Create(EducationApp.BusinessLogicLayer.Models.OrderItems.CreateOrderItemModel)">
+             <summary>
+             Create new OrderItem
+             </summary>
+             <remarks>
+             Sample request:
+            
+                 POST/Create
+                 {
+                     "Description": "Выгодный товар"
+                 }
+            
+             </remarks>
+        </member>
+        <member name="M:EducationApp.PresentationLayer.Controllers.OrderItemController.Update(EducationApp.BusinessLogicLayer.Models.OrderItems.UpdateOrderItemModel)">
+             <summary>
+             Update OrderItem for Id
+             </summary>
+             <remarks>
+             Sample request:
+            
+                 PUT/Update
+                 {
+                     "Id": "",
+                     "Description": "Выгодный товар"
+                 }
+            
+             </remarks>
+        </member>
+        <member name="M:EducationApp.PresentationLayer.Controllers.OrderItemController.Delete(EducationApp.BusinessLogicLayer.Models.OrderItems.DeleteOrderItemModel)">
+             <summary>
+             Delete OrderItem for Id
+             </summary>
+             <remarks>
+             Sample request:
+            
+                 DELETE/Delete
+                 {
+                     "Id": ""
+                 }
+            
+             </remarks>
+        </member>
+        <member name="M:EducationApp.PresentationLayer.Controllers.PaymentController.GetAllIsDeleted">
+             <summary>
+             Get all Payment (IsDeleted = true)
+             </summary>
+             <remarks>
+             Sample request:
+            
+                 Get/GetAllIsDeleted
+            
+             </remarks>
+        </member>
+        <member name="M:EducationApp.PresentationLayer.Controllers.PaymentController.GetAll">
+             <summary>
+             Get all Payment 
+             </summary>
+             <remarks>
+             Sample request:
+            
+                 Get/GetAll
+            
+             </remarks>
+        </member>
+        <member name="M:EducationApp.PresentationLayer.Controllers.PaymentController.Create(EducationApp.BusinessLogicLayer.Models.Payments.PaymentModel)">
+             <summary>
+             Create new Payment
+             </summary>
+             <remarks>
+             Sample request:
+            
+                 Post/Create
+                 {
+                     "Email": "",
+                     "Source": "",
+                     "Description": "Выгодный товар",
+                     "Currency": "",
+                     "Amount": ""
+                 }
+            
+             </remarks>
+        </member>
+        <member name="M:EducationApp.PresentationLayer.Controllers.PaymentController.Update(EducationApp.BusinessLogicLayer.Models.Payments.UpdatePaymentModel)">
+             <summary>
+             Update Order for Id
+             </summary>
+             <remarks>
+             Sample request:
+            
+                 PUT/Update
+                 {
+                     "Id": "",
+                     "TransactionId": "",
+                 }
+            
+             </remarks>
+        </member>
+        <member name="M:EducationApp.PresentationLayer.Controllers.PaymentController.Delete(EducationApp.BusinessLogicLayer.Models.Payments.DeletePaymentModel)">
+             <summary>
+             Delete Order for Id
+             </summary>
+             <remarks>
+             Sample request:
+            
+                 DELETE/Delete
+                 {
+                     "Id": ""
+                 }
+            
+             </remarks>
+        </member>
+        <member name="M:EducationApp.PresentationLayer.Controllers.PrintingEditionController.GetAllIsDeleted">
+             <summary>
+             Get all PrintingEdition (IsDeleted = true)
+             </summary>
+             <remarks>
+             Sample request:
+            
+                 Get/GetAllIsDeleted
+            
+             </remarks>
+        </member>
+        <member name="M:EducationApp.PresentationLayer.Controllers.PrintingEditionController.GetAll">
+             <summary>
+             Get all PrintingEdition 
+             </summary>
+             <remarks>
+             Sample request:
+            
+                 Get/GetAll
+            
+             </remarks>
+        </member>
+        <member name="M:EducationApp.PresentationLayer.Controllers.PrintingEditionController.Buy(EducationApp.BusinessLogicLayer.Models.PrintingEditions.BuyPrintingEditionModel)">
+             <summary>
+             Buy PrintingEdition
+             </summary>
+             <remarks>
+             Sample request:
+            
+                 Post/Buy
+                 {
+                     "Id": "",
+                 }
+            
+             </remarks>
+        </member>
+        <member name="M:EducationApp.PresentationLayer.Controllers.PrintingEditionController.Create(EducationApp.BusinessLogicLayer.Models.PrintingEditions.CreatePrintingEditionModel)">
+             <summary>
+             Create new PrintingEdition
+             </summary>
+             <remarks>
+             Sample request:
+            
+                 Post/Create
+                 {
+                     "Name": "",
+                     "Description": "",
+                     "Price": "",
+                     "Type": "",
+                     "Status": "",
+                     "Currency": ""
+                 }
+            
+             </remarks>
+        </member>
+        <member name="M:EducationApp.PresentationLayer.Controllers.PrintingEditionController.Update(EducationApp.BusinessLogicLayer.Models.PrintingEditions.UpdatePrintingEditionModel)">
+             <summary>
+             Update PrintingEdition for Id
+             </summary>
+             <remarks>
+             Sample request:
+            
+                 PUT/Update
+                 {
+                     "Id": "",
+                     "Name": "",
+                     "Description": "",
+                     "Price": "",
+                     "Type": "",
+                     "Status": "",
+                     "Currency": ""
+                 }
+            
+             </remarks>
+        </member>
+        <member name="M:EducationApp.PresentationLayer.Controllers.PrintingEditionController.Delete(EducationApp.BusinessLogicLayer.Models.PrintingEditions.DeletePrintingEditionModel)">
+             <summary>
+             Delete PrintingEdition for Id
+             </summary>
+             <remarks>
+             Sample request:
+            
+                 DELETE/Delete
+                 {
+                     "Id": ""
+                 }
+            
+             </remarks>
+        </member>
+        <member name="M:EducationApp.PresentationLayer.Controllers.PrintingEditionController.Sort(EducationApp.BusinessLogicLayer.Models.PrintingEditions.SortPrintingEditionModel)">
+             <summary>
+             Sort Order
+             </summary>
+             <remarks>
+             Sample request:
+            
+                 Post/Sort
+                 {
+                     "NameSort": ""
+                 }
+            
+             </remarks>
+        </member>
+        <member name="M:EducationApp.PresentationLayer.Controllers.PrintingEditionController.Filter(EducationApp.BusinessLogicLayer.Models.PrintingEditions.FiltrationPrintingEditionModel)">
+             <summary>
+             Filter Order
+             </summary>
+             <remarks>
+             Sample request:
+            
+                 Post/Filter
+                 {
+                     "NameFilter": "",
+                     "Name":"",
+                     "Price":"",
+                     "Status":"",
+                 }
+            
+             </remarks>
+        </member>
+        <member name="M:EducationApp.PresentationLayer.Controllers.UserController.GetAllIsDeleted">
+             <summary>
+             Get all User (IsDeleted = true)
+             </summary>
+             <remarks>
+             Sample request:
+            
+                 Get/GetAllIsDeleted
+            
+             </remarks>
+        </member>
+        <member name="M:EducationApp.PresentationLayer.Controllers.UserController.GetAll">
+             <summary>
+             Get all User 
+             </summary>
+             <remarks>
+             Sample request:
+            
+                 Get/GetAll
+            
+             </remarks>
+        </member>
+        <member name="M:EducationApp.PresentationLayer.Controllers.UserController.Create(EducationApp.BusinessLogicLayer.Models.User.CreateModel)">
+             <summary>
+             Create new PrintingEdition
+             </summary>
+             <remarks>
+             Sample request:
+            
+                 Post/Create
+                 {
+                     "Email": "",
+                     "First Name": "",
+                     "Last Name": "",
+                     "PhoneNumber": ""
+                 }
+            
+             </remarks>
+        </member>
+        <member name="M:EducationApp.PresentationLayer.Controllers.UserController.Update(EducationApp.BusinessLogicLayer.Models.User.EditModel)">
+             <summary>
+             Update User for Id
+             </summary>
+             <remarks>
+             Sample request:
+            
+                 PUT/Update
+                 {
+                     "Id": "",
+                     "Email": "",
+                     "First Name": "",
+                     "Last Name": "",
+                     "PhoneNumber": ""
+                 }
+            
+             </remarks>
+        </member>
+        <member name="M:EducationApp.PresentationLayer.Controllers.UserController.Delete(EducationApp.BusinessLogicLayer.Models.User.DeleteModel)">
+             <summary>
+             Delete User for Id
+             </summary>
+             <remarks>
+             Sample request:
+            
+                 DELETE/Delete
                  {
                      "Id": ""
                  }

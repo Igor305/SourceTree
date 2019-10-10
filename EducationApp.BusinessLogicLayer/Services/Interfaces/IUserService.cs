@@ -6,6 +6,7 @@ namespace EducationApp.BusinessLogicLayer.Services.Interfaces
 {
     public interface IUserService
     {
+        List<Users> GetAllIsDeleted();
         List<Users> GetAll();
         void Create(CreateModel createModel);
         void Update(EditModel editModel);

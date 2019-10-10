@@ -1,14 +1,12 @@
 ﻿using EducationApp.BusinessLogicLayer.Models.Authors;
 using EducationApp.BusinessLogicLayer.Services.Interfaces;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace EducationApp.PresentationLayer.Controllers
 {
     [Route("api/[controller]")]
-    public class AuthorController : Controller
+    [ApiController]
+    public class AuthorController : ControllerBase
     {
         private readonly IAuthorService _authorService;
         public AuthorController(IAuthorService authorService)
@@ -18,6 +16,12 @@ namespace EducationApp.PresentationLayer.Controllers
         /// <summary>
         /// Get all Author (IsDeleted = true)
         /// </summary>
+        /// <remarks>
+        /// Sample request:
+        ///
+        ///     Get/GetAllIsDeleted
+        ///
+        /// </remarks>
         [HttpGet("GetAllIsDeleted")]
         public object GetAllIsDeleted()
         {
@@ -29,14 +33,20 @@ namespace EducationApp.PresentationLayer.Controllers
             return "Запись не валидна(";
         }
         /// <summary>
-        /// Get all Author
+        /// Get All Author
         /// </summary>
+        /// <remarks>
+        /// Sample request:
+        ///
+        ///     Get/GetAll
+        ///
+        /// </remarks>
         [HttpGet("GetAll")]
         public object GetAll()
         {
             if (ModelState.IsValid)
             {
-                var all =_authorService.GetAll();
+                var all = _authorService.GetAll();
                 return all;
             }
             return "Запись не валидна(";
@@ -44,21 +54,21 @@ namespace EducationApp.PresentationLayer.Controllers
         /// <summary>
         /// Get Name Author
         /// </summary>
-        ///     /// <remarks>
+        ///<remarks>
         /// Sample request:
         ///
-        ///     GET /GetAll
+        ///     Post/Find Name
         ///     {
         ///        "Name": "Пушкин"
         ///     }
         ///
         /// </remarks>
-        [HttpGet("GetName")]
-        public object GetName([FromBody]GetNameAuthorModel getNameAuthorModel)
+        [HttpGet("FindName")]
+        public object FindName([FromQuery] GetNameAuthorModel getNameAuthorModel)
         {
             if (ModelState.IsValid)
             {
-                var all = _authorService.GetName(getNameAuthorModel);
+                var all = _authorService.FindName(getNameAuthorModel);
                 return all;
             }
             return "Запись не валидна(";
@@ -69,9 +79,9 @@ namespace EducationApp.PresentationLayer.Controllers
         /// <remarks>
         /// Sample request:
         ///
-        ///     GET /GetName
+        ///     POST/Create
         ///     {
-        ///        "Name": "Пушкин"
+        ///        "Name": "Пушкин",
         ///        "DateBirth":"1805-10-09T08:38:40.163Z",
         ///        "DatadDeath": "1855-10-09T08:38:40.163Z",
         ///     }
@@ -86,18 +96,18 @@ namespace EducationApp.PresentationLayer.Controllers
                 string result = _authorService.Create(createAuthorModel);
                 return result;
             }
-           return "Запись не валидна(";
+            return "Запись не валидна(";
         }
         /// <summary>
-        /// Udate Author for Id
+        /// Update Author for Id
         /// </summary>
         /// <remarks>
         /// Sample request:
         ///
-        ///     PUT /Update
+        ///     PUT/Update
         ///     {
         ///         "Id": "",
-        ///         "Name": "Пушкин"
+        ///         "Name": "Пушкин",
         ///         "DateBirth":"1805-10-09T08:38:40.163Z",
         ///         "DatadDeath": "1855-10-09T08:38:40.163Z",
         ///     }
@@ -120,7 +130,7 @@ namespace EducationApp.PresentationLayer.Controllers
         /// <remarks>
         /// Sample request:
         ///
-        ///     DELETE /Delete
+        ///     DELETE/Delete
         ///     {
         ///         "Id": ""
         ///     }
@@ -139,3 +149,4 @@ namespace EducationApp.PresentationLayer.Controllers
         }
     }
 }
+

@@ -15,6 +15,11 @@ namespace EducationApp.BusinessLogicLayer.Services
         {
             _paymentRepository = paymentRepository;
         }
+        public List<Payment> GetAllIsDeleted()
+        {
+            var allIsDeleted = _paymentRepository.GetAllIsDeleted();
+            return allIsDeleted;
+        }
         public List<Payment> GetAll()
         {
             var all = _paymentRepository.GetAll();

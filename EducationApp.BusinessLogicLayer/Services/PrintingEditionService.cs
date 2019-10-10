@@ -15,6 +15,11 @@ namespace EducationApp.BusinessLogicLayer.Services
         {
             _printingEditionsRepository = printingEditionsRepository;
         }
+        public List<PrintingEdition> GetAllIsDeleted()
+        {
+            var allIsDeleted = _printingEditionsRepository.GetAllIsDeleted();
+            return allIsDeleted;
+        }
         public List<PrintingEdition> GetAll()
         {
             var all = _printingEditionsRepository.GetAll();

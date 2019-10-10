@@ -2,10 +2,8 @@
 using EducationApp.BusinessLogicLayer.Services.Interfaces;
 using EducationApp.DataAccessLayer.Entities;
 using EducationApp.DataAccessLayer.Repositories.Interfaces;
-using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace EducationApp.BusinessLogicLayer.Services
 {
@@ -17,6 +15,11 @@ namespace EducationApp.BusinessLogicLayer.Services
         {
             _userRepository = userRepository;
         }
+        public List<Users> GetAllIsDeleted()
+        {
+            var allIsDeleted = _userRepository.GetAllIsDeleted();
+            return allIsDeleted;
+        }
         public List<Users> GetAll()
         {
             var all = _userRepository.GetAll();
@@ -27,7 +30,7 @@ namespace EducationApp.BusinessLogicLayer.Services
             Users user = new Users
             {
                 Email = createModel.Email,
-                UserName = createModel.UserName,
+                UserName = createModel.Email,
                 FirstName = createModel.FirstName,
                 LastName = createModel.LastName,
                 PhoneNumber = createModel.PhoneNumber,
@@ -41,7 +44,7 @@ namespace EducationApp.BusinessLogicLayer.Services
             var all = _userRepository.GetAll();
             var findUser = all.Find(x => x.Id == editModel.Id);
             findUser.Email = editModel.Email;
-            findUser.UserName = editModel.UserName;
+            findUser.UserName = editModel.Email;
             findUser.FirstName = editModel.FirstName;
             findUser.LastName = editModel.LastName;
             findUser.PhoneNumber = editModel.PhoneNumber;

@@ -7,6 +7,7 @@ namespace EducationApp.DataAccessLayer.Repositories.Interfaces
 {
     public interface IPaymentRepository : IGenericRepository<Payment>
     {
+        List<Payment> GetAllIsDeleted();
         List<Payment> GetAll();
     }
 }

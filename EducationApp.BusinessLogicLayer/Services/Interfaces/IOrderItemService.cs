@@ -6,9 +6,10 @@ namespace EducationApp.BusinessLogicLayer.Services.Interfaces
 {
     public interface IOrderItemService
     {
+        List<OrderItem> GetAllIsDeleted();
         List<OrderItem> GetAll();
-        void Create(CreateOrderItemModel createOrderItemModel, decimal count);
-        void Update(UpdateOrderItemModel updateOrderItemModel, decimal count);
-        void Delete(DeleteOrderItemModel deleteOrderItemModel);
+        string Create(CreateOrderItemModel createOrderItemModel);
+        string Update(UpdateOrderItemModel updateOrderItemModel);
+        string Delete(DeleteOrderItemModel deleteOrderItemModel);
     }
 }

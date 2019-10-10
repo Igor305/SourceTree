@@ -32,8 +32,7 @@ namespace EducationApp.DataAccessLayer.Migrations
 
                     b.Property<bool>("IsDeleted");
 
-                    b.Property<string>("Name")
-                        .IsRequired();
+                    b.Property<string>("Name");
 
                     b.Property<DateTime>("UpdateDateTime");
 

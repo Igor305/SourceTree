@@ -14,33 +14,41 @@ namespace EducationApp.BusinessLogicLayer.Services
         {
             _orderRepository = orderRepository;
         }
+        public List<Order> GetAllIsDeleted()
+        {
+            var allIsDeleted = _orderRepository.GetAllIsDeleted();
+            return allIsDeleted;
+        }
         public List<Order> GetAll()
         {
             var all =_orderRepository.GetAll();
             return all;
         }
-        public void Create(CreateOrderModel createOrderModel)
+        public string Create(CreateOrderModel createOrderModel)
         {
             Order order = new Order();
             order.Description = createOrderModel.Description;
             order.CreateDateTime = DateTime.Now;
             order.UpdateDateTime = DateTime.Now;
             _orderRepository.Create(order);
+            return "Добавлена новая запись";
         }
-        public void Update(UpdateOrderModel updateOrderModel)
+        public string Update(UpdateOrderModel updateOrderModel)
         {
             var all = _orderRepository.GetAll();
             var findOrder = all.Find(x => x.Id == updateOrderModel.Id);
             findOrder.Description = updateOrderModel.Description;
             findOrder.UpdateDateTime = DateTime.Now;
             _orderRepository.Update(findOrder);
+            return "Запись Обновлена";
         }
-        public void Delete(DeleteOderModel deleteOderModel)
+        public string Delete(DeleteOderModel deleteOderModel)
         {
             var all = _orderRepository.GetAll();
             var findOrder = all.Find(x => x.Id == deleteOderModel.Id);
             findOrder.IsDeleted = true;
             _orderRepository.Update(findOrder);
+            return "Запись удалена";
         }
     }
 }

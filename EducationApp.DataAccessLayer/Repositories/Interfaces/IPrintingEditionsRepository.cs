@@ -7,6 +7,7 @@ namespace EducationApp.DataAccessLayer.Repositories.Interfaces
 {
     public interface IPrintingEditionsRepository :IGenericRepository<PrintingEdition>
     {
+        List<PrintingEdition> GetAllIsDeleted();
         List<PrintingEdition> GetAll();
     }
 }

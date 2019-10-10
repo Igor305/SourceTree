@@ -2,6 +2,7 @@
 using EducationApp.DataAccessLayer.Entities;
 using EducationApp.DataAccessLayer.Entities.Enum;
 using EducationApp.DataAccessLayer.Repositories.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +15,11 @@ namespace EducationApp.DataAccessLayer.Repositories.EFRepositories
         public OrderItemRepository (ApplicationContext applicationContext) : base(applicationContext)
         {
 
+        }
+        public List<OrderItem> GetAllIsDeleted()
+        {
+            var allIsDeleted = _applicationContext.OrderItems.IgnoreQueryFilters().ToList();
+            return allIsDeleted;
         }
         public List<OrderItem> GetAll()
         {

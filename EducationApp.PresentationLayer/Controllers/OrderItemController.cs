@@ -2,45 +2,106 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using EducationApp.BusinessLogicLayer.Models.OrderItems;
+using EducationApp.BusinessLogicLayer.Services.Interfaces;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace EducationApp.PresentationLayer.Controllers
 {
     [Route("api/[controller]")]
-    public class OrderItemController : Controller
+    [ApiController]
+    public class OrderItemController : ControllerBase
     {
-        // GET: api/<controller>
-        [HttpGet]
-        public IEnumerable<string> Get()
+        private readonly IOrderItemService _orderItemService;
+        public OrderItemController(IOrderItemService orderItemService)
         {
-            return new string[] { "value1", "value2" };
+            _orderItemService = orderItemService;
         }
-
-        // GET api/<controller>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
+        /// <summary>
+        /// Get all OrderItem (IsDeleted = true)
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        ///
+        ///     Get/GetAllIsDeleted
+        ///
+        /// </remarks>
+        [HttpGet("GetAllIsDeleted")]
+        public object GetAllIsDeleted()
         {
-            return "value";
+            var allIsDeleted = _orderItemService.GetAllIsDeleted();
+            return allIsDeleted;
         }
-
-        // POST api/<controller>
-        [HttpPost]
-        public void Post([FromBody]string value)
+        /// <summary>
+        /// Get all OrderItem
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        ///
+        ///     Get/GetAll
+        ///
+        /// </remarks>
+        [HttpGet("GetAll")]
+        public object GetAll()
         {
+            var all = _orderItemService.GetAll();
+            return all;
         }
-
-        // PUT api/<controller>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody]string value)
+        /// <summary>
+        /// Create new OrderItem
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        ///
+        ///     POST/Create
+        ///     {
+        ///         "Description": "Выгодный товар"
+        ///     }
+        ///
+        /// </remarks>
+        [HttpPost("Create")]
+        public string Create([FromBody]CreateOrderItemModel createOrderModel)
         {
+            string create = _orderItemService.Create(createOrderModel);
+            return create;
         }
-
-        // DELETE api/<controller>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
+        /// <summary>
+        /// Update OrderItem for Id
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        ///
+        ///     PUT/Update
+        ///     {
+        ///         "Id": "",
+        ///         "Description": "Выгодный товар"
+        ///     }
+        ///
+        /// </remarks>
+        [HttpPut("Update")]
+        public string Update([FromBody]UpdateOrderItemModel updateOrderModel)
         {
+            string update = _orderItemService.Update(updateOrderModel);
+            return update;
+        }
+        /// <summary>
+        /// Delete OrderItem for Id
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        ///
+        ///     DELETE/Delete
+        ///     {
+        ///         "Id": ""
+        ///     }
+        ///
+        /// </remarks>
+        [HttpDelete("Delete")]
+        public string Delete([FromBody]DeleteOrderItemModel deleteOderModel)
+        {
+            string delete = _orderItemService.Delete(deleteOderModel);
+            return delete;
         }
     }
 }

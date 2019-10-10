@@ -25,7 +25,7 @@ namespace EducationApp.BusinessLogicLayer.Services
             var allIsDeleted = _authorRepository.GetAllIsDeleted();
             return allIsDeleted;
         }
-        public IEnumerable<Author> GetName(GetNameAuthorModel getNameAuthorModel)
+        public IEnumerable<Author> FindName(GetNameAuthorModel getNameAuthorModel)
         {
             var all = _authorRepository.GetAll();
             var findNameAuthor = all.Where(x => x.Name == getNameAuthorModel.Name);
@@ -34,14 +34,14 @@ namespace EducationApp.BusinessLogicLayer.Services
         public string Create(CreateAuthorModel createAuthorModel)
         {
             Author author = new Author();
+            var all = _authorRepository.GetAll();
             if (createAuthorModel.Name == null)
             {
                 string noNull = "Name not null";
                 return noNull;
             }
-            var all = _authorRepository.GetAll();
-            var cloneauthor = all.FirstOrDefault(x => x.Name == createAuthorModel.Name);
-            if (cloneauthor.Name != null)
+            var cloneauthor = all.Any(x => x.Name == createAuthorModel.Name);
+            if (cloneauthor == true)
             {
                 string noNull = "There is such a name";
                 return noNull;

@@ -2,6 +2,7 @@
 using EducationApp.DataAccessLayer.Entities;
 using EducationApp.DataAccessLayer.Repositories.Interfaces;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,10 +13,13 @@ namespace EducationApp.DataAccessLayer.Repositories.EFRepositories
 {
     public class UserRepository : GenericRepository<Users>, IUserRepository
     {
-        private readonly UserManager<Users> _userManager;
-        public UserRepository(ApplicationContext dbContext, UserManager<Users> userManager) : base(dbContext)
+        public UserRepository(ApplicationContext dbContext) : base(dbContext)
         {
-            _userManager = userManager;
+        }
+        public List<Users> GetAllIsDeleted()
+        {
+            var allIsDeleted = _applicationContext.Users.IgnoreQueryFilters().ToList();
+            return allIsDeleted;
         }
         public List<Users> GetAll()
         {

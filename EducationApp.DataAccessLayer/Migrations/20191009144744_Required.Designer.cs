@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EducationApp.DataAccessLayer.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20191009100659_HasQueryFilter")]
-    partial class HasQueryFilter
+    [Migration("20191009144744_Required")]
+    partial class Required
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -34,8 +34,7 @@ namespace EducationApp.DataAccessLayer.Migrations
 
                     b.Property<bool>("IsDeleted");
 
-                    b.Property<string>("Name")
-                        .IsRequired();
+                    b.Property<string>("Name");
 
                     b.Property<DateTime>("UpdateDateTime");
 

@@ -7,8 +7,6 @@ namespace EducationApp.DataAccessLayer.Entities
 {
     public class Author : Basic
     {
-
-        [Required]
         public string Name { get; set; }
         public DateTime? DataBirth { get; set; }
         public DateTime? DataDeath { get; set; }

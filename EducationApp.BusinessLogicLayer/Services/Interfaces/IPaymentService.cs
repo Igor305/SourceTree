@@ -6,6 +6,7 @@ namespace EducationApp.BusinessLogicLayer.Services.Interfaces
 {
     public interface IPaymentService
     {
+        List<Payment> GetAllIsDeleted();
         List<Payment> GetAll();
         void CreateTransaction(PaymentModel paymentModel);
         void Update(UpdatePaymentModel updatePaymentModel);

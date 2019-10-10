@@ -4,41 +4,104 @@ using System.Linq;
 using System.Threading.Tasks;
 using EducationApp.BusinessLogicLayer.Models.Orders;
 using EducationApp.BusinessLogicLayer.Services.Interfaces;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace EducationApp.PresentationLayer.Controllers
 {
     [Route("api/[controller]")]
-    public class OrderController : Controller
+    [ApiController]
+    public class OrderController : ControllerBase
     {
         private readonly IOrderService _orderService;
         public OrderController(IOrderService orderService)
         {
             _orderService = orderService;
         }
-
-        [HttpGet]
+        /// <summary>
+        /// Get all Order (IsDeleted = true)
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        ///
+        ///     Get/GetAllIsDeleted
+        ///
+        /// </remarks>
+        [HttpGet("GetAllIsDeleted")]
+        public object GetAllIsDeleted()
+        {
+            var allIsDeleted = _orderService.GetAllIsDeleted();
+            return allIsDeleted;
+        }
+        /// <summary>
+        /// Get all Order
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        ///
+        ///     Get/GetAll
+        ///
+        /// </remarks>
+        [HttpGet("GetAll")]
         public object GetAll()
         {
-            var all =_orderService.GetAll();
+            var all = _orderService.GetAll();
             return all;
         }
+        /// <summary>
+        /// Create new Order
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        ///
+        ///     POST/Create
+        ///     {
+        ///         "Description": "Выгодный товар"
+        ///     }
+        ///
+        /// </remarks>
         [HttpPost("Create")]
-        public void Create([FromBody]CreateOrderModel createOrderModel)
+        public string Create([FromBody]CreateOrderModel createOrderModel)
         {
-            _orderService.Create(createOrderModel);
+            string create = _orderService.Create(createOrderModel);
+            return create;
         }
-        [HttpPut]
-        public void Update([FromBody]UpdateOrderModel updateOrderModel)
+        /// <summary>
+        /// Update Order for Id
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        ///
+        ///     PUT/Update
+        ///     {
+        ///         "Id": "",
+        ///         "Description": "Выгодный товар"
+        ///     }
+        ///
+        /// </remarks>
+        [HttpPut("Update")]
+        public string Update([FromBody]UpdateOrderModel updateOrderModel)
         {
-            _orderService.Update(updateOrderModel);
+            string update =_orderService.Update(updateOrderModel);
+            return update;
         }
-        [HttpDelete]
-        public void Delete([FromBody]DeleteOderModel deleteOderModel)
+        /// <summary>
+        /// Delete Order for Id
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        ///
+        ///     DELETE/Delete
+        ///     {
+        ///         "Id": ""
+        ///     }
+        ///
+        /// </remarks>
+        [HttpDelete("Delete")]
+        public string Delete([FromBody]DeleteOderModel deleteOderModel)
         {
-            _orderService.Delete(deleteOderModel);
+           string delete = _orderService.Delete(deleteOderModel);
+           return delete;
         }
     }
 }
