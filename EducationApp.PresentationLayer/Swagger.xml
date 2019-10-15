@@ -4,6 +4,28 @@
         <name>EducationApp.PresentationLayer</name>
     </assembly>
     <members>
+        <member name="M:EducationApp.PresentationLayer.Controllers.AccountController.GetAuth">
+             <summary>
+             Authentication
+             </summary>
+             <remarks>
+             Sample request:
+            
+                 Get/GetAuth
+            
+             </remarks>
+        </member>
+        <member name="M:EducationApp.PresentationLayer.Controllers.AccountController.PostAuth(EducationApp.BusinessLogicLayer.Services.Interfaces.IJwtPrivateKey,EducationApp.BusinessLogicLayer.Services.Interfaces.IJwtRefresh,EducationApp.BusinessLogicLayer.Models.LoginModel)">
+             <summary>
+              Log In
+             </summary>
+             <remarks>
+             Sample request:
+            
+                 Post/PostAuth
+            
+             </remarks>
+        </member>
         <member name="M:EducationApp.PresentationLayer.Controllers.AuthorController.GetAllIsDeleted">
              <summary>
              Get all Author (IsDeleted = true)
@@ -471,6 +493,20 @@
              Sample request:
             
                  DELETE/Delete
+                 {
+                     "Id": ""
+                 }
+            
+             </remarks>
+        </member>
+        <member name="M:EducationApp.PresentationLayer.Controllers.UserController.FinalRemoval(EducationApp.BusinessLogicLayer.Models.User.DeleteModel)">
+             <summary>
+             Final Removal User for Id
+             </summary>
+             <remarks>
+             Sample request:
+            
+                 DELETE/FinalRemoval
                  {
                      "Id": ""
                  }

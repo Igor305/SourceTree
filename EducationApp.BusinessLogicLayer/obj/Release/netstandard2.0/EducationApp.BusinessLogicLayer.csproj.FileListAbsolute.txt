@@ -15,3 +15,6 @@ C:\Users\Anuitex-153\source\repos\SourceTree\EducationApp.BusinessLogicLayer\obj
 C:\Users\Anuitex-153\source\repos\SourceTree\EducationApp.BusinessLogicLayer\obj\Release\netstandard2.0\EducationApp.BusinessLogicLayer.csproj.CopyComplete
 C:\Users\Anuitex-153\source\repos\SourceTree\EducationApp.BusinessLogicLayer\obj\Release\netstandard2.0\EducationApp.BusinessLogicLayer.dll
 C:\Users\Anuitex-153\source\repos\SourceTree\EducationApp.BusinessLogicLayer\obj\Release\netstandard2.0\EducationApp.BusinessLogicLayer.pdb
+C:\Users\Anuitex-153\source\repos\SourceTree\EducationApp.BusinessLogicLayer\bin\Release\netstandard2.0\System.IdentityModel.Tokens.Jwt.dll
+C:\Users\Anuitex-153\source\repos\SourceTree\EducationApp.BusinessLogicLayer\bin\Release\netstandard2.0\System.IdentityModel.Tokens.Jwt.pdb
+C:\Users\Anuitex-153\source\repos\SourceTree\EducationApp.BusinessLogicLayer\bin\Release\netstandard2.0\System.IdentityModel.Tokens.Jwt.xml

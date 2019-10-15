@@ -107,10 +107,28 @@ namespace EducationApp.PresentationLayer.Controllers
         ///
         /// </remarks>
         [HttpDelete("Delete")]
-        public string Delete([FromBody]DeleteModel model)
+        public string Delete([FromBody]DeleteModel deleteModel)
         {
-            _userService.Delete(model);
-            return "Пользователь под номером " + model.Id + " был удачно удалён";
+            _userService.Delete(deleteModel);
+            return "Пользователь под номером " + deleteModel.Id + " был удачно удалён";
+        }
+        /// <summary>
+        /// Final Removal User for Id
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        ///
+        ///     DELETE/FinalRemoval
+        ///     {
+        ///         "Id": ""
+        ///     }
+        ///
+        /// </remarks>
+        [HttpDelete("FinalRemoval")]
+        public string FinalRemoval([FromBody]DeleteModel deleteModel)
+        {
+            _userService.FinalRemoval(deleteModel);
+            return "Пользователь под номером " + deleteModel.Id + " был окончательно удалён";
         }
     }
 }

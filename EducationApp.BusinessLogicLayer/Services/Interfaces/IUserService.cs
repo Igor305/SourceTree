@@ -11,5 +11,6 @@ namespace EducationApp.BusinessLogicLayer.Services.Interfaces
         void Create(CreateModel createModel);
         void Update(EditModel editModel);
         void Delete(DeleteModel deleteModel);
+        void FinalRemoval(DeleteModel deleteModel);
     }
 }

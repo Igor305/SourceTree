@@ -5061,6 +5061,7 @@
         "dependencies": {
           "EducationApp.DataAccessLayer": "1.0.0",
           "MailKit": "2.2.0",
+          "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "2.2.0",
           "Sendgrid": "9.12.0",
           "Stripe.net": "29.5.0"
         },

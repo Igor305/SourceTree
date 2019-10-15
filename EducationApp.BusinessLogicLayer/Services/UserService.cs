@@ -58,5 +58,11 @@ namespace EducationApp.BusinessLogicLayer.Services
             findUser.IsDeleted = true;
             _userRepository.Update(findUser);
         }
+        public void FinalRemoval(DeleteModel deleteModel)
+        {
+            var all = _userRepository.GetAllIsDeleted();
+            var findUser = all.Find(x => x.Id == deleteModel.Id);
+            _userRepository.Delete(findUser.Id);
+        }
     }
 }

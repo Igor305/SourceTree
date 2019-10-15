@@ -19,6 +19,5 @@ namespace EducationApp.DataAccessLayer.Repositories.DapperRepositories
         public void Create(T entity)
         {
             _applicationContext.Query<T>("INSERT INTO ");
-        }
-    }*/
-}
+        }*/
+    }

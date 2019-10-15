@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -20,6 +21,7 @@ using Microsoft.OpenApi.Models;
 using Stripe;
 using System;
 using System.IO;
+using AccountService = EducationApp.BusinessLogicLayer.Services.AccountService;
 using OrderService = EducationApp.BusinessLogicLayer.Services.OrderService;
 
 namespace EducationApp.PresentationLayer
@@ -39,12 +41,11 @@ namespace EducationApp.PresentationLayer
             var connectionString = Configuration["ConnectionStrings:EmployeeDB"];
             services.AddDbContext<ApplicationContext>(opts => opts.UseSqlServer(connectionString));
             services.AddIdentityCore<IdentityUser>();
-            services.AddDefaultIdentity<Users>()
-            .AddRoles<IdentityRole<Guid>>()
-            .AddEntityFrameworkStores<ApplicationContext>();     
+
             services.AddScoped<IUserStore<IdentityUser>, UserOnlyStore<IdentityUser, IdentityDbContext>>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IAccountService, AccountService>();
             services.AddScoped<IPrintingEditionsRepository, PrintingEditionsRepository>();
             services.AddScoped<IPrintingEditionService, PrintingEditionService>();
             services.AddScoped<IAuthorRepository, AuthorRepository>();
@@ -55,7 +56,19 @@ namespace EducationApp.PresentationLayer
             services.AddScoped<IOrderService, OrderService>();
             services.AddScoped<IOrderItemRepository, OrderItemRepository>();
             services.AddScoped<IOrderItemService, OrderItemService>();
+            services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
             services.AddTransient<Users>();
+            services.AddIdentity<Users, IdentityRole>(options =>
+            {
+                options.Password.RequiredLength = 8;
+                options.Password.RequireLowercase = true;
+                options.Password.RequireUppercase = true;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireDigit = false;
+            })
+                .AddRoles<IdentityRole<Guid>>()
+                .AddEntityFrameworkStores<ApplicationContext>()
+                .AddDefaultTokenProviders();
             services.AddTransient<IEmailService, EmailHelper>();
             services.Configure<StripeSettings>(Configuration.GetSection("Stripe"));
             services.AddSwaggerGen(c =>
@@ -65,19 +78,14 @@ namespace EducationApp.PresentationLayer
                 var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
                 c.IncludeXmlComments(xmlPath);
             });
-
-
             //Jwt Refresh
-            const string refreshSecurityKey = "0d5b3235a8132POPROBYI248673425609879rfghert545234n1k41230";
+            string refreshSecurityKey = Configuration.GetSection("JWT")["RefreshSecretKey"];
             var refreshKey = new JwtRefresh(refreshSecurityKey);
             services.AddSingleton<IJwtRefresh>(refreshKey);
-
-
             //Jwt Token
-            const string accessSecurityKey = "0d5b3235a8b403c3dab9c3f4f65KYKARA4A666Masssaraksh07fcalskd234n1k41230";
+           string accessSecurityKey = Configuration.GetSection("JWT")["AccesSecretKey"];
             var accessKey = new JwtHelper(accessSecurityKey);
             services.AddSingleton<IJwtPrivateKey>(accessKey);
-
             const string jwtSchemeName = "JwtBearer";
             var signingDecodingKey = (IJwtPrivateKey)accessKey;
             services
@@ -103,7 +111,6 @@ namespace EducationApp.PresentationLayer
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
-          
             StripeConfiguration.ApiKey = Configuration.GetSection("Stripe")["SecretKey"];   
             if (env.IsDevelopment())
             {

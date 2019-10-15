@@ -11,11 +11,13 @@
         "dependencies": {
           "EducationApp.DataAccessLayer": "1.0.0",
           "MailKit": "2.2.0",
+          "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "2.2.0",
           "NETStandard.Library": "2.0.3",
           "Sendgrid": "9.12.0",
           "Stripe.net": "29.5.0",
           "Microsoft.AspNetCore.Identity.UI": "2.2.0.0",
-          "Microsoft.IdentityModel.Tokens": "5.3.0.0"
+          "Microsoft.IdentityModel.Tokens": "5.3.0.0",
+          "System.IdentityModel.Tokens.Jwt": "5.3.0.0"
         },
         "runtime": {
           "EducationApp.BusinessLogicLayer.dll": {}
@@ -1821,6 +1823,14 @@
             "fileVersion": "5.3.0.51005"
           }
         }
+      },
+      "System.IdentityModel.Tokens.Jwt/5.3.0.0": {
+        "runtime": {
+          "System.IdentityModel.Tokens.Jwt.dll": {
+            "assemblyVersion": "5.3.0.0",
+            "fileVersion": "5.3.0.51005"
+          }
+        }
       }
     }
   },
@@ -2975,6 +2985,11 @@
       "sha512": ""
     },
     "Microsoft.IdentityModel.Tokens/5.3.0.0": {
+      "type": "reference",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "System.IdentityModel.Tokens.Jwt/5.3.0.0": {
       "type": "reference",
       "serviceable": false,
       "sha512": ""

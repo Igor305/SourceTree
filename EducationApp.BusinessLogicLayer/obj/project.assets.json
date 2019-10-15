@@ -7382,6 +7382,7 @@
     ".NETStandard,Version=v2.0": [
       "EducationApp.DataAccessLayer >= 1.0.0",
       "MailKit >= 2.2.0",
+      "Microsoft.AspNetCore.Identity.EntityFrameworkCore >= 2.2.0",
       "NETStandard.Library >= 2.0.3",
       "Sendgrid >= 9.12.0",
       "Stripe.net >= 29.5.0"
@@ -7436,6 +7437,10 @@
       "netstandard2.0": {
         "dependencies": {
           "MailKit": {
+            "target": "Package",
+            "version": "[2.2.0, )"
+          },
+          "Microsoft.AspNetCore.Identity.EntityFrameworkCore": {
             "target": "Package",
             "version": "[2.2.0, )"
           },

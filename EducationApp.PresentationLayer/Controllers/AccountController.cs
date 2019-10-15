@@ -1,316 +1,133 @@
 ﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Identity;
-using EducationApp.DataAccessLayer.Entities;
 using EducationApp.BusinessLogicLayer.Models;
-using EducationApp.DataAccessLayer.AppContext;
-using System;
 using EducationApp.BusinessLogicLayer.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
-using EducationApp.BusinessLogicLayer.Models.User;
-using System.Security.Claims;
-using System.IdentityModel.Tokens.Jwt;
-using Microsoft.IdentityModel.Tokens;
 using System.Collections.Generic;
-using System.Linq;
-using EducationApp.BusinessLogicLayer.Helpers;
-using System.Text;
-
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace EducationApp.PresentationLayer.Controllers
 {
     [Route("api/[controller]")]
-    public class AccountController : Controller
+    [ApiController]
+    public class AccountController : ControllerBase
     {
-        private readonly UserManager<Users> _userManager;
-        private readonly SignInManager<Users> _signInManager;
-        private readonly ApplicationContext _applicationContext;
-        private readonly IEmailService _emailService;
-        private readonly RoleManager<IdentityRole> _roleManager;
-        public AccountController(UserManager<Users> userManager, SignInManager<Users> signInManager, ApplicationContext applicationContext, IEmailService emailService, RoleManager<IdentityRole> roleManager)
+        private readonly IAccountService _accountService;
+
+        public AccountController(IAccountService accountService)
         {
-            _userManager = userManager;
-            _signInManager = signInManager;
-            _applicationContext = applicationContext;
-            _emailService = emailService;
-            _roleManager = roleManager;
+            _accountService = accountService;
         }
-
-        [HttpGet("RefreshToken")]
-        public async Task<ActionResult<string>> RegreshToken([FromHeader] string tokenString, [FromServices] IJwtPrivateKey jwtPrivateKey, [FromServices] IJwtRefresh jwtRefresh)
-        {
-            var jwtEncodedString = tokenString.Substring(7);
-            Users user = new Users();
-            var dtoken = new JwtSecurityToken(jwtEncodedString: jwtEncodedString);
-            string decodingtoken = dtoken.Claims.First(c => c.Type == "Refresh").Value;
-            var UserX = await _userManager.FindByEmailAsync(decodingtoken);
-            if (UserX == null)
-            {
-                return Ok("Тебя нету в бд");
-            }
-            // Token.    
-            var claims = new List<Claim>()
-            {
-            new Claim(ClaimTypes.NameIdentifier, UserX.Id.ToString()),
-            new Claim(ClaimTypes.Email,UserX.Email),
-            new Claim(ClaimTypes.Hash, UserX.PasswordHash),
-            };
-            // JWT.
-            var token = new JwtSecurityToken(
-                issuer: "MyJwt",
-                audience: "TheBestClient",
-                claims: claims,
-                expires: DateTime.Now.AddSeconds(30),
-                signingCredentials: new SigningCredentials(
-                        jwtPrivateKey.GetKey(),
-                        jwtPrivateKey.SigningAlgorithm)
-            );
-            string jwtToken = new JwtSecurityTokenHandler().WriteToken(token);
-
-            var claimsref = new List<Claim>()
-            {
-            new Claim("Refresh", UserX.Email)
-            };
-            // JWT.
-            var refreshtoken = new JwtSecurityToken(
-                issuer: "MyJwt",
-                audience: "TheBestClient",
-                claims: claimsref,
-                expires: DateTime.Now.AddMonths(1),
-                signingCredentials: new SigningCredentials(
-                        jwtRefresh.GetKey(),
-                        jwtRefresh.SigningAlgorithm)
-            );
-            string refreshToken = new JwtSecurityTokenHandler().WriteToken(refreshtoken);
-            return "RefreshToken =      " + refreshToken + "    AccessToken  =     " + jwtToken;
-
-        }
+        /// <summary>
+        /// Authentication
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        ///
+        ///     Get/GetAuth
+        ///
+        /// </remarks>
         [HttpGet("Auth")]
         [Authorize]
-        public ActionResult<IEnumerable<string>> GetToken()
+        public ActionResult<IEnumerable<string>> GetAuth()
         {
-            var Id = HttpContext.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier);
-            var email = HttpContext.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Email);
-            var PassHash = HttpContext.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Hash);
-            if (Response.StatusCode == 401)
-            {
-                Response.StatusCode = 200;
-                var refresh = HttpContext.User.Claims.FirstOrDefault(x => x.Type == "Refresh");
-                return new string[] { "wertwe" };
-            }
-            return new string[] { Id?.Value, email?.Value, PassHash?.Value };
+            return _accountService.GetAuth();
         }
-
+        /// <summary>
+        ///  Log In
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        ///
+        ///     Post/PostAuth
+        ///
+        /// </remarks>
         [HttpPost("Auth")]
         [AllowAnonymous]
-        public async Task<ActionResult<string>> GenToken([FromServices] IJwtPrivateKey jwtPrivateKey, [FromServices] IJwtRefresh jwtRefresh, [FromBody] LoginModel login)
-        {
-            // Validate email
-            Users user = new Users();
-            var UserX = await _userManager.FindByEmailAsync(login.Email);
-            if (UserX == null)
-            {
-                return Ok("Вы ввели не правильный email. Возможно вы еще не зарегистрировались. Бегите, станьте нашим 1000-м посетителем!");
-            }
-            var confirmpass = await _userManager.CheckPasswordAsync(UserX, login.Password);
-            if (!confirmpass)
-            {
-                return Ok("Вы ввели не правильный пароль.");
-            }
-            // Token.    
-            var claims = new List<Claim>()
-            {
-            new Claim(ClaimTypes.NameIdentifier, UserX.Id.ToString()),
-            new Claim(ClaimTypes.Email,UserX.Email),
-            new Claim(ClaimTypes.Hash, UserX.PasswordHash),
-            };
-            // JWT.
-            var token = new JwtSecurityToken(
-                issuer: "MyJwt",
-                audience: "TheBestClient",
-                claims: claims,
-                expires: DateTime.Now.AddSeconds(30),
-                signingCredentials: new SigningCredentials(
-                        jwtPrivateKey.GetKey(),
-                        jwtPrivateKey.SigningAlgorithm)
-            );
-            string jwtToken = new JwtSecurityTokenHandler().WriteToken(token);
-
-            var claimsref = new List<Claim>()
-            {
-            new Claim("Refresh", UserX.Email)
-            };
-            // JWT.
-            var refreshtoken = new JwtSecurityToken(
-                issuer: "MyJwt",
-                audience: "TheBestClient",
-                claims: claimsref,
-                expires: DateTime.Now.AddMonths(1),
-                signingCredentials: new SigningCredentials(
-                        jwtRefresh.GetKey(),
-                        jwtRefresh.SigningAlgorithm)
-            );
-            string refreshToken = new JwtSecurityTokenHandler().WriteToken(refreshtoken);
-            return "RefreshToken =      " + refreshToken + "    AccessToken  =     " + jwtToken;
-        }
-
-        [HttpGet("Register")]
-        public IActionResult Register()
-        {
-            return Ok(_applicationContext);
-        }
-
-        [HttpPost("Register")]
-        public async Task<IActionResult> AddRegister([FromBody]RegisterModel reg)
+        public async Task<ActionResult<string>> PostAuth([FromServices] IJwtPrivateKey jwtPrivateKey, [FromServices] IJwtRefresh jwtRefresh, [FromBody] LoginModel login)
         {
             if (ModelState.IsValid)
             {
-                Users user = new Users { Email = reg.Email, UserName = reg.Email };
-                // добавляем пользователя
-                var result = await _userManager.CreateAsync(user, reg.Password);
-                if (result.Succeeded)
-                {
-                    // генерация токена для пользователя
-                    var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-                    var regurl = Url.Action(
-                        "ConfirmEmail",
-                        "Account",
-                        new { userId = user.Id, code = code },
-                        protocol: HttpContext.Request.Scheme);
-                    string subject = "Подтверждение регистрации";
-                    string message = $"Подтвердите регистрацию, перейдя по ссылке: <a href='{regurl}'>НАЖМИ НА МЕНЯ</a>";
-                    await _emailService.SendEmail(reg.Email, subject, message);
-                    // установка куки
-                    await _signInManager.SignInAsync(user, false);
-                    return Ok(reg);
-                }
-                else
-                {
-                    foreach (var error in result.Errors)
-                    {
-                        ModelState.AddModelError(string.Empty, error.Description);
-                    }
-                }
+                return await _accountService.PostAuth( jwtPrivateKey,  jwtRefresh, login);
             }
-            return Ok(reg);
+            return "Error, not IsValid";        
         }
 
-        [HttpGet("ConfirmEmail")]
-        [AllowAnonymous]
-        public async Task<IActionResult> ConfirmEmail(string userId, string code)
+        [HttpPost("Register")]
+        public async Task<ActionResult<string>> AddRegister([FromBody]RegisterModel reg)
         {
-            if (userId == null || code == null)
+            if (ModelState.IsValid)
             {
-                return Ok("Error");
+                return await _accountService.Register(reg);
             }
-            var user = await _userManager.FindByIdAsync(userId);
-            if (user == null)
-            {
-                return Ok("Error");
-            }
-            var result = await _userManager.ConfirmEmailAsync(user, code);
-            if (result.Succeeded)
-                return Ok(user);
-            else
-                return Ok("Error");
+            return "Error, not IsValid";
         }
 
         [HttpPost("ForgotPassword")]
         [AllowAnonymous]
-        public async Task<IActionResult> Emailpassword([FromBody]EmailModel email)
+        public async Task<ActionResult<string>> ForgotPassword([FromBody]EmailModel email)
         {
             if (ModelState.IsValid)
             {
-                var user = await _userManager.FindByNameAsync(email.Email);
-                if (user == null || !(await _userManager.IsEmailConfirmedAsync(user)))
-                {
-                    // пользователь с данным email может отсутствовать в бд
-                    // тем не менее мы выводим стандартное сообщение, чтобы скрыть 
-                    // наличие или отсутствие пользователя в бд
-                    return View("ForgotPasswordConfirmation");
-                }
-
-                var code = await _userManager.GeneratePasswordResetTokenAsync(user);
-                var callbackUrl = Url.Action(
-                    "ResetPassword",
-                    "Account",
-                new { userEmail = user.Email, code = code }, protocol: HttpContext.Request.Scheme);
-
-                string subject = "Изменение пароля ";
-                string message = $"Для сброса пароля пройдите по ссылке: <a href='{callbackUrl}'>Нажми на меня</a>";
-                await _emailService.SendEmail(email.Email, subject, message);
+                return await _accountService.ForgotPassword(email);
             }
-            return Ok(email);
+            return "Error, not IsValid";
+        }
+
+        [HttpPost("ConfirmEmail")]
+        [AllowAnonymous]
+        public async Task<ActionResult<string>> ConfirmEmail(string userId, string code)
+        {
+            if (ModelState.IsValid)
+            {
+                return await _accountService.ConfirmEmail(userId, code);
+            }
+            return "Error, not IsValid";
         }
 
         [HttpPost("ResetPassword")]
         [AllowAnonymous]
-        public async Task<IActionResult> ResetPassword(ResetPasswordModel reset, string code, string userEmail, [FromHeader]string password)
+        public async Task<ActionResult<string>> ResetPassword(ResetPasswordModel reset, string code, string userEmail, [FromHeader]string password)
         {
-            if (code == null || userEmail == null)
+            if (ModelState.IsValid)
             {
-                return Ok("Error");
+                return await _accountService.ResetPassword(reset, code, userEmail, password);
             }
-            var user = await _userManager.FindByNameAsync(userEmail);
-            if (user == null)
-            {
-                return Ok("ResetPasswordConfirmation");
-            }
-            await _userManager.CheckPasswordAsync(user, password);
-            var result = await _userManager.ResetPasswordAsync(user, code, password);
-            if (result.Succeeded)
-            {
-                return Ok(user);
-            }
-            foreach (var error in result.Errors)
-            {
-                ModelState.AddModelError(string.Empty, error.Description);
-            }
-            return Ok(result);
+            return "Error, not IsValid";
         }
 
         [HttpPost("LogOut")]
-        public async Task<IActionResult> LogOut(LoginModel log)
+        public async Task<ActionResult<string>> LogOut([FromBody]LoginModel log)
         {
-            await _signInManager.SignOutAsync();
-            log.Email = log.Password = null;
-            return Ok(log);
-        }
-
-        [HttpGet("Roles/GetAll")]
-        public IActionResult Index() => Ok(_roleManager.Roles.ToList());
-
-        [HttpPost("Roles/Create")]
-        public async Task<IActionResult> Create([FromBody]string Name)
-        {
-            if (!string.IsNullOrEmpty(Name))
+            if (ModelState.IsValid)
             {
-                IdentityResult result = await _roleManager.CreateAsync(new IdentityRole(Name));
-                if (result.Succeeded)
-                {
-                    return RedirectToAction("Index");
-                }
-                else
-                {
-                    foreach (var error in result.Errors)
-                    {
-                        ModelState.AddModelError(string.Empty, error.Description);
-                    }
-                }
+                return await _accountService.LogOut(log);
             }
-            return Ok(Name);
+            return "Error, not IsValid";
         }
 
-        [HttpPost("Roles/Delete")]
-        public async Task<IActionResult> Delete([FromBody]string id)
+        [HttpGet("RefreshToken")]
+        public async Task<ActionResult<string>> RefreshToken([FromHeader] string tokenString, [FromServices] IJwtPrivateKey jwtPrivateKey, [FromServices] IJwtRefresh jwtRefresh)
         {
-            IdentityRole role = await _roleManager.FindByIdAsync(id);
-            if (role != null)
+            if (ModelState.IsValid)
             {
-                IdentityResult result = await _roleManager.DeleteAsync(role);
+                return await _accountService.RefreshToken(tokenString, jwtPrivateKey, jwtRefresh);
             }
-            return RedirectToAction("Index");
+            return "Error, not IsValid";
         }
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+
     }
 }
