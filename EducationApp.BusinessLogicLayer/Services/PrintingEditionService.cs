@@ -91,20 +91,10 @@ namespace EducationApp.BusinessLogicLayer.Services
         public object Filter(FiltrationPrintingEditionModel filtrationPrintingEditionModel )
         {
             var all = _printingEditionsRepository.GetAll();
-            switch (filtrationPrintingEditionModel.NameFilter)
-            {
-                case PrintingEditionNameFilter.Name:
-                    var filterName = all.Where(x => x.Name == filtrationPrintingEditionModel.Name);
-                    return filterName;
-                case PrintingEditionNameFilter.Price:
-                    var filterPrice = all.Where(x => x.Price == filtrationPrintingEditionModel.Price);
-                    return filterPrice;
-                case PrintingEditionNameFilter.Status:
-                    var filterStatus = all.Where(x => x.Status == filtrationPrintingEditionModel.Status);
-                    return filterStatus;
-                default:
-                    return "Чет не так";
-            }
+            var filterName = all.Where(x => x.Name == filtrationPrintingEditionModel.Name);
+            var filterPrice = all.Where(x => x.Price == filtrationPrintingEditionModel.Price);
+            var filterStatus = all.Where(x => x.Status == filtrationPrintingEditionModel.Status);
+            return filterStatus;
         }
     }
 }

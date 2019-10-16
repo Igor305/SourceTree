@@ -5,7 +5,6 @@ namespace EducationApp.BusinessLogicLayer.Models.PrintingEditions
 {
     public class FiltrationPrintingEditionModel
     {
-        public PrintingEditionNameFilter NameFilter { get; set; }
         public string Name { get; set; }
         public string Price { get; set; }
         public TypeStatus Status { get; set; }

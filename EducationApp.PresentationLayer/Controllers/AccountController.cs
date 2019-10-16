@@ -4,6 +4,7 @@ using EducationApp.BusinessLogicLayer.Models;
 using EducationApp.BusinessLogicLayer.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using System.Collections.Generic;
+using EducationApp.BusinessLogicLayer.Models.Account;
 
 namespace EducationApp.PresentationLayer.Controllers
 {
@@ -39,6 +40,9 @@ namespace EducationApp.PresentationLayer.Controllers
         /// Sample request:
         ///
         ///     Post/PostAuth
+        ///     
+        ///     "Email":"karakymba@gmail.com",
+        ///     "Password":"karaganda"
         ///
         /// </remarks>
         [HttpPost("Auth")]
@@ -51,9 +55,21 @@ namespace EducationApp.PresentationLayer.Controllers
             }
             return "Error, not IsValid";        
         }
-
+        /// <summary>
+        ///  Register
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        /// 
+        ///     Post/Register
+        ///
+        ///     "Email":"karakymba@gmail.com",
+        ///     "Password":"karaganda",
+        ///     "PasswordConfirm":"karaganda"
+        ///     
+        /// </remarks>
         [HttpPost("Register")]
-        public async Task<ActionResult<string>> AddRegister([FromBody]RegisterModel reg)
+        public async Task<ActionResult<string>> Register([FromBody]RegisterModel reg)
         {
             if (ModelState.IsValid)
             {
@@ -61,7 +77,17 @@ namespace EducationApp.PresentationLayer.Controllers
             }
             return "Error, not IsValid";
         }
-
+        /// <summary>
+        ///  Forgot Password
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        /// 
+        ///     Post/ForgotPassword
+        ///
+        ///     "Email":"karakymba@gmail.com"
+        ///     
+        /// </remarks>
         [HttpPost("ForgotPassword")]
         [AllowAnonymous]
         public async Task<ActionResult<string>> ForgotPassword([FromBody]EmailModel email)
@@ -72,29 +98,63 @@ namespace EducationApp.PresentationLayer.Controllers
             }
             return "Error, not IsValid";
         }
-
-        [HttpPost("ConfirmEmail")]
+        /// <summary>
+        ///  Confirm Password
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        ///
+        ///     Post/ConfirmEmail
+        /// 
+        ///     "Email":"karakymba@gmail.com",
+        ///     
+        /// </remarks>
+        [HttpGet("ConfirmEmail")]
         [AllowAnonymous]
-        public async Task<ActionResult<string>> ConfirmEmail(string userId, string code)
+        public async Task<ActionResult<string>> ConfirmEmail([FromQuery]ConfirmEmail confirmEmail)
         {
             if (ModelState.IsValid)
             {
-                return await _accountService.ConfirmEmail(userId, code);
+                return await _accountService.ConfirmEmail(confirmEmail.userId, confirmEmail.code);
             }
             return "Error, not IsValid";
         }
-
+        /// <summary>
+        ///  Reset Password
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        ///
+        ///     Post/ResetPassword
+        /// 
+        ///     "Email":"karakymba@gmail.com",
+        ///     "Password":"karaganda",
+        ///     "PasswordConfirm":"karaganda",
+        ///     "Code":"ioprewthjypoiwreyortpo"
+        ///     
+        /// </remarks>
         [HttpPost("ResetPassword")]
         [AllowAnonymous]
-        public async Task<ActionResult<string>> ResetPassword(ResetPasswordModel reset, string code, string userEmail, [FromHeader]string password)
+        public async Task<ActionResult<string>> ResetPassword([FromBody] ResetPasswordModel reset)
         {
             if (ModelState.IsValid)
             {
-                return await _accountService.ResetPassword(reset, code, userEmail, password);
+                return await _accountService.ResetPassword(reset);
             }
             return "Error, not IsValid";
         }
-
+        /// <summary>
+        ///  Log Out
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        ///
+        ///     Post/LogOut
+        /// 
+        ///     "Email":"karakymba@gmail.com",
+        ///     "Password":"karaganda"
+        ///     
+        /// </remarks>
         [HttpPost("LogOut")]
         public async Task<ActionResult<string>> LogOut([FromBody]LoginModel log)
         {
@@ -104,9 +164,19 @@ namespace EducationApp.PresentationLayer.Controllers
             }
             return "Error, not IsValid";
         }
-
-        [HttpGet("RefreshToken")]
-        public async Task<ActionResult<string>> RefreshToken([FromHeader] string tokenString, [FromServices] IJwtPrivateKey jwtPrivateKey, [FromServices] IJwtRefresh jwtRefresh)
+        /// <summary>
+        ///  Refresh Token
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        ///
+        ///     Get/RefreshToken
+        /// 
+        ///     "token":"karakymba@gmail.com",
+        ///     
+        /// </remarks>
+        [HttpPost("RefreshToken")]
+        public async Task<ActionResult<string>> RefreshToken([FromBody] string tokenString, [FromServices] IJwtPrivateKey jwtPrivateKey, [FromServices] IJwtRefresh jwtRefresh)
         {
             if (ModelState.IsValid)
             {

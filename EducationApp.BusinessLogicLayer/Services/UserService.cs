@@ -60,9 +60,9 @@ namespace EducationApp.BusinessLogicLayer.Services
         }
         public void FinalRemoval(DeleteModel deleteModel)
         {
-            var all = _userRepository.GetAllIsDeleted();
-            var findUser = all.Find(x => x.Id == deleteModel.Id);
-            _userRepository.Delete(findUser.Id);
+            var allFinalRemoval = _userRepository.GetAllIsDeleted();
+            var findUser = allFinalRemoval.Find(x => x.Id == deleteModel.Id);
+            _userRepository.Delete(findUser);
         }
     }
 }

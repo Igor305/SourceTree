@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using System;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
 
 namespace EducationApp.DataAccessLayer.AppContext
 {
@@ -21,13 +22,13 @@ namespace EducationApp.DataAccessLayer.AppContext
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-
             modelBuilder.Entity<Author>().HasQueryFilter(e => !e.IsDeleted);
             modelBuilder.Entity<Order>().HasQueryFilter(e => !e.IsDeleted);
             modelBuilder.Entity<OrderItem>().HasQueryFilter(e => !e.IsDeleted);
             modelBuilder.Entity<Payment>().HasQueryFilter(e => !e.IsDeleted);
             modelBuilder.Entity<PrintingEdition>().HasQueryFilter(e => !e.IsDeleted);
             modelBuilder.Entity<Users>().HasQueryFilter(e => !e.IsDeleted);
+            modelBuilder.Entity<Role>().HasQueryFilter(e => !e.IsDeleted);
 
             modelBuilder.Entity<UserInRole>()
                 .HasKey(bc => new { bc.UserId, bc.RoleId });

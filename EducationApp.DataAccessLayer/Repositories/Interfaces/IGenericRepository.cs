@@ -15,6 +15,6 @@ namespace EducationApp.DataAccessLayer.Repositories.Interfaces
 
         void Update(T entity);
 
-        void Delete(Guid id);
+        void Delete(T entity);
     }
 }

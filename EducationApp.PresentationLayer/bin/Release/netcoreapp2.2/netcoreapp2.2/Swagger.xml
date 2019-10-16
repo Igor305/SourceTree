@@ -15,7 +15,7 @@
             
              </remarks>
         </member>
-        <member name="M:EducationApp.PresentationLayer.Controllers.AccountController.PostAuth(EducationApp.BusinessLogicLayer.Services.Interfaces.IJwtPrivateKey,EducationApp.BusinessLogicLayer.Services.Interfaces.IJwtRefresh,EducationApp.BusinessLogicLayer.Models.LoginModel)">
+        <member name="M:EducationApp.PresentationLayer.Controllers.AccountController.PostAuth(EducationApp.BusinessLogicLayer.Services.Interfaces.IJwtPrivateKey,EducationApp.BusinessLogicLayer.Services.Interfaces.IJwtRefresh,EducationApp.BusinessLogicLayer.Models.Account.LoginModel)">
              <summary>
               Log In
              </summary>
@@ -23,7 +23,94 @@
              Sample request:
             
                  Post/PostAuth
+                 
+                 "Email":"karakymba@gmail.com",
+                 "Password":"karaganda"
             
+             </remarks>
+        </member>
+        <member name="M:EducationApp.PresentationLayer.Controllers.AccountController.Register(EducationApp.BusinessLogicLayer.Models.Account.RegisterModel)">
+             <summary>
+              Register
+             </summary>
+             <remarks>
+             Sample request:
+             
+                 Post/Register
+            
+                 "Email":"karakymba@gmail.com",
+                 "Password":"karaganda",
+                 "PasswordConfirm":"karaganda"
+                 
+             </remarks>
+        </member>
+        <member name="M:EducationApp.PresentationLayer.Controllers.AccountController.ForgotPassword(EducationApp.BusinessLogicLayer.Models.EmailModel)">
+             <summary>
+              Forgot Password
+             </summary>
+             <remarks>
+             Sample request:
+             
+                 Post/ForgotPassword
+            
+                 "Email":"karakymba@gmail.com"
+                 
+             </remarks>
+        </member>
+        <member name="M:EducationApp.PresentationLayer.Controllers.AccountController.ConfirmEmail(EducationApp.BusinessLogicLayer.Models.Account.ConfirmEmail)">
+             <summary>
+              Confirm Password
+             </summary>
+             <remarks>
+             Sample request:
+            
+                 Post/ConfirmEmail
+             
+                 "Email":"karakymba@gmail.com",
+                 
+             </remarks>
+        </member>
+        <member name="M:EducationApp.PresentationLayer.Controllers.AccountController.ResetPassword(EducationApp.BusinessLogicLayer.Models.Account.ResetPasswordModel)">
+             <summary>
+              Reset Password
+             </summary>
+             <remarks>
+             Sample request:
+            
+                 Post/ResetPassword
+             
+                 "Email":"karakymba@gmail.com",
+                 "Password":"karaganda",
+                 "PasswordConfirm":"karaganda",
+                 "Code":"ioprewthjypoiwreyortpo"
+                 
+             </remarks>
+        </member>
+        <member name="M:EducationApp.PresentationLayer.Controllers.AccountController.LogOut(EducationApp.BusinessLogicLayer.Models.Account.LoginModel)">
+             <summary>
+              Log Out
+             </summary>
+             <remarks>
+             Sample request:
+            
+                 Post/LogOut
+             
+                 "Email":"karakymba@gmail.com",
+                 "Password":"karaganda"
+                 
+             </remarks>
+        </member>
+        <member name="M:EducationApp.PresentationLayer.Controllers.AccountController.RefreshToken(System.String,EducationApp.BusinessLogicLayer.Services.Interfaces.IJwtPrivateKey,EducationApp.BusinessLogicLayer.Services.Interfaces.IJwtRefresh)">
+             <summary>
+              Refresh Token
+             </summary>
+             <remarks>
+             Sample request:
+            
+                 Get/RefreshToken
+             
+                 "token":"karakymba@gmail.com",
+                 
              </remarks>
         </member>
         <member name="M:EducationApp.PresentationLayer.Controllers.AuthorController.GetAllIsDeleted">

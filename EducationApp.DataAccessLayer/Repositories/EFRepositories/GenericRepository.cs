@@ -35,10 +35,10 @@ namespace EducationApp.DataAccessLayer.Repositories.EFRepositories
             _applicationContext.SaveChanges();
         }
 
-        public void Delete(Guid id)
+        public void Delete(T entity)
         {
-            var entity = GetById(id);
             _dbSet.Remove(entity);
+            _applicationContext.SaveChanges();
         }
     }
 }

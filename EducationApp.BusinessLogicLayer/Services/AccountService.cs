@@ -13,6 +13,7 @@ using System.Linq;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Routing;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
+using EducationApp.BusinessLogicLayer.Models.Account;
 
 namespace EducationApp.BusinessLogicLayer.Services
 {
@@ -20,14 +21,16 @@ namespace EducationApp.BusinessLogicLayer.Services
     {
         private readonly UserManager<Users> _userManager;
         private readonly SignInManager<Users> _signInManager;
+        private readonly RoleManager<Users> _roleManager;
         private readonly IEmailService _emailService;
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly IActionContextAccessor _actionContextAccessor;
         private readonly IUrlHelperFactory _urlHelperFactory;
-        public AccountService(UserManager<Users> userManager, SignInManager<Users> signInManager, IEmailService emailService, IHttpContextAccessor httpContextAccessor, IUrlHelperFactory urlHelperFactory,IActionContextAccessor actionContextAccessor)
+        public AccountService(UserManager<Users> userManager, SignInManager<Users> signInManager, RoleManager<Users> roleManager, IEmailService emailService, IHttpContextAccessor httpContextAccessor, IUrlHelperFactory urlHelperFactory,IActionContextAccessor actionContextAccessor)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _roleManager = roleManager;
             _emailService = emailService;
             _httpContextAccessor = httpContextAccessor;
             _urlHelperFactory = urlHelperFactory;
@@ -104,15 +107,15 @@ namespace EducationApp.BusinessLogicLayer.Services
             {
                 var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                 var regurl = _urlHelperFactory.GetUrlHelper(_actionContextAccessor.ActionContext).Action(
+                    "ConfirmEmail",
                     "Account",
-                    "ResetPassword",
                     new { userId = user.Id, code = code },
                     protocol: _httpContextAccessor.HttpContext.Request.Scheme);
                 string subject = "Подтверждение регистрации";
-                string message = $"Подтвердите регистрацию, перейдя по ссылке: <a href='{regurl}'>НАЖМИ НА МЕНЯ</a>";
+                string message = $"Подтвердите регистрацию, перейдя по ссылке: <a href={regurl}>Confirm email</a>";
                 await _emailService.SendEmail(reg.Email, subject, message);
-                await _signInManager.SignInAsync(user, false);
-                return reg.ToString();
+               // await _signInManager.SignInAsync(user, false);
+                return "Confirm account from email";
             }
             return result.ToString();
         }
@@ -133,7 +136,7 @@ namespace EducationApp.BusinessLogicLayer.Services
             string subject = "Изменение пароля ";
             string message = $"Для сброса пароля пройдите по ссылке: <a href='{callbackUrl}'>Нажми на меня</a>";
             await _emailService.SendEmail(email.Email, subject, message);
-            return email.ToString();
+            return "Confirm reset password from email";
         }
         public async Task<ActionResult<string>> ConfirmEmail(string userId, string code)
         {
@@ -153,19 +156,19 @@ namespace EducationApp.BusinessLogicLayer.Services
             }
             return "Error, not Succeeded";
         }
-        public async Task<ActionResult<string>> ResetPassword(ResetPasswordModel reset, string code, string userEmail, string password)
+        public async Task<ActionResult<string>> ResetPassword(ResetPasswordModel reset)
         {
-            if (code == null || userEmail == null)
+            if (reset.Code == null || reset.Email == null)
             {
                 return "Error";
             }
-            var user = await _userManager.FindByNameAsync(userEmail);
+            var user = await _userManager.FindByNameAsync(reset.Email);
             if (user == null)
             {
                 return "ResetPasswordConfirmation";
             }
-            await _userManager.CheckPasswordAsync(user, password);
-            var result = await _userManager.ResetPasswordAsync(user, code, password);
+            await _userManager.CheckPasswordAsync(user, reset.Password);
+            var result = await _userManager.ResetPasswordAsync(user, reset.Code, reset.Password);
             if (result.Succeeded)
             {
                 return user.ToString();
@@ -224,6 +227,40 @@ namespace EducationApp.BusinessLogicLayer.Services
             );
             string refreshToken = new JwtSecurityTokenHandler().WriteToken(refreshtoken);
             return "RefreshToken =      " + refreshToken + "    AccessToken  =     " + jwtToken;
+        }
+
+        [HttpPost]
+        private async Task createRolesandUsers()
+        {
+            bool x = await _roleManager.RoleExistsAsync("Admin");
+            if (!x)
+            { 
+                
+                var role = new IdentityRole();
+                role.Name = "Admin";
+                await _roleManager.CreateAsync(role);               
+
+                var user = new Users();
+                user.UserName = "God";
+                user.Email = "igortalavuria@gmail.com";
+
+                string userPWD = "Igor12345";
+
+                IdentityResult chkUser = await _userManager.CreateAsync(user, userPWD);
+
+                if (chkUser.Succeeded)
+                {
+                    var result1 = await _userManager.AddToRoleAsync(user, "Admin");
+                }
+            }
+   
+            x = await _roleManager.RoleExistsAsync("User");
+            if (!x)
+            {
+                var role = new IdentityRole();
+                role.Name = "User";
+                await _roleManager.CreateAsync(role);
+            }
         }
     }
 }

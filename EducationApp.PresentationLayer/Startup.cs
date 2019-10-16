@@ -41,7 +41,6 @@ namespace EducationApp.PresentationLayer
             var connectionString = Configuration["ConnectionStrings:EmployeeDB"];
             services.AddDbContext<ApplicationContext>(opts => opts.UseSqlServer(connectionString));
             services.AddIdentityCore<IdentityUser>();
-
             services.AddScoped<IUserStore<IdentityUser>, UserOnlyStore<IdentityUser, IdentityDbContext>>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IUserService, UserService>();
@@ -58,7 +57,7 @@ namespace EducationApp.PresentationLayer
             services.AddScoped<IOrderItemService, OrderItemService>();
             services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
             services.AddTransient<Users>();
-            services.AddIdentity<Users, IdentityRole>(options =>
+            services.AddIdentity<Users, Role>(options =>
             {
                 options.Password.RequiredLength = 8;
                 options.Password.RequireLowercase = true;
@@ -89,23 +88,23 @@ namespace EducationApp.PresentationLayer
             const string jwtSchemeName = "JwtBearer";
             var signingDecodingKey = (IJwtPrivateKey)accessKey;
             services
-                .AddAuthentication(options => {
-                    options.DefaultAuthenticateScheme = jwtSchemeName;
-                    options.DefaultChallengeScheme = jwtSchemeName;
-                })
-                .AddJwtBearer(jwtSchemeName, jwtBearerOptions => {
-                    jwtBearerOptions.TokenValidationParameters = new TokenValidationParameters
-                    {
-                        ValidateIssuerSigningKey = true,
-                        IssuerSigningKey = signingDecodingKey.GetKey(),
-                        ValidateIssuer = true,
-                        ValidIssuer = "MyJwt",
-                        ValidateAudience = true,
-                        ValidAudience = "TheBestClient",
-                        ValidateLifetime = true,
-                        ClockSkew = TimeSpan.FromSeconds(5)
-                    };
-                });
+            .AddAuthentication(options => {
+                options.DefaultAuthenticateScheme = jwtSchemeName;
+                options.DefaultChallengeScheme = jwtSchemeName;
+            })
+            .AddJwtBearer(jwtSchemeName, jwtBearerOptions => {
+                jwtBearerOptions.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = signingDecodingKey.GetKey(),
+                    ValidateIssuer = true,
+                    ValidIssuer = "MyJwt",
+                    ValidateAudience = true,
+                    ValidAudience = "TheBestClient",
+                    ValidateLifetime = true,
+                    ClockSkew = TimeSpan.FromSeconds(5)
+                };
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -128,8 +127,6 @@ namespace EducationApp.PresentationLayer
             app.UseAuthentication();
             app.UseHttpsRedirection();
             app.UseMvc();
-   
-
         }
     }
 }
