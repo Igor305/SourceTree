@@ -8,6 +8,7 @@ namespace EducationApp.BusinessLogicLayer.Services.Interfaces
     {
         List<Order> GetAllIsDeleted();
         List<Order> GetAll();
+        List<Order> Pagination(PaginationPageOrderModel paginationPageOrderModel);
         string Create(CreateOrderModel createOrderModel);
         string Update(UpdateOrderModel updateOrderModel);
         string Delete(DeleteOderModel deleteOderModel);

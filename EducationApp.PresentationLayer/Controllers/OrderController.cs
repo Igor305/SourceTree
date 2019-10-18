@@ -49,6 +49,27 @@ namespace EducationApp.PresentationLayer.Controllers
             return all;
         }
         /// <summary>
+        /// Get Pagination Order
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        ///
+        ///     Get/Pagination
+        ///     "Skip":"1",
+        ///     "Take":"2"
+        ///
+        /// </remarks>
+        [HttpGet("Pagination")]
+        public object Pagination([FromQuery] PaginationPageOrderModel paginationPageOrderModel)
+        {
+            if (ModelState.IsValid)
+            {
+                var filter = _orderService.Pagination(paginationPageOrderModel);
+                return filter;
+            }
+            return "Модель не валидная(";
+        }
+        /// <summary>
         /// Create new Order
         /// </summary>
         /// <remarks>

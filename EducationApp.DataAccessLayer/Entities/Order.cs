@@ -1,5 +1,4 @@
 ﻿using EducationApp.DataAccessLayer.Entities.Base;
-using EducationApp.DataAccessLayer.Entities.Enum;
 using System;
 using System.Collections.Generic;
 
@@ -9,7 +8,7 @@ namespace EducationApp.DataAccessLayer.Entities
     {
 
         public Guid UsersId { get; set; }
-        public Users users { get; set; }
+        public Users Users { get; set; }
         public string Description { get; set; }
         public Guid PaymentId { get; set; }
         public Payment Payment { get; set; }

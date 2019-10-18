@@ -53,12 +53,35 @@ namespace EducationApp.PresentationLayer.Controllers
             return "Запись не валидна(";
         }
         /// <summary>
+        /// Get Pagination Author
+        /// </summary>
+        ///<remarks>
+        /// Sample request:
+        ///
+        ///     Get/Pagination
+        ///     {
+        ///        "Skip": "1",
+        ///        "Take":"2"
+        ///     }
+        ///
+        /// </remarks>
+        [HttpGet("Pagination")]
+        public object Pagination([FromQuery] PaginationPageAuthorModel paginationPageAuthorModel )
+        {
+            if (ModelState.IsValid)
+            {
+                var all = _authorService.Pagination(paginationPageAuthorModel);
+                return all;
+            }
+            return "Запись не валидна(";
+        }
+        /// <summary>
         /// Get Name Author
         /// </summary>
         ///<remarks>
         /// Sample request:
         ///
-        ///     Post/Find Name
+        ///     Get/Find Name
         ///     {
         ///        "Name": "Пушкин"
         ///     }

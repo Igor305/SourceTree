@@ -169,17 +169,11 @@ namespace EducationApp.DataAccessLayer.Migrations
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken();
 
-                    b.Property<DateTime>("CreateDateTime");
-
-                    b.Property<bool>("IsDeleted");
-
                     b.Property<string>("Name")
                         .HasMaxLength(256);
 
                     b.Property<string>("NormalizedName")
                         .HasMaxLength(256);
-
-                    b.Property<DateTime>("UpdateDateTime");
 
                     b.HasKey("Id");
 
@@ -305,11 +299,9 @@ namespace EducationApp.DataAccessLayer.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<System.Guid>", b =>
                 {
-                    b.Property<string>("LoginProvider")
-                        .HasMaxLength(128);
+                    b.Property<string>("LoginProvider");
 
-                    b.Property<string>("ProviderKey")
-                        .HasMaxLength(128);
+                    b.Property<string>("ProviderKey");
 
                     b.Property<string>("ProviderDisplayName");
 
@@ -339,11 +331,9 @@ namespace EducationApp.DataAccessLayer.Migrations
                 {
                     b.Property<Guid>("UserId");
 
-                    b.Property<string>("LoginProvider")
-                        .HasMaxLength(128);
+                    b.Property<string>("LoginProvider");
 
-                    b.Property<string>("Name")
-                        .HasMaxLength(128);
+                    b.Property<string>("Name");
 
                     b.Property<string>("Value");
 
@@ -372,7 +362,7 @@ namespace EducationApp.DataAccessLayer.Migrations
                         .HasForeignKey("EducationApp.DataAccessLayer.Entities.Order", "PaymentId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("EducationApp.DataAccessLayer.Entities.Users", "users")
+                    b.HasOne("EducationApp.DataAccessLayer.Entities.Users", "Users")
                         .WithOne("Order")
                         .HasForeignKey("EducationApp.DataAccessLayer.Entities.Order", "UsersId")
                         .OnDelete(DeleteBehavior.Cascade);

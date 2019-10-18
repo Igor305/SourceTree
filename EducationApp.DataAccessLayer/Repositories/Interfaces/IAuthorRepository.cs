@@ -1,6 +1,7 @@
 ﻿using EducationApp.DataAccessLayer.Entities;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace EducationApp.DataAccessLayer.Repositories.Interfaces
 {
@@ -8,5 +9,6 @@ namespace EducationApp.DataAccessLayer.Repositories.Interfaces
     {
         List<Author> GetAll();
         List<Author> GetAllIsDeleted();
+        IQueryable<Author> Pagination();
     }
 }

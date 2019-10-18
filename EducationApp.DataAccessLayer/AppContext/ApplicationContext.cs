@@ -2,7 +2,6 @@
 using Microsoft.EntityFrameworkCore;
 using System;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Microsoft.AspNetCore.Identity;
 
 namespace EducationApp.DataAccessLayer.AppContext
 {
@@ -22,13 +21,16 @@ namespace EducationApp.DataAccessLayer.AppContext
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            Role adminRole = new Role { Name = "Admin" };
+            Role userRole = new Role { Name = "User" };
+            Users adminUser = new Users { Email = "igortalavuria@gmail.com"};
+
             modelBuilder.Entity<Author>().HasQueryFilter(e => !e.IsDeleted);
             modelBuilder.Entity<Order>().HasQueryFilter(e => !e.IsDeleted);
             modelBuilder.Entity<OrderItem>().HasQueryFilter(e => !e.IsDeleted);
             modelBuilder.Entity<Payment>().HasQueryFilter(e => !e.IsDeleted);
             modelBuilder.Entity<PrintingEdition>().HasQueryFilter(e => !e.IsDeleted);
             modelBuilder.Entity<Users>().HasQueryFilter(e => !e.IsDeleted);
-            modelBuilder.Entity<Role>().HasQueryFilter(e => !e.IsDeleted);
 
             modelBuilder.Entity<UserInRole>()
                 .HasKey(bc => new { bc.UserId, bc.RoleId });

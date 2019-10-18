@@ -22,5 +22,13 @@ namespace EducationApp.DataAccessLayer.Repositories.EFRepositories
             var all = _applicationContext.Orders.ToList();
             return all;
         }
+        public IQueryable<Order> Pagination()
+        {
+            IQueryable<Order> orders = _applicationContext.Orders
+                .Include(x => x.Payment)
+                .Include(x => x.OrderItem)
+                .Include(x => x.Users);
+            return orders;
+        }
     }
 }

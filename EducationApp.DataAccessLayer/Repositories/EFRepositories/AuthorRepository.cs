@@ -26,5 +26,10 @@ namespace EducationApp.DataAccessLayer.Repositories.EFRepositories
             var  all = _applicationContext.Authors.IgnoreQueryFilters().ToList();
             return all;
         }
+        public IQueryable<Author> Pagination()
+        {
+            IQueryable<Author> authors = _applicationContext.Authors.Include(x => x.AutorInPrintingEdition);
+            return authors;
+        }
     }
 }

@@ -51,9 +51,9 @@ namespace EducationApp.PresentationLayer.Controllers
         {
             if (ModelState.IsValid)
             {
-                return await _accountService.PostAuth( jwtPrivateKey,  jwtRefresh, login);
+                return await _accountService.PostAuth(jwtPrivateKey, jwtRefresh, login);
             }
-            return "Error, not IsValid";        
+            return "Error, not IsValid";
         }
         /// <summary>
         ///  Register
@@ -176,28 +176,42 @@ namespace EducationApp.PresentationLayer.Controllers
         ///     
         /// </remarks>
         [HttpPost("RefreshToken")]
-        public async Task<ActionResult<string>> RefreshToken([FromBody] string tokenString, [FromServices] IJwtPrivateKey jwtPrivateKey, [FromServices] IJwtRefresh jwtRefresh)
+        public async Task<ActionResult<string>> RefreshToken([FromBody] RefreshTokenModel refreshTokenModel, [FromServices] IJwtPrivateKey jwtPrivateKey, [FromServices] IJwtRefresh jwtRefresh)
         {
             if (ModelState.IsValid)
             {
-                return await _accountService.RefreshToken(tokenString, jwtPrivateKey, jwtRefresh);
+                return await _accountService.RefreshToken(refreshTokenModel, jwtPrivateKey, jwtRefresh);
             }
             return "Error, not IsValid";
         }
-
-
-
-
-
-
-        
-
-
-
-
-
-
-
-
+        [HttpGet("GetAllRole")]
+        public object GetAllRoleUsers()
+        {
+            var all = _accountService.GetAllRoleUsers();
+            return all;
+        }
+        [HttpPost("CreateRole")]
+        public async Task<ActionResult<string>> CreateRole([FromBody] CreateRoleModel createRoleModel)
+        {
+            if (ModelState.IsValid)
+            {
+                return await _accountService.CreateRoleUsers(createRoleModel);
+            }
+            return "Error, not IsValid";
+        }
+        [HttpDelete("DeleteRole")]
+        public async Task<ActionResult<string>> DeleteRole([FromBody] DeleteRoleModel deleteRoleModel)
+        {
+            if (ModelState.IsValid)
+            {
+                return await _accountService.DeleteRoleUsers(deleteRoleModel);
+            }
+            return "Error, not IsValid";
+        }
+        [HttpPost]
+        public async Task<ActionResult<string>> ChangeRoleUser([FromBody] ChangeRoleUserModel changeRoleUserModel)
+        {
+            return await _accountService.ChangeRoleUser(changeRoleUserModel);
+        }
     }
 }

@@ -1,8 +1,6 @@
 ﻿using EducationApp.DataAccessLayer.Entities;
-using EducationApp.DataAccessLayer.Entities.Enum;
-using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Linq;
 
 namespace EducationApp.DataAccessLayer.Repositories.Interfaces
 {
@@ -10,5 +8,6 @@ namespace EducationApp.DataAccessLayer.Repositories.Interfaces
     {
         List<Order> GetAllIsDeleted();
         List<Order> GetAll();
+        IQueryable<Order> Pagination();
     }
 }

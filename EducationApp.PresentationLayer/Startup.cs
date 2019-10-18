@@ -65,7 +65,7 @@ namespace EducationApp.PresentationLayer
                 options.Password.RequireNonAlphanumeric = false;
                 options.Password.RequireDigit = false;
             })
-                .AddRoles<IdentityRole<Guid>>()
+                .AddSignInManager<SignInManager<Users>>()
                 .AddEntityFrameworkStores<ApplicationContext>()
                 .AddDefaultTokenProviders();
             services.AddTransient<IEmailService, EmailHelper>();

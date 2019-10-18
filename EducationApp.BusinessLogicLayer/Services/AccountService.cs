@@ -21,12 +21,12 @@ namespace EducationApp.BusinessLogicLayer.Services
     {
         private readonly UserManager<Users> _userManager;
         private readonly SignInManager<Users> _signInManager;
-        private readonly RoleManager<Users> _roleManager;
+        private readonly RoleManager<Role> _roleManager;
         private readonly IEmailService _emailService;
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly IActionContextAccessor _actionContextAccessor;
         private readonly IUrlHelperFactory _urlHelperFactory;
-        public AccountService(UserManager<Users> userManager, SignInManager<Users> signInManager, RoleManager<Users> roleManager, IEmailService emailService, IHttpContextAccessor httpContextAccessor, IUrlHelperFactory urlHelperFactory,IActionContextAccessor actionContextAccessor)
+        public AccountService(UserManager<Users> userManager, SignInManager<Users> signInManager, RoleManager<Role> roleManager, IEmailService emailService, IHttpContextAccessor httpContextAccessor, IUrlHelperFactory urlHelperFactory,IActionContextAccessor actionContextAccessor)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -36,39 +36,42 @@ namespace EducationApp.BusinessLogicLayer.Services
             _urlHelperFactory = urlHelperFactory;
             _actionContextAccessor = actionContextAccessor;
         }
-        public ActionResult<IEnumerable<string>> GetAuth()
+        public ActionResult<IEnumerable<string>> GetAuth()                                                                                                       //GetAuth
         {
             var Id = _httpContextAccessor.HttpContext.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier);
             var email = _httpContextAccessor.HttpContext.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Email);
-            var PassHash = _httpContextAccessor.HttpContext.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Hash);
+            var passHash = _httpContextAccessor.HttpContext.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Hash);
+            var role = _httpContextAccessor.HttpContext.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Role);
             if (_httpContextAccessor.HttpContext.Response.StatusCode == 401)
             {
                 _httpContextAccessor.HttpContext.Response.StatusCode = 200;
                 var refresh = _httpContextAccessor.HttpContext.User.Claims.FirstOrDefault(x => x.Type == "Refresh");
                 return new string[] { "Error 401" };
             }
-            return new string[] { Id?.Value, email?.Value, PassHash?.Value };
+            return new string[] { Id?.Value, email?.Value, passHash?.Value, role?.Value };
         }
-        public async Task<ActionResult<string>> PostAuth( IJwtPrivateKey jwtPrivateKey, IJwtRefresh jwtRefresh, LoginModel login)
+        public async Task<ActionResult<string>> PostAuth( IJwtPrivateKey jwtPrivateKey, IJwtRefresh jwtRefresh, LoginModel login)                                //PostAuth
         {
             // Validate email
             Users user = new Users();
-            var UserX = await _userManager.FindByEmailAsync(login.Email);
-            if (UserX == null)
+            var userX = await _userManager.FindByEmailAsync(login.Email);
+            if (userX == null)
             {
                 return "Вы ввели не правильный email. Возможно вы еще не зарегистрировались. Бегите, станьте нашим 1000-м посетителем!";
             }
-            var confirmpass = await _userManager.CheckPasswordAsync(UserX, login.Password);
+            var confirmpass = await _userManager.CheckPasswordAsync(userX, login.Password);
             if (!confirmpass)
             {
                 return "Вы ввели не правильный пароль.";
             }
+            await _userManager.AddToRoleAsync(userX, "User");
             // Token.    
             var claims = new List<Claim>()
             {
-            new Claim(ClaimTypes.NameIdentifier, UserX.Id.ToString()),
-            new Claim(ClaimTypes.Email,UserX.Email),
-            new Claim(ClaimTypes.Hash, UserX.PasswordHash),
+            new Claim(ClaimTypes.NameIdentifier, userX.Id.ToString()),
+            new Claim(ClaimTypes.Email,userX.Email),
+            new Claim(ClaimTypes.Hash, userX.PasswordHash),
+            new Claim(ClaimTypes.Role, "User"),
             };
             // JWT.
             var token = new JwtSecurityToken(
@@ -84,7 +87,7 @@ namespace EducationApp.BusinessLogicLayer.Services
 
             var claimsref = new List<Claim>()
             {
-            new Claim("Refresh", UserX.Email)
+            new Claim("Refresh", userX.Email)
             };
             // JWT.
             var refreshtoken = new JwtSecurityToken(
@@ -99,7 +102,7 @@ namespace EducationApp.BusinessLogicLayer.Services
             string refreshToken = new JwtSecurityTokenHandler().WriteToken(refreshtoken);
             return "RefreshToken =      " + refreshToken + "    AccessToken  =     " + jwtToken;
         }
-        public async Task<ActionResult<string>> Register(RegisterModel reg)
+        public async Task<ActionResult<string>> Register(RegisterModel reg)                                                                                     //Register
         {
             Users user = new Users { Email = reg.Email, UserName = reg.Email };
             var result = await _userManager.CreateAsync(user, reg.Password);
@@ -119,7 +122,7 @@ namespace EducationApp.BusinessLogicLayer.Services
             }
             return result.ToString();
         }
-        public async Task<ActionResult<string>> ForgotPassword(EmailModel email)
+        public async Task<ActionResult<string>> ForgotPassword(EmailModel email)                                                                                 //ForgotPassword
         {
             var user = await _userManager.FindByNameAsync(email.Email);
             if (user == null || !(await _userManager.IsEmailConfirmedAsync(user)))
@@ -138,7 +141,7 @@ namespace EducationApp.BusinessLogicLayer.Services
             await _emailService.SendEmail(email.Email, subject, message);
             return "Confirm reset password from email";
         }
-        public async Task<ActionResult<string>> ConfirmEmail(string userId, string code)
+        public async Task<ActionResult<string>> ConfirmEmail(string userId, string code)                                                                           //ConfirmEmail
         {
             if (userId == null || code == null)
             {
@@ -156,7 +159,7 @@ namespace EducationApp.BusinessLogicLayer.Services
             }
             return "Error, not Succeeded";
         }
-        public async Task<ActionResult<string>> ResetPassword(ResetPasswordModel reset)
+        public async Task<ActionResult<string>> ResetPassword(ResetPasswordModel reset)                                                                             //ResetPassword
         {
             if (reset.Code == null || reset.Email == null)
             {
@@ -175,15 +178,15 @@ namespace EducationApp.BusinessLogicLayer.Services
             }
             return "Error, not Succeeded";
         }
-        public async Task<ActionResult<string>> LogOut(LoginModel log)
+        public async Task<ActionResult<string>> LogOut(LoginModel log)                                                                                              //LogOut
         {
             await _signInManager.SignOutAsync();
             log.Email = log.Password = null;
             return "LogOut";
         }
-        public async Task<ActionResult<string>> RefreshToken( string tokenString, IJwtPrivateKey jwtPrivateKey, IJwtRefresh jwtRefresh)
+        public async Task<ActionResult<string>> RefreshToken( RefreshTokenModel refreshTokenModel, IJwtPrivateKey jwtPrivateKey, IJwtRefresh jwtRefresh)             //RefreshToken
         {
-            var jwtEncodedString = tokenString.Substring(7);
+            var jwtEncodedString = refreshTokenModel.tokenString.Substring(7);
             Users user = new Users();
             var dtoken = new JwtSecurityToken(jwtEncodedString: jwtEncodedString);
             string decodingtoken = dtoken.Claims.First(c => c.Type == "Refresh").Value;
@@ -198,6 +201,7 @@ namespace EducationApp.BusinessLogicLayer.Services
             new Claim(ClaimTypes.NameIdentifier, UserX.Id.ToString()),
             new Claim(ClaimTypes.Email,UserX.Email),
             new Claim(ClaimTypes.Hash, UserX.PasswordHash),
+            new Claim(ClaimTypes.Role, "User"),
             };
             // JWT.
             var token = new JwtSecurityToken(
@@ -228,39 +232,51 @@ namespace EducationApp.BusinessLogicLayer.Services
             string refreshToken = new JwtSecurityTokenHandler().WriteToken(refreshtoken);
             return "RefreshToken =      " + refreshToken + "    AccessToken  =     " + jwtToken;
         }
-
-        [HttpPost]
-        private async Task createRolesandUsers()
+        public ICollection<Role> GetAllRoleUsers()                                                                                                                          //GetAllRoleUsers
         {
+            var all = _roleManager.Roles.ToList();
+            return all;
+        }
+        public async Task<ActionResult<string>> CreateRoleUsers(CreateRoleModel createRoleModel)                                                                            //CreateRoleUsers
+        {
+            var role = new Role();
             bool x = await _roleManager.RoleExistsAsync("Admin");
             if (!x)
-            { 
-                
-                var role = new IdentityRole();
+            {            
                 role.Name = "Admin";
-                await _roleManager.CreateAsync(role);               
+                await _roleManager.CreateAsync(role);
 
-                var user = new Users();
+                Users user = new Users();
                 user.UserName = "God";
                 user.Email = "igortalavuria@gmail.com";
-
                 string userPWD = "Igor12345";
+                IdentityResult Admin = await _userManager.CreateAsync(user, userPWD);
 
-                IdentityResult chkUser = await _userManager.CreateAsync(user, userPWD);
-
-                if (chkUser.Succeeded)
+                if (Admin.Succeeded)
                 {
                     var result1 = await _userManager.AddToRoleAsync(user, "Admin");
                 }
             }
-   
-            x = await _roleManager.RoleExistsAsync("User");
-            if (!x)
+            role.Name = createRoleModel.NameRole;
+            await _roleManager.CreateAsync(role);          
+            return $"Create role Admin, {createRoleModel.NameRole}";
+        }
+        public async Task<ActionResult<string>> DeleteRoleUsers(DeleteRoleModel deleteRoleModel)                                                                              //DeleteRoleUsers
+        {
+            var delrole = await _roleManager.FindByNameAsync(deleteRoleModel.NameRole);
+            await _roleManager.DeleteAsync(delrole);
+            return $"Delete role {deleteRoleModel.NameRole}";
+        }
+        public async Task<ActionResult<string>> ChangeRoleUser(ChangeRoleUserModel changeRoleUserModel)                                                                        //ChangeRoleUser
+        {
+            var findUser = _userManager.Users.FirstOrDefault(x => x.Email == changeRoleUserModel.Email);
+            var findRole = _roleManager.Roles.FirstOrDefault(x => x.Name == changeRoleUserModel.NameRole);
+            UserInRole userInRole = new UserInRole
             {
-                var role = new IdentityRole();
-                role.Name = "User";
-                await _roleManager.CreateAsync(role);
-            }
+                UserId = findUser.Id,
+                RoleId = findRole.Id
+            };
+            return $"{findUser.Id} - {findRole.Id}";
         }
     }
 }

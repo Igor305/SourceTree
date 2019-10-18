@@ -52,6 +52,29 @@ namespace EducationApp.PresentationLayer.Controllers
             return "Модель не валидная(";
         }
         /// <summary>
+        /// Get Pagination PrintingEdition
+        /// </summary>
+        ///<remarks>
+        /// Sample request:
+        ///
+        ///     Get/Pagination
+        ///     {
+        ///        "Skip": "1",
+        ///        "Take":"2"
+        ///     }
+        ///
+        /// </remarks>
+        [HttpGet("Pagination")]
+        public object Pagination([FromQuery] PaginationPagePrintingEditionModel paginationPagePrintingEditionModel)
+        {
+            if (ModelState.IsValid)
+            {
+                var filter = _printingEditionService.Pagination(paginationPagePrintingEditionModel);
+                return filter;
+            }
+            return "Модель не валидная(";
+        }
+        /// <summary>
         /// Buy PrintingEdition
         /// </summary>
         /// <remarks>

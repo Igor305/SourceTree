@@ -12,11 +12,13 @@ namespace EducationApp.BusinessLogicLayer.Services.Interfaces
     {
         List<PrintingEdition> GetAllIsDeleted();
         List<PrintingEdition> GetAll();
+        List<PrintingEdition> Pagination(PaginationPagePrintingEditionModel paginationPagePrintingEditionModel);
         object Buy(BuyPrintingEditionModel buyPrintingEditionModel);
         void Create(CreatePrintingEditionModel createPrintingEditionModel);
         void Update(UpdatePrintingEditionModel updatePrintingEditionModel);
         void Delete(DeletePrintingEditionModel deletePrintingEditionModel);
         object Sort(SortPrintingEditionModel sortPrintingEditionModel);
         object Filter(FiltrationPrintingEditionModel filtrationPrintingEditionModel);
+
     }
 }

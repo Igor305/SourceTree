@@ -4,6 +4,7 @@ using EducationApp.DataAccessLayer.Entities;
 using EducationApp.DataAccessLayer.Repositories.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace EducationApp.BusinessLogicLayer.Services
 {
@@ -23,6 +24,24 @@ namespace EducationApp.BusinessLogicLayer.Services
         {
             var all =_orderRepository.GetAll();
             return all;
+        }
+        public List<Order> Pagination(PaginationPageOrderModel paginationPageOrderModel)
+        {
+            if (paginationPageOrderModel.Skip < 1)
+            {
+                paginationPageOrderModel.Skip = 1;
+            }
+            var pagination = _orderRepository.Pagination();
+            var count = pagination.Count();
+            var items = pagination.Skip(paginationPageOrderModel.Skip).Take(paginationPageOrderModel.Take).ToList();
+
+            PaginationOrderModel paginationOrderModel = new PaginationOrderModel(count, paginationPageOrderModel.Skip, paginationPageOrderModel.Take);
+            IndexViewModel viewModel = new IndexViewModel
+            {
+                PaginationOrderModel = paginationOrderModel,
+                Orders = items
+            };
+            return items;
         }
         public string Create(CreateOrderModel createOrderModel)
         {

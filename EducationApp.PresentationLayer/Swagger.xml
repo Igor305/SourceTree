@@ -100,7 +100,7 @@
                  
              </remarks>
         </member>
-        <member name="M:EducationApp.PresentationLayer.Controllers.AccountController.RefreshToken(System.String,EducationApp.BusinessLogicLayer.Services.Interfaces.IJwtPrivateKey,EducationApp.BusinessLogicLayer.Services.Interfaces.IJwtRefresh)">
+        <member name="M:EducationApp.PresentationLayer.Controllers.AccountController.RefreshToken(EducationApp.BusinessLogicLayer.Models.Account.RefreshTokenModel,EducationApp.BusinessLogicLayer.Services.Interfaces.IJwtPrivateKey,EducationApp.BusinessLogicLayer.Services.Interfaces.IJwtRefresh)">
              <summary>
               Refresh Token
              </summary>
@@ -135,6 +135,21 @@
             
              </remarks>
         </member>
+        <member name="M:EducationApp.PresentationLayer.Controllers.AuthorController.Pagination(EducationApp.BusinessLogicLayer.Models.Authors.PaginationPageAuthorModel)">
+             <summary>
+             Get Pagination Author
+             </summary>
+            <remarks>
+             Sample request:
+            
+                 Get/Pagination
+                 {
+                    "Skip": "1",
+                    "Take":"2"
+                 }
+            
+             </remarks>
+        </member>
         <member name="M:EducationApp.PresentationLayer.Controllers.AuthorController.FindName(EducationApp.BusinessLogicLayer.Models.Authors.GetNameAuthorModel)">
              <summary>
              Get Name Author
@@ -142,7 +157,7 @@
             <remarks>
              Sample request:
             
-                 Post/Find Name
+                 Get/Find Name
                  {
                     "Name": "Пушкин"
                  }
@@ -215,6 +230,19 @@
              Sample request:
             
                  Get/GetAll
+            
+             </remarks>
+        </member>
+        <member name="M:EducationApp.PresentationLayer.Controllers.OrderController.Pagination(EducationApp.BusinessLogicLayer.Models.Orders.PaginationPageOrderModel)">
+             <summary>
+             Get Pagination Order
+             </summary>
+             <remarks>
+             Sample request:
+            
+                 Get/Pagination
+                 "Skip":"1",
+                 "Take":"2"
             
              </remarks>
         </member>
@@ -414,6 +442,21 @@
              Sample request:
             
                  Get/GetAll
+            
+             </remarks>
+        </member>
+        <member name="M:EducationApp.PresentationLayer.Controllers.PrintingEditionController.Pagination(EducationApp.BusinessLogicLayer.Models.PrintingEditions.PaginationPagePrintingEditionModel)">
+             <summary>
+             Get Pagination PrintingEdition
+             </summary>
+            <remarks>
+             Sample request:
+            
+                 Get/Pagination
+                 {
+                    "Skip": "1",
+                    "Take":"2"
+                 }
             
              </remarks>
         </member>

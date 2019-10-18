@@ -15,15 +15,34 @@ namespace EducationApp.BusinessLogicLayer.Services
         {
             _authorRepository = authorRepository;
         }
+        
+        public List<Author> GetAllIsDeleted()
+        {
+            var allIsDeleted = _authorRepository.GetAllIsDeleted();
+            return allIsDeleted;
+        }
         public List<Author> GetAll()
         {
             var all = _authorRepository.GetAll();
             return all;
         }
-        public List<Author> GetAllIsDeleted()
+        public List<Author> Pagination(PaginationPageAuthorModel paginationPageAuthorModel)
         {
-            var allIsDeleted = _authorRepository.GetAllIsDeleted();
-            return allIsDeleted;
+            if (paginationPageAuthorModel.Skip < 1)
+            {
+                paginationPageAuthorModel.Skip = 1;
+            }
+            var pagination = _authorRepository.Pagination();
+            var count = pagination.Count();
+            var items = pagination.Skip(paginationPageAuthorModel.Skip).Take(paginationPageAuthorModel.Take).ToList();
+
+            PaginationAuthorModel paginationAuthorModel = new PaginationAuthorModel(count, paginationPageAuthorModel.Skip, paginationPageAuthorModel.Take);
+            IndexViewModel viewModel = new IndexViewModel
+            {
+                PaginationAuthorModel = paginationAuthorModel,
+                Authors = items
+            };
+            return items;
         }
         public IEnumerable<Author> FindName(GetNameAuthorModel getNameAuthorModel)
         {

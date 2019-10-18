@@ -3,9 +3,11 @@ using EducationApp.BusinessLogicLayer.Models.PrintingEditions;
 using EducationApp.BusinessLogicLayer.Services.Interfaces;
 using EducationApp.DataAccessLayer.Entities;
 using EducationApp.DataAccessLayer.Repositories.Interfaces;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace EducationApp.BusinessLogicLayer.Services
 {
@@ -25,6 +27,24 @@ namespace EducationApp.BusinessLogicLayer.Services
         {
             var all = _printingEditionsRepository.GetAll();
             return all;
+        }
+        public List<PrintingEdition> Pagination(PaginationPagePrintingEditionModel paginationPagePrintingEditionModel)
+        {
+            if (paginationPagePrintingEditionModel.Skip < 1)
+            {
+                paginationPagePrintingEditionModel.Skip = 1;
+            }
+            var pagination = _printingEditionsRepository.Pagination();
+            var count = pagination.Count();
+            var items = pagination.Skip(paginationPagePrintingEditionModel.Skip).Take(paginationPagePrintingEditionModel.Take).ToList();
+
+            PaginationPrintingEditionModel paginationPrintingEditionModel = new PaginationPrintingEditionModel(count, paginationPagePrintingEditionModel.Skip, paginationPagePrintingEditionModel.Take);
+            IndexViewModel viewModel = new IndexViewModel
+            {
+                PaginationPrintingEditionModel = paginationPrintingEditionModel,
+                PrintingEditions = items
+            };
+            return items;
         }
         public object Buy(BuyPrintingEditionModel buyPrintingEditionModel)
         {
