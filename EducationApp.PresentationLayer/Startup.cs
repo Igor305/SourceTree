@@ -1,4 +1,6 @@
-﻿using EducationApp.BusinessLogicLayer.Helpers;
+﻿using AutoMapper;
+using EducationApp.BusinessLogicLayer.AutoMapper;
+using EducationApp.BusinessLogicLayer.Helpers;
 using EducationApp.BusinessLogicLayer.Services;
 using EducationApp.BusinessLogicLayer.Services.Interfaces;
 using EducationApp.BusinessLogicLayer.Stripe.Infrastructure;
@@ -56,6 +58,12 @@ namespace EducationApp.PresentationLayer
             services.AddScoped<IOrderItemRepository, OrderItemRepository>();
             services.AddScoped<IOrderItemService, OrderItemService>();
             services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
+            var mappingConfig = new MapperConfiguration(mc =>
+            {
+                mc.AddProfile(new MappingProfile());
+            });
+            IMapper mapper = mappingConfig.CreateMapper();
+            services.AddSingleton(mapper);
             services.AddTransient<Users>();
             services.AddIdentity<Users, Role>(options =>
             {
@@ -77,6 +85,7 @@ namespace EducationApp.PresentationLayer
                 var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
                 c.IncludeXmlComments(xmlPath);
             });
+
             //Jwt Refresh
             string refreshSecurityKey = Configuration.GetSection("JWT")["RefreshSecretKey"];
             var refreshKey = new JwtRefresh(refreshSecurityKey);

@@ -1,4 +1,5 @@
-﻿using EducationApp.BusinessLogicLayer.Models.Authors;
+﻿using AutoMapper;
+using EducationApp.BusinessLogicLayer.Models.Authors;
 using EducationApp.BusinessLogicLayer.Services.Interfaces;
 using EducationApp.DataAccessLayer.Entities;
 using EducationApp.DataAccessLayer.Repositories.Interfaces;
@@ -11,9 +12,11 @@ namespace EducationApp.BusinessLogicLayer.Services
     public class AuthorService : IAuthorService
     {
         private readonly IAuthorRepository _authorRepository;
-        public AuthorService(IAuthorRepository authorRepository)
+        private readonly IMapper _mapper;
+        public AuthorService(IAuthorRepository authorRepository, IMapper mapper)
         {
             _authorRepository = authorRepository;
+            _mapper = mapper;
         }
         
         public List<Author> GetAllIsDeleted()
@@ -52,19 +55,19 @@ namespace EducationApp.BusinessLogicLayer.Services
         }
         public string Create(CreateAuthorModel createAuthorModel)
         {
-            Author author = new Author();
-            var all = _authorRepository.GetAll();
             if (createAuthorModel.Name == null)
             {
                 string noNull = "Name not null";
                 return noNull;
             }
+            var all = _authorRepository.GetAll();
             var cloneauthor = all.Any(x => x.Name == createAuthorModel.Name);
             if (cloneauthor == true)
             {
                 string noNull = "There is such a name";
                 return noNull;
             }
+            Author author = new Author();
             author.Name = createAuthorModel.Name;
             if (createAuthorModel.DateBirth > createAuthorModel.DataDeath)
             {
@@ -76,8 +79,9 @@ namespace EducationApp.BusinessLogicLayer.Services
                 string dateNotVanga = "The future has not come yet";
                 return dateNotVanga;
             }
-            author.DataBirth = createAuthorModel.DateBirth;
-            author.DataDeath = createAuthorModel.DataDeath;
+            var model = _mapper.Map<CreateAuthorModel>(author);
+           // author.DataBirth = createAuthorModel.DateBirth;
+           // author.DataDeath = createAuthorModel.DataDeath;
             author.CreateDateTime = DateTime.Now;
             author.UpdateDateTime = DateTime.Now;
             _authorRepository.Create(author);

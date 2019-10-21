@@ -15,7 +15,7 @@
             
              </remarks>
         </member>
-        <member name="M:EducationApp.PresentationLayer.Controllers.AccountController.PostAuth(EducationApp.BusinessLogicLayer.Services.Interfaces.IJwtPrivateKey,EducationApp.BusinessLogicLayer.Services.Interfaces.IJwtRefresh,EducationApp.BusinessLogicLayer.Models.Account.LoginModel)">
+        <member name="M:EducationApp.PresentationLayer.Controllers.AccountController.PostAuth(EducationApp.BusinessLogicLayer.Models.Account.LoginModel,EducationApp.BusinessLogicLayer.Services.Interfaces.IJwtPrivateKey,EducationApp.BusinessLogicLayer.Services.Interfaces.IJwtRefresh)">
              <summary>
               Log In
              </summary>
@@ -44,7 +44,7 @@
                  
              </remarks>
         </member>
-        <member name="M:EducationApp.PresentationLayer.Controllers.AccountController.ForgotPassword(EducationApp.BusinessLogicLayer.Models.EmailModel)">
+        <member name="M:EducationApp.PresentationLayer.Controllers.AccountController.ForgotPassword(EducationApp.BusinessLogicLayer.Models.Account.ForgotPassword)">
              <summary>
               Forgot Password
              </summary>
@@ -86,7 +86,7 @@
                  
              </remarks>
         </member>
-        <member name="M:EducationApp.PresentationLayer.Controllers.AccountController.LogOut(EducationApp.BusinessLogicLayer.Models.Account.LoginModel)">
+        <member name="M:EducationApp.PresentationLayer.Controllers.AccountController.LogOut(EducationApp.BusinessLogicLayer.Models.Account.LogOutModel)">
              <summary>
               Log Out
              </summary>

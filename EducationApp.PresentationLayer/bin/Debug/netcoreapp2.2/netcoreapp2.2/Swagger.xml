@@ -4,6 +4,115 @@
         <name>EducationApp.PresentationLayer</name>
     </assembly>
     <members>
+        <member name="M:EducationApp.PresentationLayer.Controllers.AccountController.GetAuth">
+             <summary>
+             Authentication
+             </summary>
+             <remarks>
+             Sample request:
+            
+                 Get/GetAuth
+            
+             </remarks>
+        </member>
+        <member name="M:EducationApp.PresentationLayer.Controllers.AccountController.PostAuth(EducationApp.BusinessLogicLayer.Models.Account.LoginModel,EducationApp.BusinessLogicLayer.Services.Interfaces.IJwtPrivateKey,EducationApp.BusinessLogicLayer.Services.Interfaces.IJwtRefresh)">
+             <summary>
+              Log In
+             </summary>
+             <remarks>
+             Sample request:
+            
+                 Post/PostAuth
+                 
+                 "Email":"karakymba@gmail.com",
+                 "Password":"karaganda"
+            
+             </remarks>
+        </member>
+        <member name="M:EducationApp.PresentationLayer.Controllers.AccountController.Register(EducationApp.BusinessLogicLayer.Models.Account.RegisterModel)">
+             <summary>
+              Register
+             </summary>
+             <remarks>
+             Sample request:
+             
+                 Post/Register
+            
+                 "Email":"karakymba@gmail.com",
+                 "Password":"karaganda",
+                 "PasswordConfirm":"karaganda"
+                 
+             </remarks>
+        </member>
+        <member name="M:EducationApp.PresentationLayer.Controllers.AccountController.ForgotPassword(EducationApp.BusinessLogicLayer.Models.Account.ForgotPassword)">
+             <summary>
+              Forgot Password
+             </summary>
+             <remarks>
+             Sample request:
+             
+                 Post/ForgotPassword
+            
+                 "Email":"karakymba@gmail.com"
+                 
+             </remarks>
+        </member>
+        <member name="M:EducationApp.PresentationLayer.Controllers.AccountController.ConfirmEmail(EducationApp.BusinessLogicLayer.Models.Account.ConfirmEmail)">
+             <summary>
+              Confirm Password
+             </summary>
+             <remarks>
+             Sample request:
+            
+                 Post/ConfirmEmail
+             
+                 "Email":"karakymba@gmail.com",
+                 
+             </remarks>
+        </member>
+        <member name="M:EducationApp.PresentationLayer.Controllers.AccountController.ResetPassword(EducationApp.BusinessLogicLayer.Models.Account.ResetPasswordModel)">
+             <summary>
+              Reset Password
+             </summary>
+             <remarks>
+             Sample request:
+            
+                 Post/ResetPassword
+             
+                 "Email":"karakymba@gmail.com",
+                 "Password":"karaganda",
+                 "PasswordConfirm":"karaganda",
+                 "Code":"ioprewthjypoiwreyortpo"
+                 
+             </remarks>
+        </member>
+        <member name="M:EducationApp.PresentationLayer.Controllers.AccountController.LogOut(EducationApp.BusinessLogicLayer.Models.Account.LogOutModel)">
+             <summary>
+              Log Out
+             </summary>
+             <remarks>
+             Sample request:
+            
+                 Post/LogOut
+             
+                 "Email":"karakymba@gmail.com",
+                 "Password":"karaganda"
+                 
+             </remarks>
+        </member>
+        <member name="M:EducationApp.PresentationLayer.Controllers.AccountController.RefreshToken(EducationApp.BusinessLogicLayer.Models.Account.RefreshTokenModel,EducationApp.BusinessLogicLayer.Services.Interfaces.IJwtPrivateKey,EducationApp.BusinessLogicLayer.Services.Interfaces.IJwtRefresh)">
+             <summary>
+              Refresh Token
+             </summary>
+             <remarks>
+             Sample request:
+            
+                 Get/RefreshToken
+             
+                 "token":"karakymba@gmail.com",
+                 
+             </remarks>
+        </member>
         <member name="M:EducationApp.PresentationLayer.Controllers.AuthorController.GetAllIsDeleted">
              <summary>
              Get all Author (IsDeleted = true)
@@ -26,6 +135,21 @@
             
              </remarks>
         </member>
+        <member name="M:EducationApp.PresentationLayer.Controllers.AuthorController.Pagination(EducationApp.BusinessLogicLayer.Models.Authors.PaginationPageAuthorModel)">
+             <summary>
+             Get Pagination Author
+             </summary>
+            <remarks>
+             Sample request:
+            
+                 Get/Pagination
+                 {
+                    "Skip": "1",
+                    "Take":"2"
+                 }
+            
+             </remarks>
+        </member>
         <member name="M:EducationApp.PresentationLayer.Controllers.AuthorController.FindName(EducationApp.BusinessLogicLayer.Models.Authors.GetNameAuthorModel)">
              <summary>
              Get Name Author
@@ -33,7 +157,7 @@
             <remarks>
              Sample request:
             
-                 Post/Find Name
+                 Get/Find Name
                  {
                     "Name": "Пушкин"
                  }
@@ -106,6 +230,19 @@
              Sample request:
             
                  Get/GetAll
+            
+             </remarks>
+        </member>
+        <member name="M:EducationApp.PresentationLayer.Controllers.OrderController.Pagination(EducationApp.BusinessLogicLayer.Models.Orders.PaginationPageOrderModel)">
+             <summary>
+             Get Pagination Order
+             </summary>
+             <remarks>
+             Sample request:
+            
+                 Get/Pagination
+                 "Skip":"1",
+                 "Take":"2"
             
              </remarks>
         </member>
@@ -308,6 +445,21 @@
             
              </remarks>
         </member>
+        <member name="M:EducationApp.PresentationLayer.Controllers.PrintingEditionController.Pagination(EducationApp.BusinessLogicLayer.Models.PrintingEditions.PaginationPagePrintingEditionModel)">
+             <summary>
+             Get Pagination PrintingEdition
+             </summary>
+            <remarks>
+             Sample request:
+            
+                 Get/Pagination
+                 {
+                    "Skip": "1",
+                    "Take":"2"
+                 }
+            
+             </remarks>
+        </member>
         <member name="M:EducationApp.PresentationLayer.Controllers.PrintingEditionController.Buy(EducationApp.BusinessLogicLayer.Models.PrintingEditions.BuyPrintingEditionModel)">
              <summary>
              Buy PrintingEdition
@@ -471,6 +623,20 @@
              Sample request:
             
                  DELETE/Delete
+                 {
+                     "Id": ""
+                 }
+            
+             </remarks>
+        </member>
+        <member name="M:EducationApp.PresentationLayer.Controllers.UserController.FinalRemoval(EducationApp.BusinessLogicLayer.Models.User.DeleteModel)">
+             <summary>
+             Final Removal User for Id
+             </summary>
+             <remarks>
+             Sample request:
+            
+                 DELETE/FinalRemoval
                  {
                      "Id": ""
                  }

@@ -1,6 +1,5 @@
 ﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using EducationApp.BusinessLogicLayer.Models;
 using EducationApp.BusinessLogicLayer.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using System.Collections.Generic;
@@ -47,11 +46,11 @@ namespace EducationApp.PresentationLayer.Controllers
         /// </remarks>
         [HttpPost("Auth")]
         [AllowAnonymous]
-        public async Task<ActionResult<string>> PostAuth([FromServices] IJwtPrivateKey jwtPrivateKey, [FromServices] IJwtRefresh jwtRefresh, [FromBody] LoginModel login)
+        public async Task<ActionResult<string>> PostAuth([FromBody] LoginModel login, [FromServices] IJwtPrivateKey jwtPrivateKey, [FromServices] IJwtRefresh jwtRefresh)
         {
             if (ModelState.IsValid)
             {
-                return await _accountService.PostAuth(jwtPrivateKey, jwtRefresh, login);
+                return await _accountService.PostAuth(login, jwtPrivateKey, jwtRefresh);
             }
             return "Error, not IsValid";
         }
@@ -90,11 +89,11 @@ namespace EducationApp.PresentationLayer.Controllers
         /// </remarks>
         [HttpPost("ForgotPassword")]
         [AllowAnonymous]
-        public async Task<ActionResult<string>> ForgotPassword([FromBody]EmailModel email)
+        public async Task<ActionResult<string>> ForgotPassword([FromBody]ForgotPassword forgotPassword)
         {
             if (ModelState.IsValid)
             {
-                return await _accountService.ForgotPassword(email);
+                return await _accountService.ForgotPassword(forgotPassword);
             }
             return "Error, not IsValid";
         }
@@ -156,11 +155,11 @@ namespace EducationApp.PresentationLayer.Controllers
         ///     
         /// </remarks>
         [HttpPost("LogOut")]
-        public async Task<ActionResult<string>> LogOut([FromBody]LoginModel log)
+        public async Task<ActionResult<string>> LogOut([FromBody]LogOutModel logOutModel)
         {
             if (ModelState.IsValid)
             {
-                return await _accountService.LogOut(log);
+                return await _accountService.LogOut(logOutModel);
             }
             return "Error, not IsValid";
         }

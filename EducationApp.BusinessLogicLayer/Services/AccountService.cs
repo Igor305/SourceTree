@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Identity;
 using EducationApp.DataAccessLayer.Entities;
-using EducationApp.BusinessLogicLayer.Models;
 using System;
 using EducationApp.BusinessLogicLayer.Services.Interfaces;
 using System.Security.Claims;
@@ -50,7 +49,7 @@ namespace EducationApp.BusinessLogicLayer.Services
             }
             return new string[] { Id?.Value, email?.Value, passHash?.Value, role?.Value };
         }
-        public async Task<ActionResult<string>> PostAuth( IJwtPrivateKey jwtPrivateKey, IJwtRefresh jwtRefresh, LoginModel login)                                //PostAuth
+        public async Task<ActionResult<string>> PostAuth(LoginModel login, IJwtPrivateKey jwtPrivateKey, IJwtRefresh jwtRefresh)                                //PostAuth
         {
             // Validate email
             Users user = new Users();
@@ -117,14 +116,14 @@ namespace EducationApp.BusinessLogicLayer.Services
                 string subject = "Подтверждение регистрации";
                 string message = $"Подтвердите регистрацию, перейдя по ссылке: <a href={regurl}>Confirm email</a>";
                 await _emailService.SendEmail(reg.Email, subject, message);
-               // await _signInManager.SignInAsync(user, false);
+                await _signInManager.SignInAsync(user, false);
                 return "Confirm account from email";
             }
             return result.ToString();
         }
-        public async Task<ActionResult<string>> ForgotPassword(EmailModel email)                                                                                 //ForgotPassword
+        public async Task<ActionResult<string>> ForgotPassword(ForgotPassword forgotPassword)                                                                                 //ForgotPassword
         {
-            var user = await _userManager.FindByNameAsync(email.Email);
+            var user = await _userManager.FindByNameAsync(forgotPassword.Email);
             if (user == null || !(await _userManager.IsEmailConfirmedAsync(user)))
             {
                 return "ForgotPasswordConfirmation";
@@ -138,7 +137,7 @@ namespace EducationApp.BusinessLogicLayer.Services
             protocol: _httpContextAccessor.HttpContext.Request.Scheme);
             string subject = "Изменение пароля ";
             string message = $"Для сброса пароля пройдите по ссылке: <a href='{callbackUrl}'>Нажми на меня</a>";
-            await _emailService.SendEmail(email.Email, subject, message);
+            await _emailService.SendEmail(forgotPassword.Email, subject, message);
             return "Confirm reset password from email";
         }
         public async Task<ActionResult<string>> ConfirmEmail(string userId, string code)                                                                           //ConfirmEmail
@@ -178,10 +177,10 @@ namespace EducationApp.BusinessLogicLayer.Services
             }
             return "Error, not Succeeded";
         }
-        public async Task<ActionResult<string>> LogOut(LoginModel log)                                                                                              //LogOut
+        public async Task<ActionResult<string>> LogOut(LogOutModel logOutModel)                                                                                              //LogOut
         {
             await _signInManager.SignOutAsync();
-            log.Email = log.Password = null;
+            logOutModel.Email = logOutModel.Password = null;
             return "LogOut";
         }
         public async Task<ActionResult<string>> RefreshToken( RefreshTokenModel refreshTokenModel, IJwtPrivateKey jwtPrivateKey, IJwtRefresh jwtRefresh)             //RefreshToken
